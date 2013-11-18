@@ -1,0 +1,57 @@
+************************************************************
+thanks.txt
+  -- about dependent MATLAB tools used in Mcalibrator2
+
+Mcalibrator2 uses several MATLAB functions distributed
+by someones directly or modified versions of them.
+The details are listed as below.
+
+We greatly appreciate for their contributions.
+We also clearly denote that our Mcalibrator2 suite fulfills
+all the license requirements to use these tools.
+
+Created    : "2012-05-16 16:41:51 ban"
+Last Update: "2012-05-31 15:02:08 ban"
+************************************************************
+
+* for creating GUI window
+tabpanel     : Elmar Tarajan
+               [ref] http://www.mathworks.com/matlabcentral/fileexchange/6996-tabpanel-constructor-v2-8-2010
+
+* for creating html documents
+m2html       : Guillaume Flandin
+               [ref] http://www.artefact.tk/software/matlab/m2html/
+
+* for filtering raw luminance data
+smoothn      : Damien Garcia
+               [ref] Garcia D, Robust smoothing of gridded data in one and higher dimensions
+               with missing values. Computational Statistics & Data Analysis, 2010.
+               [ref] http://www.mathworks.com/matlabcentral/fileexchange/725-smoothn
+splinefit    : Jonas Lundgren
+               [ref] http://www.mathworks.com/matlabcentral/fileexchange/13812-splinefit
+
+* for non-linear estimation of RGB values to produce CIE1931 xyY we want
+fminsearchOS : Olivier Salvado
+               [ref] Jeffrey C. Lagarias, James A. Reeds, Margaret H. Wright,
+               Paul E. Wright, "Convergence Properties of the Nelder-Mead Simplex
+               Method in Low Dimensions", SIAM Journal of Optimization, 9(1): p.112-147, 1998.
+               [ref] http://www.mathworks.com/matlabcentral/fileexchange/5157-fminsearch-modifed-for-higher-scale-smooth-function
+
+* for very effective optimization/estimation of RGB values to produce CIE1931 xyY we want
+iFit toolbox : E. Farhi et al.
+               [ref] http://ifit.mccode.org/index.html
+
+
+* the tool below is not used directly; you need to install it separately.
+
+Mcalibrator2 can communicate with Psychtoolbox if it is installed
+Psychtoolbox : The individual Psychtoolbox core developers,
+               (c) 1996-2011, David Brainard
+               (c) 1996-2007, Denis Pelli
+                              Allen Ingling
+               (c) 2005-2011, Mario Kleiner
+               Individual major contributors:
+               (c) 2006       Richard F. Murray
+               (c) 2008-2011  Diederick C. Niehorster
+               (c) 2008-2011  Tobias Wolf
+               [ref] http://psychtoolbox.org/HomePage
