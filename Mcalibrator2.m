@@ -29,7 +29,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-07-05 18:39:34 ban"
+  % Last Update: "2013-11-26 13:04:11 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -793,8 +793,10 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
 
     % save images as a PPT slide
     if windows_flg
-      tmpimgfile=fullfile(save_dir,'gamma_result.bmp');
-      saveas(gcf,tmpimgfile,'bmp');
+      tmpimgfile=fullfile(save_dir,'gamma_result.png');
+      set(gcf,'PaperPositionMode','auto');
+      print(gcf,tmpimgfile,'-dpng','-r0');
+      %saveas(gcf,tmpimgfile,'bmp');
       ppt=ppt.addImageSlide(color_str{ii},tmpimgfile);
       delete(tmpimgfile);
     end
