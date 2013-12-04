@@ -1,9 +1,9 @@
-function [fig_id,success]=DisplayColorWindowPTB(rgb,fullscr_flg,fig_id,scr_num)
+function [fig_id,success]=DisplayColorWindowBITS(rgb,fullscr_flg,fig_id,scr_num)
 
-% function [fig_id,success]=DisplayColorWindowPTB(rgb,:fullscr_flg,:fig_id,:scr_num)
+% function [fig_id,success]=DisplayColorWindowBITS(rgb,:fullscr_flg,:fig_id,:scr_num)
 % (: is optional)
 %
-% displays a Psychtoolbox color window with specific RGB values
+% displays a BITS++ (color++ mode) color window with specific RGB values
 %
 % [input]
 % rgb         : color (RGB) to be displayed
@@ -22,7 +22,7 @@ function [fig_id,success]=DisplayColorWindowPTB(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2013-12-04 15:26:15 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-04 16:05:40 ban (ban.hiroshi@gmail.com)"
 
 warning off; %#ok
 
@@ -83,14 +83,17 @@ try
     Screen('Preference','VisualDebuglevel',3);
 
     % reset display gamma-function
-    ResetDisplayGammaPTB();
+    ResetDisplayGammaBITS();
 
-    % open PTB window
+    % Open a double buffered fullscreen window with black background, configured for the Bits++
+    % Color++ Mode, i.e., with proper setup of imaging pipeline and conversion shaders:
     if is_windows
-      [ptbwindow,ptbrect]=Screen(scr_num,'OpenWindow',[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
+      [ptbwindow,ptbrect] = BitsPlusPlus('OpenWindowColor++',scr_num,[255,255,255],scrpos);
     else
-      [ptbwindow,ptbrect]=Screen(scr_num-1,'OpenWindow',[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
+      [ptbwindow,ptbrect] = BitsPlusPlus('OpenWindowColor++',scr_num-1,[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
     end
+    % Enable Bits++ Color++ output formatter
+    Screen('HookFunction', window, 'Enable', 'FinalOutputFormattingBlit');
     fig_id=ptbwindow;
   else
     ptbwindow=fig_id;

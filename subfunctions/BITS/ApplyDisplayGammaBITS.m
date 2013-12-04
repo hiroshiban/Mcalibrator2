@@ -1,7 +1,7 @@
-function ApplyDisplayGammaPTB(gamma_table)
+function ApplyDisplayGammaBITS(gamma_table)
 
-% Loads and sets display gamma-table(s) using PTB Screen() function.
-% function ApplyDisplayGammaPTB(:gamma_table)
+% Loads and sets BITS++ display gamma-table(s) using PTB Screen() function.
+% function ApplyDisplayGammaBITS(:gamma_table)
 % (: is optional)
 %
 % Loads gamma table(s) and sets it(them) on PTB engine
@@ -22,7 +22,7 @@ function ApplyDisplayGammaPTB(gamma_table)
 %
 %
 % Created    : "12-08-22 02:52:30 ban"
-% Last Update: "2013-12-04 15:02:49 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-04 15:50:24 ban (ban.hiroshi@gmail.com)"
 
 % check input variable
 if nargin<1 || isempty(gamma_table), gamma_table=(repmat(linspace(0.0,1.0,256),3,1))'; end
@@ -37,26 +37,17 @@ end
 if size(gamma_table,1)==3 && size(gamma_table,2)==256, gamma_table=permute(gamma_table,[2,1,3]); end
 if size(gamma_table,1)~=256 || size(gamma_table,2)~=3, error('gamma_table should be 256x3xN matrix. check input variable'); end
 
-% check OS (Windows or the others)
-is_windows=false;
-winstr=mexext(); winstr=winstr(end-2:end);
-if strcmpi(winstr,'w32') || strcmpi(winstr,'w64'), is_windows=true; end
+% first, we need to reset PTB own gamma table
+ResetDisplayGammaBITS(1.0);
 
-% apply gamma table(s)
+% get opened PTB window pointers
+winPtrs=Screen('Windows');
 
-% first, applying the first table to whole displays
-screencount=size(Screen('Screens'),2)-1;
-if screencount==1
-  Screen('LoadNormalizedGammaTable',0,gamma_table(:,:,1)); return
+% setting each of gamma tables to each of displays
+if length(winPtrs)==1
+  BitsPlusSetClut(0,gamma_table(:,:,1)); return
 else
-  for ii=0:1:screencount, Screen('LoadNormalizedGammaTable',ii,gamma_table(:,:,1)); end
-end
-
-% then, setting each of gamma tables to each of displays
-if is_windows % 0 = whole displays, 1 = the first, 2 = the second, ...
-  for ii=2:1:screencount, Screen('LoadNormalizedGammaTable',ii,gamma_table(:,:,min(ii,size(gamma_table,3)))); end
-else % 0 = the first display, 1 = the second, ...
-  for ii=1:1:screencount, Screen('LoadNormalizedGammaTable',ii,gamma_table(:,:,min(ii+1,size(gamma_table,3)))); end
+  for ii=1:1:length(winPtrs), BitsPlusSetClut(winPtrs(ii),gamma_table(:,:,min(ii,size(gamma_table,3)))); end
 end
 
 return

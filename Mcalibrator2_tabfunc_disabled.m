@@ -1,46 +1,46 @@
-function varargout = Mcalibrator2(varargin)
+function varargout = Mcalibrator2_tabfunc_disabled(varargin)
 
-  % function varargout = Mcalibrator2(varargin)
+  % function varargout = Mcalibrator2_tabfunc_disabled(varargin)
   %
-  % MCALIBRATOR2 M-file for Mcalibrator2.fig
-  %      MCALIBRATOR2, by itself, creates a new MCALIBRATOR2 or raises the existing
+  % MCALIBRATOR2_TABFUNC_DISABLED M-file for Mcalibrator2_tabfunc_disabled.fig
+  %      MCALIBRATOR2_TABFUNC_DISABLED, by itself, creates a new MCALIBRATOR2_TABFUNC_DISABLED or raises the existing
   %      singleton*.
   %
-  %      H = MCALIBRATOR2 returns the handle to a new MCALIBRATOR2 or the handle to
+  %      H = MCALIBRATOR2_TABFUNC_DISABLED returns the handle to a new MCALIBRATOR2_TABFUNC_DISABLED or the handle to
   %      the existing singleton*.
   %
-  %      MCALIBRATOR2('CALLBACK',hObject,eventData,handles,...) calls the local
-  %      function named CALLBACK in MCALIBRATOR2.M with the given input arguments.
+  %      MCALIBRATOR2_TABFUNC_DISABLED('CALLBACK',hObject,eventData,handles,...) calls the local
+  %      function named CALLBACK in MCALIBRATOR2_TABFUNC_DISABLED.M with the given input arguments.
   %
-  %      MCALIBRATOR2('Property','Value',...) creates a new MCALIBRATOR2 or raises the
+  %      MCALIBRATOR2_TABFUNC_DISABLED('Property','Value',...) creates a new MCALIBRATOR2_TABFUNC_DISABLED or raises the
   %      existing singleton*.  Starting from the left, property value pairs are
-  %      applied to the GUI before Mcalibrator2_OpeningFcn gets called.  An
+  %      applied to the GUI before Mcalibrator2_tabfunc_disabled_OpeningFcn gets called.  An
   %      unrecognized property name or invalid value makes property application
-  %      stop.  All inputs are passed to Mcalibrator2_OpeningFcn via varargin.
+  %      stop.  All inputs are passed to Mcalibrator2_tabfunc_disabled_OpeningFcn via varargin.
   %
   %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
   %      instance to run (singleton)".
   %
   % See also: GUIDE, GUIDATA, GUIHANDLES
   %
-  % Edit the above text to modify the response to help Mcalibrator2
+  % Edit the above text to modify the response to help Mcalibrator2_tabfunc_disabled
   %
-  % Last Modified by GUIDE v2.5 12-Apr-2012 11:23:34
+  % Last Modified by GUIDE v2.5 04-Dec-2013 16:12:41
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-11-26 13:03:43 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-04 16:13:58 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % functions for initializing Mcalibrator2 GUI
+  % functions for initializing Mcalibrator2_tabfunc_disabled GUI
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   % add path to subfunctions
   addpath(genpath(fullfile(fileparts(mfilename('fullpath')),'subfunctions')));
 
-  % change directory to the Mcalibrator2 directory
+  % change directory to the Mcalibrator2_tabfunc_disabled directory
   tgt=mfilename('fullpath'); %which('Mcalibrator2');
   cd(fileparts(tgt));
 
@@ -48,8 +48,8 @@ function varargout = Mcalibrator2(varargin)
   gui_Singleton = 1;
   gui_State = struct('gui_Name',       mfilename, ...
                      'gui_Singleton',  gui_Singleton, ...
-                     'gui_OpeningFcn', @Mcalibrator2_OpeningFcn, ...
-                     'gui_OutputFcn',  @Mcalibrator2_OutputFcn, ...
+                     'gui_OpeningFcn', @Mcalibrator2_tabfunc_disabled_OpeningFcn, ...
+                     'gui_OutputFcn',  @Mcalibrator2_tabfunc_disabled_OutputFcn, ...
                      'gui_LayoutFcn',  [] , ...
                      'gui_Callback',   []);
   if nargin && ischar(varargin{1})
@@ -64,27 +64,27 @@ function varargout = Mcalibrator2(varargin)
   % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before Mcalibrator2 is made visible.
-function Mcalibrator2_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before Mcalibrator2_tabfunc_disabled is made visible.
+function Mcalibrator2_tabfunc_disabled_OpeningFcn(hObject, eventdata, handles, varargin)
 
   % This function has no output args, see OutputFcn.
   % hObject    handle to figure
   % eventdata  reserved - to be defined in a future version of MATLAB
   % handles    structure with handles and user data (see GUIDATA)
-  % varargin   command line arguments to Mcalibrator2 (see VARARGIN)
+  % varargin   command line arguments to Mcalibrator2_tabfunc_disabled (see VARARGIN)
 
-  %===temporally disabled===% global tabhandle;
+  global tabhandle;
 
   % add path to subfunctions
   addpath(genpath(fullfile(fileparts(mfilename('fullpath')),'subfunctions')));
 
-  % Choose default command line output for Mcalibrator2
+  % Choose default command line output for Mcalibrator2_tabfunc_disabled
   handles.output = hObject;
 
   % Update handles structure
   guidata(hObject, handles);
 
-  % UIWAIT makes Mcalibrator2 wait for user response (see UIRESUME)
+  % UIWAIT makes Mcalibrator2_tabfunc_disabled wait for user response (see UIRESUME)
   % uiwait(handles.figure1);
 
   % set text message
@@ -92,13 +92,13 @@ function Mcalibrator2_OpeningFcn(hObject, eventdata, handles, varargin)
   strings=load_information_strings;
   set(handles.information_text,'FontAngle','normal','FontName','Tahoma','FontSize',10.0,'FontUnits','pixels','String',[{'This is Mcalibrator2 config panel.',''},strings{1}]);
 
-  % disable some tabs when opening Mcalibrator2
-  %===temporally disabled===% tabselectionfcn(hObject,'McalibratorTab',2:4,'off');
-  %===temporally disabled===% tabhandle=hObject;
+  % disable some tabs when opening Mcalibrator2_tabfunc_disabled
+  tabselectionfcn(hObject,'McalibratorTab',2:4,'off');
+  tabhandle=hObject;
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = Mcalibrator2_OutputFcn(hObject, eventdata, handles)
+function varargout = Mcalibrator2_tabfunc_disabled_OutputFcn(hObject, eventdata, handles)
 
   % Get default command line output from handles structure
   varargout{1} = handles.output;
@@ -265,7 +265,7 @@ function param=setparam(handleobject)
 
 function config_ok_togglebutton_Callback(hObject, eventdata, handles)
 
-  %===temporally disabled===% global tabhandle;
+  global tabhandle;
   global config;
   global colorimeterhandler;
   global displayhandler;
@@ -273,7 +273,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   if get(handles.config_ok_togglebutton,'Value')
 
     % enable some tabs
-    %===temporally disabled===% tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on');
+    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on');
     manageConfigTab(handles,'off');
     manageMeasureTab(handles,'on');
     manageLUTTab(handles,'on');
@@ -337,23 +337,25 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
       displayhandler=@DisplayColorWindow;
     elseif strcmp(config.display_routine.name,'Psychtoolbox')
       displayhandler=@DisplayColorWindowPTB;
+    elseif strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
+      displayhandler=@DisplayColorWindowBITS;
     end
 
     % check whether Psychtoolbox is installed
-    if strcmp(config.display_routine.name,'Psychtoolbox')
+    if strcmp(config.display_routine.name,'Psychtoolbox') || strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
       if exist('Screen','file')~=3 % does not exist mex file named 'Screen' = Psychtoolbox is not installed
         PlaySound(0);
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
 
         % disable some tabs
-        %===temporally disabled===% tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+        tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
         manageConfigTab(handles,'on');
         manageMeasureTab(handles,'off');
         manageLUTTab(handles,'off');
         manageColorTab(handles,'off');
 
         return;
-       end
+      end
     end
 
     % save the configurations
@@ -371,7 +373,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   else
 
     % disable some tabs
-    %===temporally disabled===% tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
     manageConfigTab(handles,'on');
     manageMeasureTab(handles,'off');
     manageLUTTab(handles,'off');

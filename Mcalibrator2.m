@@ -29,7 +29,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-11-26 13:04:11 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-04 16:13:35 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -337,10 +337,12 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
       displayhandler=@DisplayColorWindow;
     elseif strcmp(config.display_routine.name,'Psychtoolbox')
       displayhandler=@DisplayColorWindowPTB;
+    elseif strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
+      displayhandler=@DisplayColorWindowBITS;
     end
 
     % check whether Psychtoolbox is installed
-    if strcmp(config.display_routine.name,'Psychtoolbox')
+    if strcmp(config.display_routine.name,'Psychtoolbox') || strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
       if exist('Screen','file')~=3 % does not exist mex file named 'Screen' = Psychtoolbox is not installed
         PlaySound(0);
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
@@ -353,7 +355,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         manageColorTab(handles,'off');
 
         return;
-       end
+      end
     end
 
     % save the configurations

@@ -3,7 +3,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 % function [fig_id,success]=DisplayColorWindow(rgb,:fullscr_flg,:fig_id,:scr_num)
 % (: is optional)
 %
-% displays window with a specified RGB color
+% displays a color window with specific RGB values
 %
 % [input]
 % rgb         : color (RGB) to be displayed
@@ -18,7 +18,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2013-07-06 03:51:27 ban"
+% Last Update: "2013-12-04 15:25:59 ban (ban.hiroshi@gmail.com)"
 
 % persistent/global variable
 persistent hpush;
