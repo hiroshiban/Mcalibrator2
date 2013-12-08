@@ -89,7 +89,7 @@ classdef colorcal
   %
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-05-14 22:43:30 ban"
+  % Last Update: "2013-12-08 16:58:27 ban (ban.hiroshi@gmail.com)"
 
   properties (Hidden) %(SetAccess = protected);
     portname=6; % id of USB port to communicate with ColorCal

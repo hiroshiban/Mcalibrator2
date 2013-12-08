@@ -2,7 +2,7 @@ classdef cs100a
   % a class to manipulate MINOLTA CS-100A from MATLAB through a serial port connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2012-04-25 17:38:19 ban"
+  % Last Update: "2013-12-08 01:57:43 ban (ban.hiroshi@gmail.com)"
 
   properties (Hidden) %(SetAccess = protected)
     portname='COM1'; % id of serial port to communicate with CS-100A
@@ -37,14 +37,13 @@ classdef cs100a
       if nargin>1 && ~isempty(port_name)
         obj.portname=port_name;
         obj.rscom=serial(obj.portname);
-      elseif ~isempty(obj.port_name)
+      elseif ~isempty(obj.portname)
         obj.rscom=serial(obj.portname);
       else
         error('set a name of serial port.');
       end
 
       set(obj.rscom,'DataBits',7,'BaudRate',4800,'Parity','even','StopBits',2,'Terminator','CR/LF');
-      set(obj.rscom,'Parity','even','DataBits',7,'StopBits',2);
 
       fopen(obj.rscom);
 

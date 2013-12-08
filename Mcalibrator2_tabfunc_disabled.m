@@ -29,7 +29,7 @@ function varargout = Mcalibrator2_tabfunc_disabled(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-04 16:13:58 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-08 17:03:20 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -93,7 +93,7 @@ function Mcalibrator2_tabfunc_disabled_OpeningFcn(hObject, eventdata, handles, v
   set(handles.information_text,'FontAngle','normal','FontName','Tahoma','FontSize',10.0,'FontUnits','pixels','String',[{'This is Mcalibrator2 config panel.',''},strings{1}]);
 
   % disable some tabs when opening Mcalibrator2_tabfunc_disabled
-  tabselectionfcn(hObject,'McalibratorTab',2:4,'off');
+  %tabselectionfcn(hObject,'McalibratorTab',2:4,'off');
   tabhandle=hObject;
 
 
@@ -273,7 +273,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   if get(handles.config_ok_togglebutton,'Value')
 
     % enable some tabs
-    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on');
+    %tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on');
     manageConfigTab(handles,'off');
     manageMeasureTab(handles,'on');
     manageLUTTab(handles,'on');
@@ -348,7 +348,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
 
         % disable some tabs
-        tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+        %tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
         manageConfigTab(handles,'on');
         manageMeasureTab(handles,'off');
         manageLUTTab(handles,'off');
@@ -373,7 +373,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   else
 
     % disable some tabs
-    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+    %tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
     manageConfigTab(handles,'on');
     manageMeasureTab(handles,'off');
     manageLUTTab(handles,'off');
