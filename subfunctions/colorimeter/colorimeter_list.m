@@ -34,12 +34,12 @@ function colorimeters=colorimeter_list()
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2012-04-24 16:32:07 ban"
+% Last Update: "2013-12-09 16:39:31 ban (ban.hiroshi@gmail.com)"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'KONICA-MINOLTA CS-100A','cs100a',0};
 colorimeters{3}={'Admesy Brontes-LL','brontesLL',1};
-colorimeters{4}={'Cambridge Research Systems ColorCal','colorcal',1};
-colorimeters{5}={'Cambridge Research Systems ColorCal2','colorcal2',1};
+colorimeters{4}={'CRS ColorCal2 Windows','colorcal',1};
+colorimeters{5}={'CRS ColorCal2 (PTB, not tested)','colorcal2',1};
 
 return

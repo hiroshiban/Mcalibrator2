@@ -1,6 +1,10 @@
 classdef colorcal2
   % a class to manipulate Cambridge Research Systems ColorCal2 from MATLAB through a USB connection
   %
+  % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  % !!! BETA VERSION, NOT TESTED AT ALL. ON WINDOWS, PLEASE USE colorcal.m. THAT IS FULLY TESTED. !!!
+  % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  %
   % [NOTE]
   % requires Psychtoolbox to communicate ColorCal through a USB port.
   % Especially,
@@ -10,7 +14,7 @@ classdef colorcal2
   %
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2012-04-17 09:38:27 ban"
+  % Last Update: "2013-12-09 16:44:51 ban (ban.hiroshi@gmail.com)"
 
   properties (Hidden)
     portname=6; % id of USB port to communicate with ColorCal2

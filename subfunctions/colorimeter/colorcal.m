@@ -1,6 +1,15 @@
 classdef colorcal
   % a class to manipulate Cambridge Research Systems ColorCal from MATLAB through a USB connection
   %
+  % Created    : "2012-04-11 09:23:57 ban"
+  % Last Update: "2013-12-09 16:36:45 ban (ban.hiroshi@gmail.com)"
+  %
+  % [example]
+  % >> cc=colorcal;
+  % >> cc=cc.gen_port();
+  % >> cc=cc.initialize();
+  % >> cc=cc.measure();
+  %
   % [methods]
   % colorcal=colorcal.gen_port('PORT')             : generate USB port to communicate with ColorCAL
   % colorcal=colorcal.initialize(integration_time) : initialize measurement parameters
@@ -11,9 +20,9 @@ classdef colorcal
   % [qq,lum,colorcal]=colorcal.measureLuminance(integration_time) : measure luminance
   %
   % [NOTE]
-  % requires CalibInterface.h & Calibrator.lib distributed by Cambridge Research Systems.
+  % requires CalibInterface.h & Calibrator.dll distributed by Cambridge Research Systems.
   %
-  % [Basic functions available by loading CalibInterface.h & Calibrator.lib]
+  % [Basic functions available by loading CalibInterface.h & Calibrator.dll]
   %
   % // Use these functions for simple use of the OptiCAL. They will allow you to take
   % // readings of Voltage or Luminance, and contain all the calculations and conversions
@@ -86,10 +95,6 @@ classdef colorcal
   %
   % // Return the calibrators operation modes
   % int calGetCapabilities(calDeviceCapabilities *DC);
-  %
-  %
-  % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-08 16:58:27 ban (ban.hiroshi@gmail.com)"
 
   properties (Hidden) %(SetAccess = protected);
     portname=6; % id of USB port to communicate with ColorCal
@@ -117,9 +122,9 @@ classdef colorcal
         obj.portname=6;
       end
       if ~libisloaded('Calibrator')
-        notfound=loadlibrary('Calibrator',which('CalibInterface.h'));
+        notfound=loadlibrary('Calibrator.dll',@crs_colorcal_matlab,'alias','Calibrator');
         if ~isempty(notfound)
-          error('library: Calibrator.lib & CalibInterface.h not found. check input variable.');
+          error('library: Calibrator.dll & CalibInterface.h not found. check input variable.');
         end
       end
     end
@@ -145,7 +150,9 @@ classdef colorcal
         disp('starting USB communication with ColorCAL');
 
         % open USB port
+        fprintf('starting zero-level calibration...')
         ErrorCode=calllib('Calibrator','calInitialise',obj.DEVICE_COLORCAL_USB);
+        disp('done.');
 
         % check errors
         % obj.CALIB_OK             = 0;
