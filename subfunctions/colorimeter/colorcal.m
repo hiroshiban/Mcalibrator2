@@ -2,7 +2,7 @@ classdef colorcal
   % a class to manipulate Cambridge Research Systems ColorCal from MATLAB through a USB connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-10 14:55:18 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 22:44:47 ban (ban.hiroshi@gmail.com)"
   %
   % [example]
   % >> cc=colorcal;
@@ -214,7 +214,7 @@ classdef colorcal
       else
         if ~libisloaded('Calibrator')
           check=1;
-          warning('library: Calibrator.lib & CalibInterface.h not loaded yet. check input variable.'); %#ok
+          warning('library: Calibrator.dll & CalibInterface.h not loaded yet. check input variable.'); %#ok
         else
           obj.init_flg=1;
           check=0;

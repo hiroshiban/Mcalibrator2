@@ -2,7 +2,7 @@ classdef optical
   % a class to manipulate Cambridge Research Systems OptiCal from MATLAB through a serial connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-10 14:22:37 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 22:46:38 ban (ban.hiroshi@gmail.com)"
   %
   % [example]
   % >> cc=colorcal;
@@ -15,14 +15,14 @@ classdef optical
   % optical=optical.initialize(integration_time) : initialize measurement parameters
   % optical=optical.reset_port()                 : reset USB port connection
   % optical=optical.autocalibrate()              : calibrate optical automatically
-  % [qq,Y,x,y,optical]=optical.measure(integration_time) : measure CIE1931 Y, x=y=NaN
+  % [qq,Y,x,y,optical]=optical.measure(integration_time) : measure CIE1931 Y, x=y=NaN. Please be careful.
   % [qq,vol,optical]=optical.measureVoltage(integration_time) : measure voltage
   % [qq,lum,optical]=optical.measureLuminance(integration_time) : measure luminance
   %
   % [NOTE]
-  % requires CalibInterface.h & Calibrator.lib distributed by Cambridge Research Systems.
+  % requires CalibInterface.h & Calibrator.dll distributed by Cambridge Research Systems.
   %
-  % [Basic functions available by loading CalibInterface.h & Calibrator.lib]
+  % [Basic functions available by loading CalibInterface.h & Calibrator.dll]
   %
   % //Use these functions for simple use of the OptiCAL. They will allow you to take
   % //readings of Voltage or Luminance, and contain all the calculations and conversions
@@ -125,9 +125,9 @@ classdef optical
         obj.portname='COM1';
       end
       if ~libisloaded('Calibrator')
-        notfound=loadlibrary('Calibrator',which('CalibInterface.h'));
+        notfound=loadlibrary('Calibrator.dll',@crs_colorcal_matlab,'alias','Calibrator');
         if ~isempty(notfound)
-          error('library: Calibrator.lib & CalibInterface.h not found. check input variable.');
+          error('library: Calibrator.dll & CalibInterface.h not found. check input variable.');
         end
       end
     end
@@ -162,7 +162,8 @@ classdef optical
         elseif strcmp(obj.rscom,'COM4')
           ErrorCode=calllib('Calibrator','calInitialise',obj.DEVICE_OPTICAL_COM4);
         else
-          ErrorCode=calllib('Calibrator','calInitialise',str2num(strrep(obj.rscom,'COM',''))); %#ok
+          error('OptiCAL can be controlled correctly only when it is connected through a serial port COM1-COM4. Check your setting.');
+          %ErrorCode=calllib('Calibrator','calInitialise',str2num(strrep(obj.rscom,'COM',''))); %#ok
         end
 
         % check errors
@@ -201,7 +202,8 @@ classdef optical
       elseif strcmp(obj.rscom,'COM4')
         ErrorCode=calllib('Calibrator','calInitialise',obj.DEVICE_OPTICAL_COM4);
       else
-        ErrorCode=calllib('Calibrator','calInitialise',str2num(strrep(obj.rscom,'COM',''))); %#ok
+        error('OptiCAL can be controlled correctly only when it is connected through a serial port COM1-COM4. Check your setting.');
+        %ErrorCode=calllib('Calibrator','calInitialise',str2num(strrep(obj.rscom,'COM',''))); %#ok
       end
 
       % check errors
@@ -235,10 +237,10 @@ classdef optical
         check=1;
       else
         if ~libisloaded('Calibrator')
-          check=0;
-          warning('library: Calibrator.lib & CalibInterface.h not loaded yet. check input variable.'); %#ok
-        else
           check=1;
+          warning('library: Calibrator.dll & CalibInterface.h not loaded yet. check input variable.'); %#ok
+        else
+          check=0;
         end
       end
     end

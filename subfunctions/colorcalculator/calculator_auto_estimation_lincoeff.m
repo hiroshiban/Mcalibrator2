@@ -21,7 +21,7 @@ function calculator_auto_estimation_lincoeff(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-10 16:18:18 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-10 17:39:18 ban (ban.hiroshi@gmail.com)"
 
 global config;
 global colorimeterhandler;
@@ -33,7 +33,7 @@ set(handles.information_uipanel,'Title','information');
 set(handles.information_text,'String','Automatic linear ratio adjustment of xyY values started...');
 
 % create luminance file format
-save_dir=fullfile(fileparts(which('Mcalibrator2')),'data',config.date);
+save_dir=fullfile(config.save_dir,config.date);
 save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
 if isempty(phosphors)

@@ -7,11 +7,11 @@ function lut=LoadLUTs()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2012-05-29 16:32:07 ban"
+% Last Update: "2013-12-10 17:40:13 ban (ban.hiroshi@gmail.com)"
 
 global config;
 
-save_dir=fullfile(fileparts(which('Mcalibrator2')),'data',config.date);
+save_dir=fullfile(config.save_dir,config.date);
 color_str={'red','green','blue'};
 lut=zeros(str2num(config.lutoutbit.name),3); %#ok
 

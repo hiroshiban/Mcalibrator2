@@ -29,7 +29,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-10 16:46:45 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 18:28:05 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -105,19 +105,17 @@ function varargout = Mcalibrator2_OutputFcn(hObject, eventdata, handles)
 
 
 % --- Outputs from this function are returned to the command line.
-%function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 
   global colorimeterhandler; %#ok
   global displayhandler; %#ok
 
   % remove path
-  tgt=fileparts(mfilename('fullpath')); %fileparts(which('Mcalibrator2'));
-  rmpath(genpath(fullfile(tgt,'subfunctions')));
+  rmpath(genpath(fullfile(fileparts(mfilename('fullpath')),'subfunctions')));
 
   % delete object
-  delete colorimeterhandler;
-  delete displayhandler;
+  %if ~isempty(colorimeterhandler), delete colorimeterhandler; end
+  %if ~isempty(displayhandler), delete displayhandler; end
 
   % clear global variables
   clear global all;
@@ -132,6 +130,7 @@ function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % these are empty, just required to handle GUI
+function save_dir_edit_Callback(hObject, eventdata, handles)
 function date_edit_Callback(hObject, eventdata, handles)
 function repetition_edit_Callback(hObject, eventdata, handles)
 function red_radiobutton_Callback(hObject, eventdata, handles)
@@ -203,6 +202,8 @@ function gathermethod_popupmenu_CreateFcn(hObject, eventdata, handles)
 function manageConfigTab(handles,state)
 
   % state : 'on' or 'off'
+  set(handles.save_dir_edit,'Enable',state);
+  set(handles.select_dir_pushbutton,'Enable',state);
   set(handles.date_edit,'Enable',state);
   set(handles.apparatus_popupmenu,'Enable',state);
   set(handles.display_routine_popupmenu,'Enable',state);
@@ -269,6 +270,16 @@ function param=setparam(handleobject)
   param.id=id;
 
 
+function select_dir_pushbutton_Callback(hObject, eventdata, handles)
+
+  global config;
+
+  dir_name=uigetdir(fileparts(mfilename('fullpath')));
+  if dir_name~=0
+    set(handles.save_dir_edit,'String',dir_name);
+  end
+
+
 function config_ok_togglebutton_Callback(hObject, eventdata, handles)
 
   global tabhandle;
@@ -286,6 +297,8 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     manageColorTab(handles,'on');
 
     % store the current configurations and save them to a file
+    config.save_dir=get(handles.save_dir_edit,'String');
+    if ~exist(config.save_dir,'dir'), mkdir(config.save_dir); end
     config.date=get(handles.date_edit,'String');
 
     config.apparatus=setparam(handles.apparatus_popupmenu);
@@ -361,7 +374,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     end
 
     % save the configurations
-    save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+    save_dir=fullfile(config.save_dir,config.date);
     if ~exist(save_dir,'dir'), mkdir(save_dir); end
     save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
     if ~exist(save_fname,'file')
@@ -390,6 +403,7 @@ function load_pushbutton_Callback(hObject, eventdata, handles)
 
   [filename,filepath]=uigetfile({'config_*.mat','config file (config_*.mat)';'*.*','All Files (*.*)'},'select a config file');
   load(fullfile(filepath,filename));
+  set(handles.save_dir_edit,'String',config.save_dir);
   set(handles.date_edit,'String',datestr(now,'yymmdd'));
   set(handles.apparatus_popupmenu,'Value',config.apparatus.id);
   set(handles.display_routine_popupmenu,'Value',config.display_routine.id);
@@ -414,6 +428,7 @@ function save_pushbutton_Callback(hObject, eventdata, handles)
 
   global config;
 
+  config.save_dir=get(handles.save_dir_edit,'String');
   config.date=get(handles.date_edit,'String');
 
   config.apparatus=setparam(handles.apparatus_popupmenu);
@@ -434,7 +449,7 @@ function save_pushbutton_Callback(hObject, eventdata, handles)
   config.usecyan=get(handles.cyan_radiobutton,'value');
   config.flare_correction=get(handles.flare_correction_radiobutton,'value');
 
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'config');
+  save_dir=fullfile(config.save_dir,'config');
   if ~exist(save_dir,'dir'), mkdir(save_dir); end
   save(fullfile(save_dir,sprintf('config_%s.mat',config.date)),'config');
 
@@ -530,7 +545,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   % set the sampling interval (0.0-1.0).
@@ -660,7 +675,7 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   load(save_fname); % load measured luminance data
@@ -730,7 +745,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   global config;
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   load(save_fname); % load measured luminance data
@@ -856,7 +871,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   load(save_fname); % load measured luminance data
@@ -1099,7 +1114,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   % get/set phosphor CIE1931 xyY
@@ -1306,7 +1321,7 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   % create luminance file format
-  save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
+  save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
   if isempty(get(handles.xyY_edit,'String')) || isempty(get(handles.RGB_edit,'String')) || ...

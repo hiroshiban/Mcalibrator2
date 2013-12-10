@@ -2,10 +2,10 @@
 TODO.txt on Mcalibrator2
 
 Created    : "2013-12-10 16:47:36 ban (ban.hiroshi@gmail.com)"
-Last Update: "2013-12-10 16:53:42 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-10 18:35:46 ban (ban.hiroshi@gmail.com)"
 **************************************************
 
-1. Add an option to select a directory to save the measurement results.
+*DONE* 1. Add an option to select a directory to save the measurement results.
 
 2. Add different subroutine to display a color patch.
    Mcalibrator now has three options to display color patch for display calibration.
@@ -20,3 +20,7 @@ Last Update: "2013-12-10 16:53:42 ban (ban.hiroshi@gmail.com)"
 4. The other interfaces to CRS light measurement devices.
    We need to add/update some class files in ~/Mcalibrator2/subfunctions/colorimeter/
    to use OptiCAL, ColorCAL, and SpectroCAL in Mcalibrator2.
+
+5. Add option(s) to set optimization parameters more easily.
+
+6. GUI window adjusting so that we can display a color window on multiple display(s)
