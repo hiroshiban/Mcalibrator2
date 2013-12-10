@@ -21,12 +21,12 @@ function calculator_auto_estimation_hybrid(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2012-05-29 16:32:07 ban"
+% Last Update: "2013-12-10 16:18:17 ban (ban.hiroshi@gmail.com)"
 
 global config;
 global colorimeterhandler;
 global displayhandler;
-global phosphers;
+global phosphors;
 global flares;
 
 set(handles.information_uipanel,'Title','information');
@@ -36,8 +36,8 @@ set(handles.information_text,'String','Automatic linear least-square estimation 
 save_dir=fullfile(fileparts(which('Mcalibrator2')),'data',config.date);
 save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
-if isempty(phosphers)
-  set(handles.information_text,'String','Phospher chromaticities have not acquired yet. Measure them first.');
+if isempty(phosphors)
+  set(handles.information_text,'String','phosphor chromaticities have not acquired yet. Measure them first.');
   PlaySound(0);
   return
 end
@@ -59,9 +59,9 @@ else
   flare_xyY=[];
   flare_XYZ=zeros(3,1);
 end
-myrgb=xyY2RGB(myxyY,phosphers,flare_xyY);
-myxyY=RGB2xyY(myrgb,phosphers,flare_xyY);
-myphosphers=XYZ2xyY( xyY2XYZ(phosphers)-repmat(flare_XYZ,1,3) );
+myrgb=xyY2RGB(myxyY,phosphors,flare_xyY);
+myxyY=RGB2xyY(myrgb,phosphors,flare_xyY);
+myphosphors=XYZ2xyY( xyY2XYZ(phosphors)-repmat(flare_XYZ,1,3) );
 
 % load LUTs if use_LUT (radiobutton) is set
 if get(handles.use_LUT_radiobutton,'Value')
@@ -78,16 +78,16 @@ options.lin.rmserror=1; % percent error
 options.lin.ss0=2.0; % search space, from ss0 to ss1
 options.lin.ss1=1.0;
 options.nonlin=optimset('Display','iter','MaxFunEvals',150,'TolFun',0.5,'TolX',1e-3,'MaxIter',50,'DiffMinChange',1e-3);
-hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,myphosphers,flare_XYZ,lut,colorimeterhandler,displayhandler,options);
+hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,myphosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options);
 
 % plotting
-PlotCIE1931xy([],phosphers,-1,0,1);
+PlotCIE1931xy([],phosphors,-1,0,1);
 for mm=1:1:size(myxyY,2)
   set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...');
   axes(handles.color_figure); %#ok
   hold on;
-  PlotCIE1931xy(rawxyY(1:2,mm),phosphers,0,1,1,1);
-  PlotCIE1931xy(hybrid_estimate{mm}.final_xyY(1:2),phosphers,0,1,1,0);
+  PlotCIE1931xy(rawxyY(1:2,mm),phosphors,0,1,1,1);
+  PlotCIE1931xy(hybrid_estimate{mm}.final_xyY(1:2),phosphors,0,1,1,0);
   set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...Done.');
 end
 

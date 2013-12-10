@@ -1,14 +1,14 @@
-function xyY = RGB2xyY(RGB,phosphers,flares)
+function xyY = RGB2xyY(RGB,phosphors,flares)
 
-% function xyY=RGB2xyY(RGB,phosphers,:flares)
+% function xyY=RGB2xyY(RGB,phosphors,:flares)
 % (: is optional)
 %
-% Compute phospher coodinates CIE1931 xyY from RGB(0 - 1).
+% Compute phosphor coodinates CIE1931 xyY from RGB(0 - 1).
 %
 % [input]
 % RGB        : RGB video input values, [3 x n] matrix
-% phosphers  : a 3 by 3 matrix. Each column is
-%              tristimulus coordinates of a phospher:
+% phosphors  : a 3 by 3 matrix. Each column is
+%              tristimulus coordinates of a phosphor:
 %              [Rx Gx Bx;Ry Gy By; RY GY BY]
 % flares     : zero-level xyY (light leaks), 3 x n matrix
 %              flares=repmat([x;y;Y],1,size(myxyY,2));
@@ -22,7 +22,7 @@ function xyY = RGB2xyY(RGB,phosphers,flares)
 %
 %
 % Created    : "2012-04-09 20:51:42 ban"
-% Last Update: "2012-04-19 06:04:08 ban"
+% Last Update: "2013-12-10 16:18:20 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<2, help(mfilename()); xyY=[]; return; end
@@ -33,7 +33,7 @@ if ~isempty(flares) && (size(RGB,1)~=size(flares,1))
 end
 
 % convert xyY to XYZ
-pXYZ=xyY2XYZ(phosphers);
+pXYZ=xyY2XYZ(phosphors);
 
 % subtract flares
 if ~isempty(flares)

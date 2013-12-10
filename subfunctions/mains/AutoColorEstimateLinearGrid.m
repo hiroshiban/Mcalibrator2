@@ -1,6 +1,6 @@
-function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphers,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
+function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 
-% function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphers,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
+% function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce xyY you want to display based on least-square estimation assuming piecewise linearity
 %
@@ -14,7 +14,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphers,
 % rawxyY             : raw xyY you want, [3 x n] matrix
 % myxyY              : your xyY after preprocessing (e.g. flare-correction), [3 x n] matrix
 %                      if no preprocessing is applied, myxyY=rawxyY;
-% phosphers          : phospher xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
+% phosphors          : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
 % flare_XYZ          : flare XYZ, [X,Y,Z] !NOTE! not used now May 16 2012 Hiroshi Ban
 % lut                : color lookup table, [n x 3(r,g,b)] matrix, set lut=[]; if you do not need to use LUTs
 % colorimeterhandler : handle to an object to manipulate colorimeter
@@ -41,7 +41,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphers,
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2012-11-20 14:10:48 ban"
+% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<7, help(mfilename()); lineargrid_estimate=[]; return; end
@@ -82,7 +82,7 @@ fig_id=displayhandler([255,255,255],1); pause(0.2);
 for mm=1:1:size(myxyY,2)
 
   % initial transformation
-  pXYZ0=xyY2XYZ(phosphers); % set the global phospher XYZ matrix as initial values
+  pXYZ0=xyY2XYZ(phosphors); % set the global phosphor XYZ matrix as initial values
   T0=inv(pXYZ0);
 
   % estimation of the transformation matrix
@@ -106,7 +106,7 @@ for mm=1:1:size(myxyY,2)
     % generate samples & measure
     ss=options.ss0+(ii-1)*(options.ss1-options.ss0)/(options.iteration-1);
 
-    % get samples to estimate a new transformation matrix (local phospher xyY),
+    % get samples to estimate a new transformation matrix (local phosphor xyY),
     % assuming a piecewise linearity
 
     % here, we use grid samplings for measuring local chromaticities
@@ -162,7 +162,7 @@ for mm=1:1:size(myxyY,2)
     T1=(msXYZ*msXYZ')\msXYZ*sRGB';
     T1=T1';
 
-    % generate local phospher RGB
+    % generate local phosphor RGB
     RGB2=T1*xyY2XYZ(myxyY(:,mm)); RGB2(RGB2<0)=0; RGB2(RGB2>1)=1;
     if ~isempty(lut), RGB2=getRGBfromLUT(lut,RGB2); end
 

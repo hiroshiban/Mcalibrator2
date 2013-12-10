@@ -29,7 +29,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-04 16:13:35 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 16:44:10 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -163,6 +163,12 @@ function display_routine_popupmenu_CreateFcn(hObject, eventdata, handles)
   if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
   end
+  % set display subroutine names to GUI
+  displayroutines=displayroutine_list();
+  str_displayroutine=[];
+  for ii=1:1:length(displayroutines), str_displayroutine=[str_displayroutine,displayroutines{ii}(1)]; end %#ok
+  set(hObject,'String',str_displayroutine);
+  set(hObject,'Value',1);
 
 
 function sampling_popupmenu_Callback(hObject, eventdata, handles)
@@ -240,7 +246,7 @@ function manageLUTTab(handles,state)
 function manageColorTab(handles,state)
 
   % state : 'on' or 'off'
-  set(handles.load_phospher_pushbutton,'Enable',state);
+  set(handles.load_phosphor_pushbutton,'Enable',state);
   set(handles.use_LUT_radiobutton,'Enable',state);
   set(handles.use_RGB_radiobutton,'Enable',state);
   set(handles.xyY_edit,'Enable',state);
@@ -333,13 +339,9 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
       return
     end
 
-    if strcmp(config.display_routine.name,'MATLAB figure')
-      displayhandler=@DisplayColorWindow;
-    elseif strcmp(config.display_routine.name,'Psychtoolbox')
-      displayhandler=@DisplayColorWindowPTB;
-    elseif strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
-      displayhandler=@DisplayColorWindowBITS;
-    end
+    % set a display routine
+    displayroutines=displayroutine_list();
+    displayhandler=eval(sprintf('@%s;',displayroutines{config.display_routine.id}{2}));
 
     % check whether Psychtoolbox is installed
     if strcmp(config.display_routine.name,'Psychtoolbox') || strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
@@ -693,9 +695,9 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
   % fitting
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
-    set(handles.information_text,'String',sprintf('fitting a model to the measured %s phospher...',color_str{ii}));
+    set(handles.information_text,'String',sprintf('fitting a model to the measured %s phosphor...',color_str{ii}));
     fitlum{ii}(2,:)=ApplyCurveFitting(lum{ii}([1,4],:),fitmethod,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg);
-    set(handles.information_text,'String',sprintf('fitting a model to the measured %s phospher...Done.',color_str{ii}));
+    set(handles.information_text,'String',sprintf('fitting a model to the measured %s phosphor...Done.',color_str{ii}));
   end
 
   axes(handles.lum_figure); %#ok
@@ -788,7 +790,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
 
-    set(handles.information_text,'String',sprintf('Generating LUT for %s phospher...',color_str{ii}));
+    set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...',color_str{ii}));
     lut{ii}=ApplyGammaCorrection(lum{ii}([1,4],:),fitmethod,lutoutbit,...
                                  monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg); %#ok % lum is already loaded on memory
     set(gcf,'Name',[get(gcf,'Name'),sprintf(' %s',color_str{ii})]);
@@ -821,7 +823,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.4f\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
 
-    set(handles.information_text,'String',sprintf('Generating LUT for %s phospher...Done.',color_str{ii}));
+    set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...Done.',color_str{ii}));
   end
   hold off;
 
@@ -1086,12 +1088,12 @@ function use_RGB_radiobutton_Callback(hObject, eventdata, handles)
 
 
 % main procedures
-function load_phospher_pushbutton_Callback(hObject, eventdata, handles)
+function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
 
   global config;
   global colorimeterhandler;
   global displayhandler;
-  global phosphers;
+  global phosphors;
   global flares;
 
   set(handles.information_uipanel,'Title','information');
@@ -1100,18 +1102,18 @@ function load_phospher_pushbutton_Callback(hObject, eventdata, handles)
   save_dir=fullfile(fileparts(mfilename('fullpath')),'data',config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
-  % get/set phospher CIE1931 xyY
+  % get/set phosphor CIE1931 xyY
   load(save_fname); % load measured luminance data
-  if ( ~isempty(phosphers) && ~isempty(flares) ) || sum(phosphers(:))~=0
+  if ( ~isempty(phosphors) && ~isempty(flares) ) || sum(phosphors(:))~=0
 
-    % empty, use already acquired phosphers and flares values
+    % empty, use already acquired phosphors and flares values
 
   elseif exist('lum','var') && sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
 
-    phosphers=zeros(3,3); % phosphers = [rx,gx,bx;ry,gy,by;rY,gY,bY];
-    phosphers(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
-    phosphers(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
-    phosphers(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
+    phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
+    phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
+    phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
+    phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
 
     flares=zeros(3,3); % zero-level light
     flares(:,1)=[lum{1}(2,1);lum{1}(3,1);lum{1}(4,1)];
@@ -1121,22 +1123,22 @@ function load_phospher_pushbutton_Callback(hObject, eventdata, handles)
 
   else
 
-    phosphers=zeros(3,3); % phosphers = [rx,ry,rY; gx,gy,gY; bx,by,bY];
+    phosphors=zeros(3,3); % phosphors = [rx,ry,rY; gx,gy,gY; bx,by,bY];
     flares=zeros(3,3); % leaked (zero-level) light
 
-    set(handles.information_text,'String',{'RGB phospher chromaticities have not been acquired yet.',...
-                        'starting to measure CIE1931 xyY for RGB phosphers....'});
+    set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.',...
+                        'starting to measure CIE1931 xyY for RGB phosphors....'});
 
     % initialize color window
     scr_num=str2num(get(handles.scr_num_edit,'String')); %#ok
     fig_id=displayhandler([255,255,255],1,[],scr_num); pause(0.2);
 
-    % measure CIE1931 xyY for RGB phosphers
+    % measure CIE1931 xyY for RGB phosphors
     color_str={'red','green','blue'};
     colors={[1,0,0],[0,1,0],[0,0,1]};
     for ii=1:1:length(color_str)
       set(handles.information_text,'String',sprintf('Measuring CIE 1931 xyY of %s...',color_str{ii}));
-      [phosphers(3,ii),phosphers(1,ii),phosphers(2,ii),displayhandler,colorimeterhandler]=...
+      [phosphors(3,ii),phosphors(1,ii),phosphors(2,ii),displayhandler,colorimeterhandler]=...
           MeasureCIE1931xyY(displayhandler,colorimeterhandler,colors{ii},1,fig_id);
       set(handles.information_text,'String',sprintf('Measuring CIE 1931 xyY of %s...Done',color_str{ii}));
     end
@@ -1152,16 +1154,16 @@ function load_phospher_pushbutton_Callback(hObject, eventdata, handles)
     displayhandler(-999,1,fig_id);
 
   end
-  set(handles.information_text,'String',{'RGB phospher chromaticities have not been acquired yet.','starting to measure CIE1931 xyY for RGB phosphers....Done.'});
+  set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.','starting to measure CIE1931 xyY for RGB phosphors....Done.'});
 
-  % plotting phospher CIE1931 xy
+  % plotting phosphor CIE1931 xy
   axes(handles.color_figure); %#ok
   hold off;
-  PlotCIE1931xy([],phosphers,-1,1,1);
+  PlotCIE1931xy([],phosphors,-1,1,1);
   hold off;
 
   % save the results
-  eval(sprintf('save %s phosphers flares -append;',save_fname));
+  eval(sprintf('save %s phosphors flares -append;',save_fname));
 
   PlaySound(1);
 
@@ -1169,13 +1171,13 @@ function load_phospher_pushbutton_Callback(hObject, eventdata, handles)
 function xyY_RGB_convert_pushbutton_Callback(hObject, eventdata, handles)
 
   global config;
-  global phosphers;
+  global phosphors;
   global flares;
 
   set(handles.information_uipanel,'Title','information');
 
-  if isempty(phosphers) || sum(phosphers(:))==0
-    set(handles.information_text,'String','RGB phospher chromaticities have not been acquired yet. Measure them first.');
+  if isempty(phosphors) || sum(phosphors(:))==0
+    set(handles.information_text,'String','RGB phosphor chromaticities have not been acquired yet. Measure them first.');
     PlaySound(0);
     return
   else
@@ -1188,7 +1190,7 @@ function xyY_RGB_convert_pushbutton_Callback(hObject, eventdata, handles)
     else
       flare_xyY=[];
     end
-    rgbdata=xyY2RGB(myxyY,phosphers,flare_xyY);
+    rgbdata=xyY2RGB(myxyY,phosphors,flare_xyY);
     rgbdata(rgbdata<0)=0;
     rgbdata(rgbdata>1)=1.0;
 
@@ -1214,7 +1216,7 @@ function xyY_RGB_convert_pushbutton_Callback(hObject, eventdata, handles)
       end
       set(handles.RGB_edit,'String',str_rgb);
     end
-  end % if ~exist(phosphers,'var') || sum(phosphers(:))==0
+  end % if ~exist(phosphors,'var') || sum(phosphors(:))==0
 
   if get(handles.use_LUT_radiobutton,'Value')
     set(handles.information_text,'String','xyY values were converted to RGB values.');
@@ -1365,6 +1367,27 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
   fclose(fid);
 
   set(handles.information_text,'String','Saving CIE1931 xyY data...Done.');
+
+  PlaySound(1);
+
+
+function plot_color_pushbutton_Callback(hObject, eventdata, handles)
+
+  global phosphors;
+
+  rawxyY=getDataFromStr(get(handles.xyY_edit,'String'));
+  mesxyY=getDataFromStr(get(handles.results_xyY_edit,'String'));
+  set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...');
+  if isempty(phosphors), disp('WARNING: phosphor tristimulus values have not been measured yet. using dummy values...'); end %#ok
+  if isempty(rawxyY), disp('WARNING: xyY values you want have not been set yet...'); end %#ok
+  if isempty(mesxyY), disp('WARNING: actual xyY values have not been measured yet...'); end %#ok
+  axes(handles.color_figure); %#ok
+  hold off;
+  PlotCIE1931xy((rawxyY(:,1:2))',phosphors,-1,1,1,1);
+  PlotCIE1931xy((mesxyY(:,1:2))',phosphors,0,1,1,0);
+  hold off;
+
+  set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...Done.');
 
   PlaySound(1);
 

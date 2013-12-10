@@ -1,0 +1,22 @@
+**************************************************
+TODO.txt on Mcalibrator2
+
+Created    : "2013-12-10 16:47:36 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-10 16:53:42 ban (ban.hiroshi@gmail.com)"
+**************************************************
+
+1. Add an option to select a directory to save the measurement results.
+
+2. Add different subroutine to display a color patch.
+   Mcalibrator now has three options to display color patch for display calibration.
+   One is MATLAB-native figure, the second is Psychtoolbox drawing, and the third is CRS BITS++
+   with Psychtoolbox (not tested). We need to add another subroutine that uses some of ViSage's
+   drawing functions to directly interact with ViSaGe stimulus presentation environment.
+
+3. An interface to ColorCAL through a virtual serial port
+   To use Mcalibrator on Mac OSX, another version of function for Mcalibrator to interact with
+   ColorCAL through a virtual serial port will be required.
+
+4. The other interfaces to CRS light measurement devices.
+   We need to add/update some class files in ~/Mcalibrator2/subfunctions/colorimeter/
+   to use OptiCAL, ColorCAL, and SpectroCAL in Mcalibrator2.

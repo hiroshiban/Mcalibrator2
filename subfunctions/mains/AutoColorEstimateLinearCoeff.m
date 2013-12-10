@@ -1,6 +1,6 @@
-function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphers,lut,colorimeterhandler,displayhandler,options)
+function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphors,lut,colorimeterhandler,displayhandler,options)
 
-% function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphers,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
+% function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce xyY you want to display based on a simple adjustment
 % by adding rgb_delta = CC*(T0*eXYZ) to rgb_measured (CC is a rate parameter, c<1.0).
@@ -23,7 +23,7 @@ function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphers,l
 % rawxyY             : raw xyY you want, [3 x n] matrix
 % myxyY              : your xyY after preprocessing (e.g. flare-correction), [3 x n] matrix
 %                      if no preprocessing is applied, myxyY=rawxyY;
-% phosphers          : phospher xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
+% phosphors          : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
 % lut                : color lookup table, [n x 3(r,g,b)] matrix, set lut=[]; if you do not need to use LUTs
 % colorimeterhandler : handle to an object to manipulate colorimeter
 % displayhandler     : function handle to manipulate/display color window
@@ -45,7 +45,7 @@ function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphers,l
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2012-05-16 15:33:22 ban"
+% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
 
 %% check input variables
 if nargin<6, help(mfilename()); lincoeff_estimate=[]; return; end
@@ -75,7 +75,7 @@ lincoeff_estimate=cell(size(myxyY,2),1);
 fig_id=displayhandler([255,255,255],1); pause(0.2);
 
 % initial transformation
-pXYZ0=xyY2XYZ(phosphers); % set the global phospher XYZ matrix as initial values
+pXYZ0=xyY2XYZ(phosphors); % set the global phosphor XYZ matrix as initial values
 T0=inv(pXYZ0);
 
 %% least-square estimations of RGB values

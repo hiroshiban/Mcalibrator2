@@ -17,12 +17,12 @@ function calculator_measure_simply(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2012-05-29 16:32:07 ban"
+% Last Update: "2013-12-10 16:18:18 ban (ban.hiroshi@gmail.com)"
 
 global config;
 global colorimeterhandler;
 global displayhandler;
-global phosphers;
+global phosphors;
 
 set(handles.information_uipanel,'Title','information');
 
@@ -69,8 +69,8 @@ rawxyY=getDataFromStr(get(handles.xyY_edit,'String'));
 set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...');
 axes(handles.color_figure); %#ok
 hold off;
-PlotCIE1931xy((rawxyY(:,1:2))',phosphers,-1,1,1,1);
-PlotCIE1931xy((mesxyY(:,1:2))',phosphers,0,1,1,0);
+PlotCIE1931xy((rawxyY(:,1:2))',phosphors,-1,1,1,1);
+PlotCIE1931xy((mesxyY(:,1:2))',phosphors,0,1,1,0);
 hold off;
 
 set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...Done.');

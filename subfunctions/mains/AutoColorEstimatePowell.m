@@ -1,6 +1,6 @@
-function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphers,lut,colorimeterhandler,displayhandler,options)
+function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphors,lut,colorimeterhandler,displayhandler,options)
 
-% function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphers,lut,colorimeterhandler,displayhandler,options);
+% function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphors,lut,colorimeterhandler,displayhandler,options);
 %
 % Estimate [R,G,B] values to produce xyY you want to display
 % using Brent-Powell with Coggins/Golden-section line serach method
@@ -9,7 +9,7 @@ function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphers,lut,colo
 % rawxyY             : raw xyY you want, [3 x n] matrix
 % myxyY              : your xyY after preprocessing (e.g. flare-correction), [3 x n] matrix
 %                      if no preprocessing is applied, myxyY=rawxyY;
-% phosphers          : phospher xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
+% phosphors          : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
 % lut                : color lookup table, [n x 3(r,g,b)] matrix
 %                      set lut=[]; if you do not need to use LUTs
 % colorimeterhandler : handle to an object to manipulate colorimeter
@@ -35,7 +35,7 @@ function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphers,lut,colo
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2012-05-16 15:32:49 ban"
+% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
 
 %% check input variables
 if nargin<6, help(mfilename()); powell_estimate=[]; return; end
@@ -76,7 +76,7 @@ fig_id=displayhandler([255,255,255],1); pause(0.2);
 for mm=1:1:size(myxyY,2)
 
   % initial transformation
-  pXYZ0=xyY2XYZ(phosphers); % set the global phospher XYZ matrix as initial values
+  pXYZ0=xyY2XYZ(phosphors); % set the global phosphor XYZ matrix as initial values
 
   % set initial parameters
   RGB0=pXYZ0\xyY2XYZ(myxyY(:,mm));

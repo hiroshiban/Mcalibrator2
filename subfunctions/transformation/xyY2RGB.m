@@ -1,13 +1,13 @@
-function rgb=xyY2RGB(myxyY,phosphers,flares)
+function rgb=xyY2RGB(myxyY,phosphors,flares)
 
-% function rgb=xyY2RGB(myxyY,phosphers,:flares)
+% function rgb=xyY2RGB(myxyY,phosphors,:flares)
 % (: is optional)
 %
 % Convert CIE1931 xyY to RGB video input values
 %
 % [input]
 % myxyY     : xyY values you want to display, [3 x n] matrix
-% phosphers : RGB phospher xyY, phosphers = [rx,gx,bx; ry,gy,by; rY,gY,bY];
+% phosphors : RGB phosphor xyY, phosphors = [rx,gx,bx; ry,gy,by; rY,gY,bY];
 % flares    : zero-level xyY (light leaks), 3x1 matrix, flares=[x;y;Y];
 %
 % [output]
@@ -15,7 +15,7 @@ function rgb=xyY2RGB(myxyY,phosphers,flares)
 %
 %
 % Created    : "2012-04-16 08:05:27 ban"
-% Last Update: "2012-04-16 08:05:39 ban"
+% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<2, help(mfilename()); rgb=[]; return; end
@@ -27,7 +27,7 @@ end
 
 % convert from xyY to XYZ
 XYZ=xyY2XYZ(myxyY);
-pXYZ=xyY2XYZ(phosphers);
+pXYZ=xyY2XYZ(phosphors);
 
 % subtract flares
 if ~isempty(flares)
