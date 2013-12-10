@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+# iFit: postinst
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+if [ ! -f "`which matlab`"  ]; then
+  db_get ifit/link_matlab
+  # only install link if answer is true and 'matlab' does not exist
+  if [ "$RET" = "true" ]; then
+    echo "iFit installer: linking ifit to matlab: ln -s /usr/local/ifit/ifit /usr/local/bin/matlab"
+    ln -s /usr/local/ifit/ifit /usr/local/bin/matlab
+  fi
+fi

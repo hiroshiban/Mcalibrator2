@@ -1,12 +1,23 @@
 classdef optical
   % a class to manipulate Cambridge Research Systems OptiCal from MATLAB through a serial connection
   %
+  % Created    : "2012-04-11 09:23:57 ban"
+  % Last Update: "2013-12-10 14:22:37 ban (ban.hiroshi@gmail.com)"
+  %
+  % [example]
+  % >> cc=colorcal;
+  % >> cc=cc.gen_port();
+  % >> cc=cc.initialize();
+  % >> cc=cc.measure();
+  %
   % [methods]
-  % colorcal=colorcal.gen_port('PORT')             : generate USB port to communicate with OptiCal
-  % colorcal=colorcal.initialize(integration_time) : initialize measurement parameters
-  % colorcal=colorcal.reset_port()                 : reset USB port connection
-  % colorcal=colorcal.autocalibrate()              : calibrate ColorCAL automatically
-  % [qq,Y,x,y,colorcal]=colorcal.measure(integration_time) : measure CIE1931 Y, x=y=NaN
+  % optical=optical.gen_port('PORT')             : generate USB port to communicate with OptiCal
+  % optical=optical.initialize(integration_time) : initialize measurement parameters
+  % optical=optical.reset_port()                 : reset USB port connection
+  % optical=optical.autocalibrate()              : calibrate optical automatically
+  % [qq,Y,x,y,optical]=optical.measure(integration_time) : measure CIE1931 Y, x=y=NaN
+  % [qq,vol,optical]=optical.measureVoltage(integration_time) : measure voltage
+  % [qq,lum,optical]=optical.measureLuminance(integration_time) : measure luminance
   %
   % [NOTE]
   % requires CalibInterface.h & Calibrator.lib distributed by Cambridge Research Systems.
@@ -84,10 +95,6 @@ classdef optical
   %
   % // Return the calibrators operation modes
   % int calGetCapabilities(calDeviceCapabilities *DC);
-  %
-  %
-  % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-05-14 22:53:55 ban"
 
   properties (Hidden) %(SetAccess = protected);
     portname='COM1'; % id of USB port to communicate with OptiCal

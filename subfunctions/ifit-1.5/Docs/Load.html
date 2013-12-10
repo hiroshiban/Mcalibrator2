@@ -1,0 +1,482 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+  <title>iFit: Importing data (iData/load)</title>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+</head><body>
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId647835"></a>iFit: importing data into objects<br>
+</h1>
+<br>
+<ol id="mozToc"><!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId5377">Importing data from a
+file (iData,
+load)
+</a><ol><li><a href="#mozTocId52427">Distant files (http://, ...)
+</a></li><li><a href="#mozTocId250466">Compressed files (.zip, ...)
+</a></li><li><a href="#mozTocId338301">Anchor references (file#anchor)
+</a></li><li><a href="#mozTocId889584">Setting Signal and Axes when they are not set properly</a></li></ol></li><li><a href="#mozTocId59221">Supported data formats</a></li><li><a href="#mozTocId782211">Example data files</a></li><li><a href="#mozTocId141862">Importing directly
+from
+Matlab variables</a></li><li><a href="#mozTocId755882">Importing from Matlab
+Figures</a></li><li><a href="#mozTocId672193">How it works
+(looktxt, iLoad, Loaders)
+</a></li></ol>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">Commands we use in this page: <span style="font-style: italic;">iData, load, </span><a href="Methods.html">methods</a>
+<div style="text-align: left;"><br>
+In this document we present how to import data as <a href="iData.html">iData</a>
+ objects from files, variables and figures. Extensive help about how to 
+create iData objects and supported file formats can be found in the <a href="Loaders.html">Loaders</a> page.<br>
+</div>
+</div>
+<h3><a class="mozTocH3" name="mozTocId5377"></a>Importing data from a
+file (<span style="font-style: italic;"><a href="iData.html">iData</a>,
+load</span>)<br>
+</h3>
+This is done by converting a file path to an <a href="iData.html">iData</a>
+object, or directly
+with the<br>
+<span style="font-style: italic;">iData/<span style="font-weight: bold;">load</span></span>
+method. The <span style="font-weight: bold; font-style: italic;">ifitpath</span>
+points to the iFit library location:<br>
+<div style="margin-left: 40px;">
+<pre>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>([ <span style="color: rgb(51, 102, 255);">ifitpath</span> <span style="color: rgb(204, 51, 204);">'Data/ILL_IN6.dat'</span> ]);</pre>
+<pre>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">load</span>(iData, <span style="color: rgb(204, 51, 204);">[ ifitpath 'Data/ILL_IN6.dat' ]</span>);</pre>
+</div>
+These commands result in the following output, which produce an iData
+object:<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <pre><span style="font-family: monospace;">iLoad: Importing file iFit/Data/ILL_IN6.dat with method ILL Data (normal integers) (looktxt)<br>looktxt iFit/Data/ILL_IN6.dat --headers --fortran --catenate --fast --binary --makerows=IIII --makerows=FFFF --outfile=/tmp/lk_915264556_CZi4aN <br>Warning: Data root level renamed as lk_915264556_CZi4aN (started with number).<br>         Output file names are unchanged [looktxt:file_open:1377]<br>Warning: File 'iFit/Data/ILL_IN6.dat' c='-' [num pos=250] two fortran numbers are touching each other<br>Warning: File 'iFit/Data/ILL_IN6.dat' c='-' [num pos=2086] two fortran numbers are touching each other<br>Warning: File 'iFit/Data/ILL_IN6.dat' c='-' [num pos=2086] two fortran numbers are touching each other<br>Warning: File 'iFit/Data/ILL_IN6.dat' c='-' [num pos=2107] two fortran numbers are touching each other<br>Warning: File 'iFit/Data/ILL_IN6.dat' c='-' [num pos=2127] two fortran numbers are touching each other<br>Looktxt: file 'iFit/Data/ILL_IN6.dat': wrote 9 numerical fields into /tmp//lk_915264556_CZi4aN.m<br>iData: Setting the Signal of tp481575 to the biggest numerical field Data.IIIIIIIIIIIIIIIIIIIIIIIIIIIII_13 with length 131584.<br><br>a =  iData object:<br><br>    [Tag]     [Dimension]                           [Title] [Last command]          [Label]<br> tp481575      [257  512] 'File ILL_IN6.dat ILL Data (n...' tp481575=load(iData,...  </span></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Wildcards (*,?) are supported. The file separator symbol ('/' for
+Linux/Unix/MacOSX and '\' for Windows) is automatically adapted to the
+system used.<a href="images/uigetfiles.gif"><img alt="File selector to inport files into iData" title="File selector to inport files into iData" src="images/uigetfiles.gif" style="border: 0px solid ; width: 308px; height: 428px;" align="right"></a><br>
+Directory may be imported (and thus all files therein) as well as lists
+of files (given as a cell of strings {...})<br>
+<div style="margin-left: 40px;">
+<pre>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>( <span style="color: rgb(204, 51, 204);">[ ifitpath '</span><span style="color: rgb(204, 51, 204);">Data' ]</span>);</pre>
+<pre>&gt;&gt; a = i<span style="color: rgb(51, 102, 255);">Data</span>(<span style="font-weight: bold;">{</span> <span style="color: rgb(204, 51, 204);">[ ifitpath </span><span style="color: rgb(204, 51, 204);">'Data/*.dat' ]</span> ,...<br><span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">[ ifitpath </span><span style="color: rgb(204, 51, 204);">'</span><span style="color: rgb(204, 51, 204);">Data/sv1850.scn' ]</span>,...<br><span style="color: rgb(204, 51, 204);">[ ifitpath </span><span style="color: rgb(204, 51, 204);">'</span><span style="color: rgb(204, 51, 204);">Data/sv1884.scn'</span> ],...<br><span style="color: rgb(204, 51, 204);">[ ifitpath </span><span style="color: rgb(204, 51, 204);">'</span><span style="color: rgb(204, 51, 204);">Data/sv4700.scn'</span> ] <span style="font-weight: bold;">}</span>);<br></pre>
+</div>
+which returns an array of iData objects.<br>
+<br>
+A <a href="../Loaders/doc/uigetfiles.html">file selector</a>,
+which supports multiple file selection, may be used by
+issuing<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">''</span>)<br>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">load</span>(iData,<span style="color: rgb(204, 51, 204);">''</span>)<br></pre>
+The choice of the file selector style can be done in the <span style="font-style: italic;">iLoad</span> configuration (refer to the <a href="Loaders.html#mozTocId56356">Loaders</a> page).<br>
+<br>
+
+By default, an analysis of the file name extension and the file content will be done, and the best
+importer method will be used. It is possible to select a preferred method with
+e.g.<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">load</span>(iData, <span style="color: rgb(204, 51, 204);">'filename'</span>, <span style="color: rgb(204, 51, 204);">'HDF5'</span>)</pre>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">load</span>(iData, <span style="color: rgb(204, 51, 204);">'filename'</span>, <span style="color: rgb(204, 51, 204);">'gui'</span>);&nbsp; % a method selector pops-up.</pre>
+A list of the supported formats is shown <a href="#mozTocId59221">below.</a><br>
+<br>
+The resulting objects will usually be 1D, 2D, 3D, nD histograms or nD event lists. Refer to the <a href="iData.html">iData</a> and <a href="Math.html">Math</a>
+page to learn how to manipulate these objects (set, get, setalias, getalias, setaxis, getaxis), and in particular how to
+reduce/extend their dimensionality (<i>sum, indexing,</i> ...), or convert events into histograms (<i>hist, interp</i>).<br>
+<h4><a class="mozTocH4" name="mozTocId52427"></a>Distant files (http://, ...)<br>
+</h4>
+The specified file names may include URL tags such as<br>
+<ul>
+  <li><span style="font-weight: bold;">file://</span><span style="font-style: italic;">filename</span></li>
+  <li><span style="font-weight: bold;">ftp://</span><span style="font-style: italic;">filename</span></li>
+  <li><span style="font-weight: bold;">http://</span><span style="font-style: italic;">filename</span></li>
+  <li><span style="font-weight: bold;">https://</span><span style="font-style: italic;">filename<br>
+    </span></li>
+
+</ul>
+were the two latter cases first get a copy of the distant file
+(requires local write permission), and then import it. A valid Internet
+connection is then required, with proper Proxy settings if needed.<br>
+<h4><a class="mozTocH4" name="mozTocId250466"></a>Compressed files (.zip, ...)<br>
+</h4>
+Compressed files (ZIP, TAR, GZIP, Z) can also be imported directly, in
+which case they are first extracted locally (requires write
+permission), and then imported. This extraction mechanism also applied for
+distant file.<br>
+<h4><a class="mozTocH4" name="mozTocId338301"></a>Anchor references (file#anchor)<br>
+</h4>
+The file name may end with an anchor reference using the '#' character, such as in <br>
+<br>
+<div style="margin-left: 40px;">[ ifitpath '<span style="color: rgb(204, 51, 204);">/Data/sv1850.scn#Data'</span> ]<br style="color: rgb(204, 51, 204);">
+<span style="color: rgb(204, 51, 204);">'http://path/file.zip#Data'</span><br>
+</div>
+<br>
+In this case, the anchor is searched in the imported data, and only the
+corresponding matching elements are returned. The resulting objects are
+thus smaller in size.<br>
+ 
+<h4><a class="mozTocH4" name="mozTocId889584"></a>Setting Signal and Axes when they are not set properly</h4>
+
+There may be cases for which the reading of the file is done properly,
+but the Signal, Error and Axes are set to their default values, that is
+the largest numerical block as the Signal, the <span style="font-style: italic;">sqrt(Signal)</span>
+as the Error, and simple indices as Axes. In this case it may be
+appropriate to customize the appearence of the scientific data set by
+setting the Signal, Error aliases, and defining the Axes values.<br>
+<br>
+In order to identify where the Signal and Axes may be stored in the
+object, you should start by displaying the Data content of the object:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">[ ifitpath 'Data/ILL_IN6.dat' ]</span>);<br>&gt;&gt; a.Data			<span style="font-style: italic;">% displays the whole object Data structure</span>, as read from the file and stored in memory<br>ans = <br>    RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR: [142198 0 1]<br>    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: [2x1 double]<br>    IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII: [342x1 double]<br>    IIIIIIIIIIIIIIIIIIIIIIIIIIIIII_3: [1x156 double]<br>    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF: [2x1 double]<br>    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF_7: [1x384 double]<br>    FFFFFFFFFFFFFFFFFFFFFFFFFFFFF_10: [1x128 double]<br>    IIIIIIIIIIIIIIIIIIIIIIIIIIIII_13: [1x512 double]<br>    <span style="color: rgb(255, 0, 0);">SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</span>: [340x4 double]<br>    <span style="color: rgb(255, 0, 0);">IIIIIIIIIIIIIIIIIIIIIIIIIIIII_17</span>: [340x1024 double]<br>                          Attributes: [1x1 struct]<br></pre>
+In this example, we have highligthed in <span style="color: rgb(255, 0, 0);">red</span> what we shall use as Signal and Axes. Then, we just define:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a.Signal = <span style="color: rgb(204, 51, 204);">'Data.IIIIIIIIIIIIIIIIIIIIIIIIIIIII_17'</span>;</pre>
+
+which sets the definition of the <span style="font-style: italic;">Signal</span> Alias as a link to the <span style="color: rgb(204, 51, 204); font-style: italic;">IIIIIIIIIIIIIIIIIIIIIIIIIIIII_17</span>
+field in the Data member of the object, of size 340 rows by 1024
+columns. Letting the Error to its default empty definition assigns it
+to <span style="font-style: italic; color: rgb(204, 51, 204);">sqrt(this.Signal)</span>, but you may define it as a link to a part of the Data, just as for the Signal. The <span style="font-style: italic;">Signal</span> label can optionally be defined as <br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">title</span>(a, <span style="color: rgb(204, 51, 204);">'Signal label'</span>);<br></pre>
+In order to define the Axes, they can be defined similarly as the Signal:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a{1} = <span style="color: rgb(204, 51, 204);">'this.Data.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS(:,1)'</span>; % defines the 1st axis as a link to the Data</pre>
+
+where we make use of the <span style="font-weight: bold; font-style: italic;">this</span>
+self reference in the link (meaning find in myself), which allows
+expressions instead of simple static links as for the Signal. This way
+we define the 1st axis as the first column of the <span style="color: rgb(204, 51, 204);">SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</span> field. It should have the proper dimension, in this example 340.<br>
+In this example, the second Axis of this 2d object has is not part of
+the Data. We may then define it as a numerical value with e.g.<br>
+<pre style="margin-left: 40px;">&gt;&gt; a{2} = <span style="color: rgb(51, 102, 255);">linspace</span>(0.001, 0.003, 1024);</pre>
+
+which is a 1024 element vector from 1 to 3 ms. The Axis labels can be set with e.g.:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">label</span>(a, 1, <span style="color: rgb(204, 51, 204);">'angle channel [1]'</span>)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">label</span>(a, 2, <span style="color: rgb(204, 51, 204);">'tof [ms]'</span>)<br></pre>
+
+The final object is now fully described, and ready to be plotted, fitted, and tortured...<br>
+<br>
+<div style="text-align: right;"><span style="font-weight: bold;">To get
+more help</span>: <a href="matlab:help%20iData">help iData</a>, <a href="matlab:help%20iData/load">help iData/load</a><br>
+</div>
+<h3><a class="mozTocH3" name="mozTocId59221"></a>Supported data formats</h3>
+In principle, any text based file is loaded transparently (see <a href="#mozTocId141862">below</a>). Binary files require a dedicated
+wrapper, but many formats are supported. In some case, additional axis
+definition specific to the format will be applied.<br>
+<br>
+The list of available methods is usually stored in the <a href="../Librarires/Loaders/iLoad_ini.m"><span style="font-style: italic; color: rgb(204, 51, 204);">iFit/Librarires/Loaders/iLoad_ini.m</span></a>
+file, <br>
+and can be obtained from the <span style="font-weight: bold; font-style: italic;">iLoad</span> function<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">iLoad</span>(<span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'formats'</span>);	<span style="font-style: italic;">% or: iData('formats')</span></pre>A local <span style="font-style: italic;">iLoad.ini</span>
+configuration file may be stored in the Matlab
+<span style="font-style: italic;">Preferences</span> directory, which
+then overrides the system default (refer to the <a href="Loaders.html#mozTocId56356">iLoad configuration</a> help page).<br>
+<br>
+The current supported format list is (details in <a style="font-weight: bold;" href="Loaders.html">Loaders</a>):<img style="width: 340px; height: 338px;" alt="iData load import method selector" title="iData load import method selector" src="images/iData_load_method_selector.png" align="right"><br>
+<ul>
+  <li>any Data in text format<br>
+  </li>
+  <li>ILL Data (most instruments at the <a href="http://www.ill.fr/YellowBook/">ILL</a>)<br>
+  </li>
+  <li>ILL TAS Data (polarized or not)</li>
+  <li>Chalk River <a href="http://www.nrc-cnrc.gc.ca/cnbc/">CNBC</a> NRU data, including multi-wire and polarized data<br>
+  </li>
+
+  <li>SPEC ESRF<br>
+</li>
+  <li><a href="http://www.mcstas.org">McStas</a> (Scan DAT output, 1D, 2D monitor, event lists, sim file, Sqw, LAZ, LAU tables)</li>
+  <li>ISIS/SPE tof data (see <a href="http://horace.isis.rl.ac.uk/">Horace</a> and <a href="http://www.libisis.org/">LibISIS</a>)<br>
+</li>
+  <li>INX tof data (ILL <a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/tofhr/inx/">processed TOF</a>)<br>
+</li>
+  <li>ESRF data format (*.edf)</li>
+  <li>Xray/neutron diffraction <a href="http://www.esrf.fr/computing/Forum/imgCIF/cbf_definition.html">Crystallographic binary file</a> (*.cbf)</li>
+  <li><a href="http://en.wikipedia.org/wiki/Analyze_%28imaging_software%29">MRI 3D volume</a> Analyze 7.5 (*.hdr with associated *.img)</li>
+<li><a href="http://nifti.nimh.nih.gov/">NifTI</a> medical imaging volume data format (*.nii)<br>
+</li>
+
+
+  <li><a href="http://www-01.ibm.com/software/lotus/">Lotus 123</a> (first spreadsheet) (*.wk1)<br>
+  </li>
+  <li>NeXT/SUN (.au) sound</li>
+  <li>Microsoft WAVE (.wav) sound</li>
+  <li>Audio/Video Interleaved (*.avi) </li>
+  <li><a href="http://www.unidata.ucar.edu/software/netcdf/">NetCDF</a> (*.nc)<br>
+  </li>
+  <li>CDF (*.cdf)<br>
+  </li>
+  <li><a href="http://fits.gsfc.nasa.gov/">FITS</a> (*.fits) used in astronomy<br>
+  </li>
+  <li>Microsoft Excel (*.xls)</li>
+  <li>Image/Picture (*.gif, *.bmp, *.tif, *.jpg, *.png)<br>
+  </li>
+  <li><a href="http://www.hdfgroup.org/">HDF4</a> (*.hdf4)<br>
+  </li>
+  <li><a href="http://www.hdfgroup.org/">HDF5</a> (*.hdf5) including the <a href="http://nexusformat.org">NeXus</a> format (*.nx, *.n4, *.ns, *.n5, *.nxs) and more specifically <a href="http://www.mantidproject.org">Mantid</a>  workspaces.<br>
+  </li>
+  <li>Matlab workspace (*.mat)<br>
+  </li>
+  <li>Comma Separated Values (*.csv)<br>
+  </li>
+  <li>Numerical single block (*.dlm)<br>
+</li>
+  <li><a href="http://www.w3.org/XML/">XML</a> (*.xml)</li>
+  <li>FIG (Matlab figure, *.fig)</li>
+  <li><a href="http://www.rcsb.org/pdb/">Protein Data Bank (*.pdb)<br>
+</a></li>
+  <li><a href="en.wikipedia.org/wiki/STL_%28file_format%29">STL</a> stereolithography (*.stl)</li>
+  <li><a href="http://www.geomview.org/docs/html/OFF.html">OFF</a> object geometry (*.off)</li>
+  <li><a href="http://en.wikipedia.org/wiki/PLY_%28file_format%29">PLY</a> Polygon File Format or the Stanford Triangle Format (*.ply)</li>
+<li><a href="http://www.marresearch.com/">MAR</a> MarResearch CCD Camera (*.mar, *.mccd), a variant of the TIFF format<br>
+</li>
+<li><a href="http://www.andor.com/scientific-cameras">SIF</a> Andor SIF CCD Camera (*.sif)</li>
+<li><a href="http://www.princetoninstruments.com/products/software/#1">SPE</a> Princeton/Roper Scientific WinView CCD / PI Acton Camera file (*.spe)</li>
+<li><a href="http://www.adsc-xray.com/products.html">IMG</a> ADSC Quantum CCD Camera (*.img)</li>
+<li><a href="http://en.wikipedia.org/wiki/Crystallographic_Information_File">CIF</a>, <a href="http://www.ill.eu/sites/fullprof/">CFL/PCR</a>, <a href="http://shelx.uni-ac.gwdg.de/SHELX/">INS/RES/SHX</a> Crystallography files (FullProf, ShelX)<br>
+</li>
+<li>EZD, MRC and <a href="http://en.wikipedia.org/wiki/CCP4_%28file_format%29">CCP4</a> electron density maps (*.map, *.ezd, *.ccp4)</li>
+<li><a href="http://en.wikipedia.org/wiki/Yaml">YAML</a> and <a href="http://en.wikipedia.org/wiki/JSON">JSON</a> (*.yaml, *.yml, *.json)</li>
+<li>NMR Bruker, Varian and JEOL data files</li>
+<li><a href="http://www.wavemetrics.com/">IBW</a> Igor Wave data file (*.ibw)</li>
+<li><a href="http://en.wikipedia.org/wiki/Wavefront_.obj_file">OBJ</a> Wavefront 3D (*.obj)<br>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+A detailed list of format descriptions can be found in the <a style="font-weight: bold;" href="Loaders.html">Loaders</a> help pages, as well as the <a href="Loaders.html#mozTocId120998">procedure</a> to be used to define new data formats. Some of these formats are
+also available for <a href="Save.html">Saving</a> iData objects.<br>
+<br>
+To force a file to be imported with a specific data format, specify the format description or extension as listed from the <span style="font-style: italic;"><span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'formats'</span>)</span> output e.g.:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'formats'</span>)<br>...<br>PDB        read_pdb/load_xyen  Protein Data Bank<br>...<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','Protein Data Bank'<span style="color: rgb(0, 0, 0);">)<br></span></span>&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','PDB'<span style="color: rgb(0, 0, 0);">)</span></span><br></pre>
+
+If you can not import a reluctant <span style="font-weight: bold;">text</span> file, try the most tolerant text reader configurations:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','text format with fast import method'</span>)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','Data (text format)'</span>)<br></pre>
+will import the raw content, without post formatting of the object in 
+memory. You will probably need to assign manually some of the Signal and
+ Axes (see <a href="iData.html">iData</a> object help).<br>
+<br>
+It may be that the <span style="font-style: italic;">looktxt</span> MeX file is corrupted. Refer to the <a href="Changes.html#mozTocId556618">Changes/Bugs</a> and <a href="Install.html#mozTocId359173">Install</a> pages.<br>
+
+
+
+<h3><a class="mozTocH3" name="mozTocId782211"></a>Example data files</h3>
+<a href="images/iFit_Data.png"><img alt="iFit: example Data" title="iFit: example Data" src="images/iFit_Data.png" style="border: 0px solid ; width: 300px; height: 266px;" align="right"></a>The
+iFit
+package
+provides
+a
+set
+of
+<a href="../Data/">example
+data
+files</a>
+used
+to
+demonstrate
+the functionalities of the package.<br>
+<ul>
+
+  <li><a href="../Data/ILL_D10.dat"><span style="font-weight: bold;">ILL_D10.dat</span></a>: some <a href="http://www.ill.eu/d10">D10</a>
+neutron diffractometer measurement at the ILL [text]
+  </li>
+  <li><a href="../Data/ILL_IN20.dat"><span style="font-weight: bold;">ILL_IN20.dat</span></a>: some <a href="http://www.ill.eu/in20">IN20</a>
+neutron triple-axis diffractometer at the ILL (GL goniometer scan) [text]
+  </li>
+  <li><a href="../Data/ILL_IN6.dat"><span style="font-weight: bold;">ILL_IN6.dat</span></a>: some <a href="http://www.ill.eu/in6">IN6</a>
+neutron time of flight spectrometer at the ILL (liquid water) [text]
+  </li>
+  <li><a href="../Data/ILL_IN6_2.dat"><span style="font-weight: bold;">ILL_IN6_2.dat</span></a>: some <a href="http://www.ill.eu/in6">IN6</a>
+neutron time of flight spectrometer at the ILL (liquid 3He) [text]
+  </li>
+  <li><a href="../Data/MCA.dat"><span style="font-weight: bold;">MCA.dat</span></a>: some Canberra
+multichannel analyzer data (from a Sandercock Brillouin light scattering
+spectrometer) [text]
+  </li>
+  <li><a href="../Data/SPEC.dat"><span style="font-weight: bold;">SPEC.dat</span></a>: some ESRF data, old SPEC format [text]
+  </li>
+  <li><a href="../Data/sv1850.scn"><span style="font-weight: bold;">sv1850.scn</span></a>: some <a href="http://www.ill.fr/in12">IN12</a>
+neutron triple-axis diffractometer at the ILL (QH scan) [text]
+  </li>
+  <li><a href="../Data/sv1884.scn"><span style="font-weight: bold;">sv1884.scn</span></a>: some <a href="http://www.ill.fr/in12">IN12</a>
+neutron triple-axis diffractometer at the ILL (sample rotation scan) [text]
+  </li>
+  <li><a href="../Data/sv4700.scn"><span style="font-weight: bold;">sv4700.scn</span></a>: some <a href="http://www.ill.fr/in12">IN12</a>
+neutron triple-axis diffractometer at the ILL [text]</li>
+  <li><a href="../Data/Example.spe"><span style="font-weight: bold;">Example.spe</span></a>: an ISIS SPE file from a TOF spectrometer (from the <a href="http://www.mantidproject.org">Mantid Project</a>) [SPE]<br>
+  </li>
+
+  <li><a href="../Data/30dor.fits"><span style="font-weight: bold;">30dor.fits</span></a>: 30Dor Spitzer IRAC 8um image from SAGE [binary, FITS format]</li>
+  <li><a href="../Data/Ag_3_a.edf"><span style="font-weight: bold;">Ag_3_a.edf</span></a>: an image of an algae cell [binary, ESRF EDF format]</li>
+  <li><a href="../Data/Ag_3_a.hdf4"><span style="font-weight: bold;">Ag_3_a.hdf4</span></a>: an image of an algae cell [binary, HDF4 image]</li>
+
+  
+  <li><a href="../Data/peaks.hdf5"><span style="font-weight: bold;">peaks.hdf5</span></a>: a surface stored as an HDF5 file [binary, HDF5]</li>
+
+  <li><a href="../Data/SQW_coh_lGe.nc"><span style="font-weight: bold;">SQW_coh_lGe.nc</span></a>: the coherent dynamic structure factor obtained from<span style="font-style: italic;"> ab-initio</span> molecular dynamics (<a href="http://cms.mpi.univie.ac.at/vasp/">VASP</a>) and analyzed with <a href="https://forge.ill.fr/projects/nmoldyn">nMoldyn</a> [binary, NetCDF]</li>
+  <li><a href="../Data/IRS21360_graphite002_ipg.nxs"><span style="font-weight: bold;">IRS21360_graphite002_ipg.nxs</span></a>: an <a href="http://www.isis.stfc.ac.uk/instruments/iris/">ISIS/IRIS</a> high resolution TOF spectrometer (<a href="http://nexusformat.org/">NeXus</a> file from  the <a href="http://www.mantidproject.org">Mantid Project</a>) [binary, HDF5/NeXus with compression]</li>
+  <li><a style="font-weight: bold;" href="../Data/peg268.csv">peg268.csv</a>: an example Comma Separated values files from Excel [text].</li>
+  <li><a style="font-weight: bold;" href="../Data/YIG_4A_corr_vana_spectre.inx">YIG_4A_corr_vana_spectre.inx</a>: an INX example file obtained from <a href="http://www.ill.eu/in5">IN5</a> tof at the ILL [text, INX].</li>
+  <li><a style="font-weight: bold;" href="../Data/cyno_atlas.4dint.hdr">cyno_atlas.4dint.hdr</a> and <a href="../Data/cyno_atlas.4dint.img"><span style="font-weight: bold;">cyno_atlas.4dint.im</span>g</a>: Tomographic monkey brain data - Volume dataset in Analyze format. Open the<span style="font-style: italic;"> 'hdr' </span>file. See <a href="http://www.mathworks.com/matlabcentral/fileexchange/3760">ReadAnalyze</a>&nbsp; [binary]</li>
+  <li><a style="font-weight: bold;" href="../Data/insulin_pilatus6mconverted_orig.cbf">insulin_pilatus6mconverted_orig.cbf</a>: a CBF insulin small angle scattering pattern, e.g. from<a href="http://www.psi.ch/sls/csaxs/software"> cSAXS@SLS</a> [binary, CBF]</li>
+  <li><a style="font-weight: bold;" href="../Data/rita22010n021140.hdf">rita22010n021140.hdf</a>: a <a href="http://spectroscopy.web.psi.ch/rita2/">RITA2@PSI</a> data file [binary, HDF5/NeXus with compression]</li>
+  <li><a style="font-weight: bold;" href="../Data/PDBSilk.pdb">PDBSilk.pdb</a>: an example PDB file [text, PDB]</li>
+  <li><a style="font-weight: bold;" href="../Data/nano_50K_4.8a_03_h4.hdf">nano_50K_4.8a_03_h4.hdf</a>: an inelastic scattering example from <a href="http://www.ill.eu/in5">IN5</a> tof at the ILL [binary, HDF4/NeXus with compression]</li>
+  <li><a href="../Data/Diff_BananaTheta_1314088587.th" style="font-weight: bold;">Diff_BananaTheta_1314088587.th</a> and <a style="font-weight: bold;" href="../Data/Diff_BananaPSD_1314088587.th_y">Diff_BananaPSD_1314088587.th_y</a>: example <a href="http://www.mcstas.org">McStas</a> simulation result files, 1D and 2D [text, McStas]</li>
+  <li><a style="font-weight: bold;" href="../Data/Monitor_GV_1330447143_list.L.x.y.z">Monitor_GV_1330447143_list.L.x.y.z</a>: a list of events simulated with <a href="http://www.mcstas.org/">McStas</a>, for the L3 strain-scanner at <a href="http://www.nrc-cnrc.gc.ca/cnbc/">CNBC</a> NRU [text, McStas]</li>
+
+  <li><a style="font-weight: bold;" href="../Data/AL20_017.DAT">AL20_017.DAT</a>: example data files from the D3 reflectometer at Chalk River <a href="http://www.nrc-cnrc.gc.ca/cnbc/">CNBC</a> NRU [text]</li>
+<li><a style="font-weight: bold;" href="../Data/nac_1645179.dat">nac_1645179.dat</a>: a D20@ILL diffractogram of a Na2Ca3Al2F14 powder&nbsp; [text]</li>
+<li><a style="font-weight: bold;" href="../Data/Na2Ca3Al2F14.cfl">Na2Ca3Al2F14.cfl</a>: a NaCaAlF standard powder used to calibrate neutron diffractometers [text]</li>
+<li><a style="font-weight: bold;" href="../Data/111107AgBH.0001.mccd">111107AgBH.0001.mccd</a>: an X-ray MarCCD image [binary/TIFF]</li>
+<li><a style="font-weight: bold;" href="../Data/Q1_Test_Protein.img">Q1_Test_Protein.img</a>: an X-ray ADSC CCD Camera [binary]<br>
+</li>
+
+
+</ul>
+
+All of these can be directly accessed with e.g.<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);">&gt;&gt; b = </span>iData</span>(<span style="color: rgb(204, 51, 204);">[ ifitpath 'Data/' <span style="color: rgb(0, 0, 0);">filename</span> ]</span>);<br>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">[ ifitpath 'Data'<span style="color: rgb(0, 0, 0);"></span> ]</span>);<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">subplot</span>(a, <span style="color: rgb(204, 51, 204);">'tight'</span>)<br></pre>
+The empty iData object &#8709; can be obtained from:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a=<span style="color: rgb(51, 102, 255);">iData</span><br>&gt;&gt; a=<span style="color: rgb(51, 102, 255);">zeros</span>(<span style="color: rgb(51, 102, 255);">iData</span>, size)<br></pre>
+<h3><a class="mozTocH3" name="mozTocId141862"></a>Importing directly
+from
+Matlab variables</h3>
+A direct import of a Matlab variable is performed with<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(variable)</pre>
+such as<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(51, 102, 255);">rand</span>(10))</pre>
+or<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'a'</span>,1,<span style="color: rgb(204, 51, 204);">'b'</span>,<span style="color: rgb(204, 51, 204);">'a string'</span>))</pre>
+This works for basically any input object (structure, numeric array,
+cell, ...).<br>
+<br>
+A special syntax is available to import Signal and Axis definitions
+with e.g.<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(x,y,...c);</pre>
+imports <span style="font-style: italic;">Signal</span> as 'c' and <span style="font-style: italic;">axes</span> x,y, ... which should then all
+be numerical values with 'x' for the columns, 'y' for the rows, 'z' for
+the depth, ... that is the plotting Matlab convention used e.g. in <span style="font-style: italic;">surf(x,y,z)</span>.<br>
+The Error, defaulted to <span style="color: rgb(204, 51, 204);">sqrt(Signal)</span>, may be defined as well using <span style="font-style: italic;">e.g.</span>:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a.Error = <span style="color: rgb(204, 51, 204);">'Data.myErrors'</span>;	<span style="font-style: italic;">% define the Error alias as a link inside the Data</span></pre>
+where <span style="font-style: italic;">myErrors</span> should be found in the object Data. Identify it by displaying it with e.g.:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a.Data</pre>
+
+
+
+Refer to the <a href="Load.html#mozTocId889584">Setting Signal and Axes when they are not set properly</a> help in order to customize the appearence of the object.<br>
+<br>
+The <span style="font-weight: bold; font-style: italic;">findobj</span>
+method can be used to inquire for all iData objects available in the
+workspace/memory:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">findobj</span>(iData);<span style="color: rgb(51, 102, 255);"></span></pre>
+The <span style="font-weight: bold;">zeros</span> method initializes
+an empty (or constant) array of objects:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a=<span style="color: rgb(51, 102, 255);">zeros</span>(<span style="color: rgb(51, 102, 255);">iData</span>, size)  % create a [size] array of empty objects<br>&gt;&gt; a=<span style="color: rgb(51, 102, 255);">zeros</span>(<span style="color: rgb(51, 102, 255);"></span>object, size) % duplicates 'object' as a [size] array<br></pre>
+<h3><a class="mozTocH3" name="mozTocId755882"></a>Importing from Matlab
+Figures<img style="width: 334px; height: 315px;" alt="The Peaks figure imported as an iData" title="The Peaks figure imported as an iData" src="images/Peaks.png" align="right"></h3>
+The direct import method also works from Matlab figures, when simply
+giving a valid Handle Graphics Object to iData:<br>
+<pre style="margin-left: 40px;">&gt;&gt; f=<span style="color: rgb(51, 102, 255);">figure</span>; <span style="color: rgb(51, 102, 255);">peaks</span>;<br>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(f);</pre>
+The handle can be a figure, a surface, an axis, a line, ...<br>
+<h3><a class="mozTocH3" name="mozTocId672193"></a>How it works
+(looktxt, iLoad, <a href="Loaders.html">Loaders</a>)<br>
+</h3>
+The file names to import are sent to the <a href="Loaders.html">Loaders</a>/iLoad
+routine,
+which
+scans
+the
+file
+and
+searches
+for
+the
+file
+extension
+and
+patterns
+in
+the
+file
+contents
+(in
+the
+case
+of
+text
+files)
+in
+order
+to
+identify the proper importation method to use.<br>
+<br>
+The text files are processed with the <a href="../Loaders/doc/looktxt.html">looktxt</a> parser (refer to <a href="http://looktxt.sourceforge.net">http://looktxt.sourceforge.net</a>)
+and
+translated
+into
+a
+Matlab
+script
+which
+is
+then
+read
+into
+the
+workspace.
+Binary
+files
+are
+read
+with
+dedicated
+read
+routines,
+as
+it
+is
+usually
+not
+possible
+to
+interpret
+correctly the file structure <span style="font-style: italic;">ab-initio</span>.
+<br>
+<br>
+The resulting Matlab variable is a structure, which holds a <span style="font-style: italic;">Data</span> field with all numerical
+blocks from the initial file, and a <span style="font-style: italic;">Header</span>
+field which holds any preceding comment strings for each field. Data
+fields are automatically named from keywords/comments found just before the
+numerical blocks (in text files).<br>
+<br>
+The structures are then converted into <a href="iData.html">iData</a>
+objects, and optionally some data format specific post-processing
+scripts are applied, as described in <span style="font-style: italic;"><a href="Loaders.html#mozTocId120998">Loaders/iLoad_ini</a>.m</span>.
+When no Signal is defined, it is assigned to the largest numerical
+block found in the file. The default axes are set as matrix indexes.<br>
+<br>
+Refer to the <a href="Loaders.html">Loaders</a> documentation to learn
+how to customize load methods and import filters.<br>
+<br>
+<div style="text-align: right;"><span style="font-weight: bold;">To get
+more help: </span><a href="Loaders.html">Loaders</a>, <a href="../Loaders/doc/looktxt.html">looktxt</a><br>
+</div>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/iData loading data - </span><span style="font-style: italic;">
+$Date: 2013-09-15 22:26:44 +0200 (Sun, 15 Sep 2013) $ $Revision: 1162 $
+</span><span style="font-style: italic;"> </span>- back to <a href="index.html">Main
+iFit
+Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+
+</body></html>

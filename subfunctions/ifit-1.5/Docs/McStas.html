@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+
+
+
+
+
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>iFit: McStas</title>
+  </head><body><ifit: changes="" title=""></ifit:>
+
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: McStas simulation/optimization<br>
+</h1>
+<h1 style="text-align: center;"><a href="http://www.mcstas.org/"><img alt="McStas [www.mcstas.org]" title="McStas [www.mcstas.org]" src="images/mcstas.png" style="border: 2px solid ; width: 150px; height: 88px;" align="right"></a></h1>
+<h1 style="text-align: center;">
+</h1>
+<ol id="mozToc"><!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId234815">Running a single
+simulation</a></li><li><a href="#mozTocId124981">Getting instrument information and Displaying the instrument geometry</a></li><li><a href="#mozTocId821585">Running series of
+simulations (scans)</a></li><li><a href="#mozTocId690143">Optimizing instrument
+parameters
+</a></li><li><a href="#mozTocId359721">Optimizing instrument
+parameters with constraints</a></li></ol>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: left;">
+<div style="text-align: center;">Commands we use in this page: <span style="font-style: italic;">mcstas</span> (mcxtrace)<br>
+</div>
+<br>
+In this document, we demonstrate how <a href="index.html">iFit</a>/<a href="Optimizers.html">Optimizers</a> and <a href="iData.html">iData</a> can
+all be used transparently to simulate and optimize <a href="http://www.mcstas.org">McStas</a> instrument models.<br>
+<br>
+To import a McStas simulation results, just use <br>
+<pre style="margin-left: 40px;">&gt;&gt; results = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'single_detector_file'</span>)<br>&gt;&gt; results = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'directory'</span>)                 <span style="font-style: italic;">% import everything in the directory, including sim files (files may imported more than once)</span><br>&gt;&gt; results = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'scan_directory/mcstas.<span style="font-weight: bold;">dat</span>'</span>) <span style="font-style: italic;">% for scans</span><br>&gt;&gt; results = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'scan_directory/mcstas.<span style="font-weight: bold;">sim</span>'</span>) <span style="font-style: italic;">% for all files from the directory, uniquely</span>.<br></pre>
+which returns a single or an array of <span style="font-style: italic;">iData</span>
+object(s), that you can plot with e.g. <span style="font-style: italic;">subplot</span>.<br>
+The resulting McStas data has an additional <span style="font-style: italic;">Parameters</span> field which holds the instrument parameters used for the simulation.<br>
+<pre style="margin-left: 40px;">&gt;&gt; results(1).Parameters</pre>
+
+<h3><a class="mozTocH3" name="mozTocId234815"></a>Running a single
+simulation</h3>
+As iFit contains powerful import routines, that support McStas data
+files, it is straight forward to launch a McStas instrument simulation
+from Matlab and get back the simulation results. To do so, you will
+obviously need to have <span style="font-style: italic;">iFit</span>
+installed (refer to the <a href="Install.html">Install</a> page), as
+well as <span style="font-style: italic;">McStas</span> (refer to the <a href="http://www.mcstas.org">McStas web site</a>). An easy solution is
+to install our <a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/illcs-livedvd/">ILL/CS
+Live
+DVD</a> ready-to-run system with <span style="font-style: italic;">McStas</span>
+pre-installed, and then put on top <a href="http://www.mathworks.com">Matlab</a>
+(requires a valid license).<br>
+<br>
+The syntax for running a McStas instrument model is:<br>
+<pre style="margin-left: 40px;">&gt;&gt; results = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'instrument'</span>, parameters, options);</pre>
+where <span style="font-style: italic;">parameters</span> is a
+structure that holds parameter names and values, e.g.<br>
+<br>
+<div style="margin-left: 40px;">parameters.RV=1<br>
+parameters.lambda=2.36<br>
+parameters.powder=<span style="color: rgb(204, 51, 204);">'Na2Ca3Al2F14.laz'</span><br>
+</div>
+<div style="text-align: left;"><br>
+and both numerical values and strings are supported. Numerical values
+should be single scalars, whereas strings are used as-is, that is they
+may assign DEFINITION instrument parameters such as file names, arrays
+and other types that are sent to the commands line. The unspecified
+instrument parameters are used with their default values (when defined).<br>
+<br>
+The parameters can also be given as a single string with members separated with the ';' character ans assigned with '=':<br>
+<pre style="margin-left: 40px;">&gt;&gt; results = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'instrument'</span>, <span style="color: rgb(204, 51, 204);">'RV=1; lambda=2.36; powder=Na2Ca3Al2F14.laz'</span>);</pre>
+
+</div>
+When the instrument is not found in the current directory, it is
+searched in the Mcstas library (may be specified with the MCSTAS environment variable), and eventually copied locally, which
+triggers its compilation.<br>
+<br>
+The last argument <span style="font-style: italic;">options</span>
+controls simulation configuration.<br>
+<ul>
+  <li><span style="font-weight: bold;">options.dir</span>:&nbsp;&nbsp;&nbsp;
+directory
+where
+to
+store results. When not defined, a temporary
+location is created, and removed after the simulation (string).<span style="color: rgb(255, 0, 0); font-weight: bold;"></span><br>
+</li>
+  <li><span style="font-weight: bold;">options.ncount</span>: number of
+neutron events per iteration, <span style="font-style: italic;">e.g. </span>1e5
+(double)</li>
+  <li><span style="font-weight: bold;">options.mpi</span>:&nbsp;&nbsp;&nbsp;
+number
+of
+processors to use with MPI (integer. The simulation should be
+re-compiled accordingly with <span style="font-style: italic;">options.compile='yes'</span>
+  </li>
+  <li><span style="font-weight: bold;">options.seed</span>:&nbsp;&nbsp;
+random number seed to use for each iteration (double)</li>
+  <li><span style="font-weight: bold;">options.gravitation</span>: 0 or
+1 to set gravitation handling in neutron propagation (boolean)</li>
+  <li><span style="font-weight: bold;">options.mode</span>:&nbsp;&nbsp;
+should be <span style="color: rgb(204, 51, 204);">'simulate'<span style="color: rgb(0, 0, 0);">. This is automatically set when no
+'optimization' configuration parameter is set. </span><br>
+    </span></li>
+  <li><span style="font-weight: bold;">options.compile</span>: 0 or 1
+to force re-compilation of the instrument (boolean)</li>
+<li><span style="font-weight: bold;">options.monitors</span>:&nbsp;
+cell string of monitor file names, or empty for all (cellstr)</li>
+<li><span style="font-weight: bold;">options.particle</span>: <span style="color: rgb(204, 51, 204);">'n' </span>for neutrons<span style="color: rgb(255, 0, 0);"> (McStas) </span>or<span style="color: rgb(204, 51, 204);"> 'x' </span>for X-rays<span style="color: rgb(255, 0, 0);"> (McXtrace). </span>Default is <span style="color: rgb(204, 51, 204);">'n'</span>.<br>
+</li>
+
+
+</ul>
+<a href="images/iFit_McStas_simulate.png"><img src="images/iFit_McStas_simulate.png" alt="iFit: McStas simulation run from Matlab/iFit and displayed" style="border: 0px solid ; width: 200px; height: 186px;" align="right"></a>In
+the
+following
+examples, we define required structures on the fly, run
+the <span style="font-style: italic;">templateDIFF</span> instrument
+(the file must be accessible from Matlab current path) and get back
+monitors:<br>
+<pre style="margin-left: 40px;">&gt;&gt; monitors=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>, <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'RV'</span>,1),<span style="color: rgb(51, 102, 255);"> struct</span>(<span style="color: rgb(204, 51, 204);">'ncount'<span style="color: rgb(0, 0, 0);">,1e6</span></span><span style="color: rgb(204, 51, 204);"></span>))<br>&gt;&gt; monitors=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>, <span style="color: rgb(51, 102, 255);">'</span><span style="color: rgb(204, 51, 204);">RV=1'</span>,<span style="color: rgb(51, 102, 255);"> </span><span style="color: rgb(204, 51, 204);">'ncount=1e6'<span style="color: rgb(0, 0, 0);"></span></span><span style="color: rgb(204, 51, 204);"></span>);	<span style="font-style: italic;">% same as above</span><br>monitors =  array [1  5] iData object:<br><br>Index     [Tag]     [Dimension]                           [Title] [Last command]          [Label]<br>    1  id445199        [40  40] 'File Diff_Mono_XY_1299773321...' id445199=load(iData,... Diff_Mono_XY <br>    2  id445212        [40   1] 'File Diff_Mono_Lambda_129977...' id445212=load(iData,... Diff_Mono_... <br>    3  id445224        [40   1] 'File Diff_Sample_Lambda_1299...' id445224=load(iData,... Diff_Sampl... <br>    4  id445236      [340    1] 'File Diff_BananaTheta_129977...' id445236=load(iData,... Diff_Banan... <br>    5  id445248      [170   25] 'File Diff_BananaPSD_12997733...' id445248=load(iData,... Diff_Banan... <br>&gt;&gt; <span style="color: rgb(51, 102, 255);">subplot</span>(monitors)<br></pre>
+The last line displays the simulation results. Usual data analysis
+(display, mathematics, fit, export) can be performed (refer to the <a href="index.html">iFit</a> and <a href="iData.html">iData</a>
+documentation). <br>
+The resulting McStas data has an additional <span style="font-style: italic;">Parameters</span> field which holds the instrument parameters used for the simulation.<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; monitors(1).Parameters<br></pre>The<span style="font-weight: bold; font-style: italic;"> 'monitors' </span>option
+ can be specified to limit the number of monitor files to load after 
+each simulation. Specifying a monitor file name list highly speeds-up the 
+importation of files after each iteration.<br>
+It should contain one token string or a cellstr {...} of tokens to 
+search for. These tokens are compared with the monitor file names, and 
+only matches are imported. If no match can be identified, all monitors 
+are read, the monitor list can be reduced by searching tokens in the 
+data sets contents.<br>
+
+<h3><a class="mozTocH3" name="mozTocId124981"></a>Getting instrument information and Displaying the instrument geometry</h3>To display the instrument geometry, use the syntax:<br>
+<pre style="margin-left: 40px;">&gt;&gt; results = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>, <span style="color: rgb(204, 51, 204);">'RV=1','mode=display'</span>);</pre>
+which will launch 'mcdisplay' in the background, and open the resulting
+figure. No neutron trajectory is shown though, only the instrument
+geometry.<br>
+<br>
+In order to just get information about the instrument, especially its input parameters, you can run<br>
+<pre style="margin-left: 40px;">&gt;&gt; results = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'instrument'</span>, <span style="color: rgb(204, 51, 204);">'parameters=values...','mode=info'</span>);<br>&gt;&gt; result  = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'instrument'</span>, <span style="color: rgb(204, 51, 204);">'</span><span style="color: rgb(204, 51, 204);">--info'</span>);	<span style="font-style: italic;">% same as above</span></pre>
+
+
+
+
+<h3><a class="mozTocH3" name="mozTocId821585"></a>Running series of
+simulations (scans)</h3>
+It is very simple to perform parameter scans, even in multi-dimensional
+spaces. For this, the parameter values just need to be vectors of
+numeric or vector cells, such as<br>
+<ul>
+  <li>parameters.RV={0.5 1 1.5};</li>
+  <li>parameters.L2= 2:0.5:4;</li>
+  <li>parameters.L3= 1.3;</li>
+</ul>
+Scans with string parameters are also possible, such as with<br>
+<ul>
+  <li>parameters.Powder={<span style="color: rgb(204, 51, 204);">'Na2Ca3Al2F14.laz','Al.laz','Cd.laz'</span>};</li>
+</ul>
+and then executes for instance:<br>
+<div style="margin-left: 40px;">
+<pre>&gt;&gt; [integral,monitors]=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>, parameters, <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'ncount'</span>,1e4));<br></pre>
+</div>
+A live display of the on-going scan is shown when specifying <span style="font-weight: bold;">OutputFcn</span>=<span style="color: rgb(204, 51, 204);">'fminplot' </span>in the last <span style="font-weight: bold;">options</span> argument (struct).<br>
+<br>
+The <span style="font-style: italic;">integral</span> argument
+returned is an <a href="iData.html">iData</a> object containing the
+integral of monitors as a function of the scanned parameters. It can be
+directly plotted with e.g. <br>
+<div style="margin-left: 40px;">
+<pre>&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(integral);     <span style="font-style: italic;">% simple plot, or median surface for multidimensional scans</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">scatter3</span>(integral); <span style="font-style: italic;">% coloured points (possibly in 2D,3D)</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">plot3</span>(integral);    <span style="font-style: italic;">% coloured lines in 2D, or volume for multidimensional scans</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">slice</span>(integral);    <span style="font-style: italic;">% only for 3D, use slice-o-matic for volume inspection</span><br></pre>
+</div>
+<a href="images/iFit_McStas_scan2D_integral.png"><img title="iFit: MsCtas scan: ploting the integral monitor value" src="images/iFit_McStas_scan2D_integral.png" alt="iFit: MsCtas scan: ploting the integral monitor value" style="border: 0px solid ; width: 200px; height: 177px;" align="right"></a>The
+<span style="font-style: italic;">monitors</span>
+argument returned is an array containing individual scan monitors.
+You may extract and catenate a selection (slices) or it by e.g. the <span style="font-style: italic; font-weight: bold;">iData/cat</span> method.<br>
+<br>
+In the following example, we launch a quick 2D scan:<br>
+<pre style="margin-left: 40px;">&gt;&gt; [p,m]=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>, <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'RV'</span>,[0.7 0.9 1.2],<span style="color: rgb(204, 51, 204);">'L2'</span>,[1 1.3 1.5]),<span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'ncount'</span>,1e4));<br></pre>
+Then we may plot, as a 2D surface, the integral value for the last
+(5th) monitor:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(p(:,:,5));<br></pre>
+<a href="images/iFit_McStas_Monitor_scan.png"><img title="iFit: McStas: evolution of a monitor" src="images/iFit_McStas_Monitor_scan.png" alt="iFit: McStas: evolution of a monitor" style="border: 0px solid ; width: 200px; height: 177px;" align="right"></a>You
+may
+look
+at the instrument parameters used for the scans, e.g.<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">get</span>(m,<span style="color: rgb(204, 51, 204);">'RV'</span>)<br></pre>which are also available in the <span style="font-style: italic;">Parameters</span> field of the objects.<br>
+
+Let's finally look at the evolution of the 4-th monitor, which is a 1D
+diffractogram, along an 'RV' parameter scan:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">squeeze</span>(m(2,:,:));  <span style="font-style: italic;">         % extract an 'RV' line, with L2=1.3</span><br>&gt;&gt; b = a(:,4);   <span style="font-style: italic;">                   % get 4th monitor on this line</span><br>&gt;&gt; setaxis(b,2,<span style="color: rgb(204, 51, 204);">'RV'</span>);               % define a new axis along the line RV<br>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">cat</span>(2, b);   <span style="font-style: italic;">                % assemble into a single iData object</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(c,<span style="color: rgb(204, 51, 204);">'tight interp'</span>);          <span style="font-style: italic;">% plot</span><br></pre>
+This methodology also works with 2D monitors assembled along, e.g. a
+scan line, which creates a 3D volume to explore with <span style="font-style: italic; font-weight: bold;">slice, </span>or <span style="font-style: italic; font-weight: bold;">plot</span>&nbsp; or <span style="font-weight: bold; font-style: italic;">plot3</span>. <br>
+<br>
+<div style="margin-left: 40px;">
+</div>
+<span style="color: rgb(255, 0, 0); font-weight: bold;">Warning: </span>Beware
+of
+the
+number
+of iterations required to scan large dimensionality spaces.
+In practice you should avoid spaces above 2 or 3 scanned parameters.
+Exceeding this will undoubtedly require very long computation times,
+and large memory storage.<br>
+<h3><a class="mozTocH3" name="mozTocId690143"></a>Optimizing instrument
+parameters<br>
+</h3>
+The optimization of instrument parameters is performed as simply as a
+single simulation, just by e.g. setting <span style="font-style: italic;">options.mode</span> to <span style="color: rgb(204, 51, 204);">'optimize'</span>. <span style="font-style: italic;"><br>
+</span>
+<pre style="margin-left: 40px;">&gt;&gt; [solution, monitors] = <span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'instrument'</span>, parameters, options);</pre>
+The parameters, as a named structure, are initiated to their starting
+value, from which the optimization proceeds.<span style="font-style: italic;"> Only numerical</span> parameters can be
+optimized. Also, it is <span style="color: rgb(255, 0, 0);">highly encouraged to use bounded parameters</span> (that is define constraints, see <a href="#mozTocId359721">below</a>), else the optimizer can get lost, produce un-meaningful results, or return <span style="font-style: italic;">NaN</span> parameter values.<br>
+<br>
+More specifically, the <span style="font-style: italic;">options</span>
+structure may contain, in addition to the optimization mode, the
+following members:<br>
+<ul>
+  <li><span style="font-weight: bold;">options.type</span>:&nbsp;&nbsp;
+    <span style="color: rgb(204, 51, 204);">'minimize'</span> or<span style="color: rgb(204, 51, 204);"> 'maximize'</span>, which is the
+default (string)</li>
+  <li><span style="font-weight: bold;">options.monitors</span>:&nbsp;
+cell string of monitor file names, or empty for all (cellstr). This option 
+actually improves dramatically the file importation by selecting only 
+the relevant files.<br>
+</li>
+  <li><span style="font-weight: bold;">options.optimizer</span>:
+function name of the optimizer to use, default is <span style="font-style: italic;">fminpso</span> (string or function
+handle). See <a href="Optimizers.html">Optimizers</a>.<br>
+  </li>
+  <li><span style="font-weight: bold;">options.mode</span>:&nbsp;&nbsp;
+should be <span style="color: rgb(204, 51, 204);">'optimize'</span>.
+This is automatically set whenever an 'optimization' configuration
+field is set, such as <span style="font-style: italic;">monitors,
+optimizer, TolFun, ...</span><span style="color: rgb(204, 51, 204);"> </span></li>
+</ul>
+as well as any other optimizer configuration fields such as<br>
+<ul>
+  <li><span style="font-weight: bold;">options.TolFun</span> =<span style="color: rgb(204, 51, 204);">'1%'</span>;&nbsp;<span style="font-style: italic;"> % stop when criteria changes are smaller
+that 1%,<span style="font-weight: bold;"> this is the default</span><br>
+    </span></li>
+  
+  <li><span style="font-weight: bold;">options.TolX</span> =<span style="color: rgb(204, 51, 204);">'0.1%';</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-style: italic;">% stop when parameter changes are smaller
+that 0.1%</span></li>
+
+  <li><span style="font-weight: bold;">options.Display</span>=<span style="color: rgb(204, 51, 204);">'final';</span></li>
+  <li><span style="color: rgb(204, 51, 204);"><span style="color: rgb(0, 0, 0);"><span style="font-weight: bold;">options.OutputFcn</span>=</span>'fminplot';
+
+
+    </span>% plots the criteria and parameters evolution during the
+optimization. <span style="font-style: italic; font-weight: bold;">This is the default</span>. Set to <span style="color: rgb(204, 51, 204);">''</span> to override this choice. A view of the monitors used as criteria is also displayed.<br>
+  </li>
+</ul>
+</div>
+The default optimizer configuration is used when not specified (see the
+<a href="Optimizers.html">Optimizers</a> page for more details), as well
+as the interactive plotting and verbose information during the
+optimization.<br>
+<br>
+The optimization returns the best parameter guess, as well as the
+monitor value for this solution.<br>
+In addition, similarly with other iFit <a href="Optimizers.html">optimization
+methods</a>, the optimizer final status and optional returned
+information can be obtained with e.g. <br>
+<pre style="margin-left: 40px;">&gt;&gt; [parameters, monitors, <span style="color: rgb(255, 0, 0);">status, output</span>]=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>,<span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'RV'</span>,1), ...<br>      <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'monitors'</span>,<span style="color: rgb(204, 51, 204);">'Banana'</span>,<span style="color: rgb(204, 51, 204);">'mode','optimize','optimizer','fminimfil'</span>));</pre>
+where <span style="font-style: italic;">output</span> stores most of the optimization process data, including
+uncertainty on the best parameter values, <span style="font-style: italic;">output.parsHistoryUncertainty </span>and<span style="font-style: italic;"> </span><span style="font-style: italic;">output.parsHessianUncertainty</span>.<br>
+<br>
+<a href="images/iFit_McStas_optimize.png"><img src="images/iFit_McStas_optimize.png" alt="iFit: McStas wrapper: dynamic optimization evolution" style="border: 0px solid ; width: 200px; height: 190px;" align="right"></a>In
+the
+following
+example,
+we search for an optimal monochromator curvature
+(parameter <span style="font-style: italic;">RV</span>) on the <span style="font-style: italic;">templateDIFF</span>
+instrument model, in order to maximize the <span style="font-style: italic;">Banana</span> monitors (as<span style="font-style: italic;"> 'monitors' </span>option):<br>
+<pre style="margin-left: 40px;">&gt;&gt; [parameters, monitors]=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>,<span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'RV'</span>,1), ...<br>      <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'monitors'</span>,<span style="color: rgb(204, 51, 204);">'Banana'</span>,<span style="color: rgb(204, 51, 204);">'optimizer','fminimfil'</span>));<br>parameters =<br>     RV: 0.75<br></pre>
+The monitors to use as optimization criteria (<span style="font-style: italic;">options.monitors</span>) can be part of a more
+complex expression, which still must start with the file name of the
+monitor, and then refer to itself with the<span style="font-style: italic;"> 'this' </span>variable (which is an <a href="iData.html">iData</a>  object), such as in the following example where we define the criteria as <span style="font-style: italic;">Amplitude/width&sup2;</span> (for a single peak)<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(0, 0, 0);">options.monitors=</span><span style="color: rgb(204, 51, 204);">'Banana; this=max(this)/std(this)^2'<br></span><span style="color: rgb(0, 0, 0);">options.monitors=</span><span style="color: rgb(204, 51, 204);">'Banana/std(this)^4'</span><br></pre>
+When the monitor filter selects more than one data set (e.g. more than one file match the monitor selection name), <span style="font-style: italic;">'this'</span> is an <a href="iData.html">iData</a>  array. Specifying a monitor list highly speeds-up the importation of files after each iteration.<br>
+For simpler definitions, the <span style="font-style: italic;">options</span> can be given as a string, similarly to the starting parameters:<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>,<span style="color: rgb(51, 102, 255);"></span><span style="color: rgb(204, 51, 204);">'RV=[1 3]'</span>, <span style="color: rgb(51, 102, 255);"></span><span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'monitors=</span><span style="color: rgb(204, 51, 204);">Banana; </span><span style="color: rgb(204, 51, 204);">mode=optimize;'</span>)</pre>
+During the optimization, a dynamic plot of the criteria evolution (the
+sum of the <span style="font-style: italic;">Banana</span>
+detector counts) and the parameters evolution is shown. The number of
+optimized parameters can be large, and only the first 3 ones will be
+shown on the dynamic plot. <br>
+The <span style="font-style: italic;">default stopping condition</span>
+is met when the integral monitor change is lower than 1%.<br>
+<br>
+To abort the optimization, just <span style="font-weight: bold;">close the optimization plot</span> window. The actual end occurs after a few more iterations.<br>
+<br>
+<span style="color: rgb(255, 0, 0); font-weight: bold;">Warning: </span>as
+<a href="http://www.mcstas.org">McStas</a>
+uses a Monte-Carlo technique (which means 'random'), the criteria is a
+noisy function. The stop conditions must then usually be quite relaxed
+for the optimization to end, or the number of <span style="font-style: italic;">ncounts</span> must be large
+enough to minimize the statistical uncertainty. TolFun=<span style="color: rgb(204, 51, 204);">'0.1%</span>' and
+TolX=<span style="color: rgb(204, 51, 204);">'0.1%'</span> are fair
+choices. Also, we recommend to constrain parameter ranges (<span style="color: rgb(255, 0, 0);">see <a href="#mozTocId359721">below</a></span>). Also, increasing the<span style="font-style: italic;"> 'ncount' </span>(which is 1e5 by default) may help the optimizer to search in a noisy criteria landscape.<br>
+<h3><a class="mozTocH3" name="mozTocId359721"></a>Optimizing instrument
+parameters with constraints</h3>
+It is quite usual the restrict the parameters search to specified
+ranges, and to fix some of the parameters. We have seen that an
+optimization can be initiated by defining the starting parameter value
+with e.g. <span style="font-style: italic;">parameters.RV=1</span>,
+together with e.g. <span style="font-style: italic;">options.mode=</span><span style="color: rgb(204, 51, 204);">'optimize'</span>.<br>
+<br>
+To fix a parameter value during the optimization, use a string
+parameter value, such as :<br>
+<ul>
+  <li>parameters.L2 = <span style="color: rgb(204, 51, 204);">'0.85'</span>; <span style="font-style: italic;">% fix
+the L2 parameter to 0.85 during optimization</span><br>
+  </li>
+</ul>
+To restrict a parameter search to a given range, set its minimum and
+maximum values :<br>
+<ul>
+  <li>parameters.RV = [ 0.7 1.2 ]; <span style="font-style: italic;">%
+the initial RV value will be used as the mean, 0.95, and will be kept
+in between 0.7 and 1.2.</span><br>
+  </li>
+</ul>
+If you wish to restrict tne search range as well as define the starting
+parameter value, use a 3 element vector <span style="font-style: italic;">[min start max ]</span>:<br>
+<ul>
+  <li>parameters.RV = [ 0.7 0.8 1.2 ]; <span style="font-style: italic;">% the initial RV value will be 0.8</span></li>
+</ul>
+We strongly <span style="font-weight: bold;">recommend</span> to limit
+the parameter search within boundaries during optimizations.<br>
+<pre style="margin-left: 40px;">&gt;&gt; [parameters, monitors]=<span style="color: rgb(51, 102, 255);">mcstas</span>(<span style="color: rgb(204, 51, 204);">'templateDIFF'</span>,<span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);">'RV'</span>,[0.7 0.8 1.2]), ...<br>      <span style="color: rgb(51, 102, 255);">struct</span>(<span style="color: rgb(204, 51, 204);"></span><span style="color: rgb(204, 51, 204);">'monitors'</span>,<span style="color: rgb(204, 51, 204);">'Banana'</span>,<span style="color: rgb(204, 51, 204);">'mode','optimize','mpi<span style="color: rgb(0, 0, 0);">',4,</span>'compile'<span style="color: rgb(0, 0, 0);">,1</span></span>));</pre>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/McStas - </span><span style="font-style: italic;">
+$Date: 2013-09-19 16:24:38 +0200 (Thu, 19 Sep 2013) $ $Revision: 1166 $
+</span><span style="font-style: italic;"> </span>-
+back to <a href="index.html">Main
+iFit Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+</div>
+</body></html>

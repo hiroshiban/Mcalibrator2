@@ -1,0 +1,27 @@
+
+* Low Priority:
+  quad
+  var, cov, corrcoef
+  smooth3
+  quiver, quiver2 with gradient
+  
+  ASINH  Inverse hyperbolic sine.
+COTH   Hyperbolic cotangent.
+COSH   Hyperbolic cosine.
+ATANH  Inverse hyperbolic tangent.
+ACOSH  Inverse hyperbolic cosine.
+CSCH   Hyperbolic cosecant. = 1/sinh
+SECH   Hyperbolic secant. = 1/cosh
+ACOTH  Inverse hyperbolic cotangent.
+ACSCH  Inverse hyperbolic cosecant.
+ASECH  Inverse hyperbolic secant.
+SINH   Hyperbolic sine.
+TANH   Hyperbolic tangent.
+COT
+SEC
+CSC
+ATAN2
+accumarray
+  
+  plot 2D: add possibility to select X or Y cuts from pointer/data tip position on surface, plus handling of arrows to move cursor onto the surface (top view). Will be slice(2D)
+

@@ -1,0 +1,108 @@
+function edit(varargin)
+% EDIT Edit or create M-file
+%   EDIT FUN opens the file FUN.M in a text editor.  FUN must be the
+%   name of an M-file or a MATLABPATH relative partial pathname (see
+%   PARTIALPATH).
+%
+%   EDIT FILE.EXT opens the specified file.  MAT and MDL files will
+%   only be opened if the extension is specified.  P and MEX files
+%   are binary and cannot be directly edited.
+%
+%   EDIT X Y Z ... will attempt to open all specified files in an
+%   editor.  Each argument is treated independently.
+%
+%   EDIT, by itself, opens up a new editor window.
+%
+%   By default, the MATLAB built-in editor is used.  The user may
+%   specify a different editor by modifying the Editor/Debugger
+%   Preferences.
+%
+%   If the specified file does not exist and the user is using the
+%   MATLAB built-in editor, an empty file may be opened depending on
+%   the Editor/Debugger Preferences.  If the user has specified a
+%   different editor, the name of the non-existent file will always
+%   be passed to the other editor.
+
+persistent success
+
+if length(varargin)
+  url = varargin{1};
+else
+  url = '';
+end
+
+if ishandle(url)
+  % activate hidden edit items in the figure
+  search_list= [ findall(url,'type','uimenu') ; findall(url,'type','uitoggletool') ; findall(url,'type','uitogglesplittool') ];
+  search_tags= get(search_list, 'Tag');
+  items      = {...
+    'figMenuInsert',...
+       'figMenuInsertTextbox','figMenuInsertTextArrow','figMenuInsertArrow', ...
+       'figMenuInsertRectangle', ...          
+  'figMenuEdit', ...
+    'figMenuEditGCO', 'figMenuEditGCA', 'figMenuEditGCF', 'figMenuEditCut','figMenuEditCopy','figMenuEditPaste', ...
+  'Standard.EditPlot', 'Exploration.Brushing'};
+  
+  for index = 1:length(items)
+    h = find(strcmp(items{index}, search_tags));
+    if ~isempty(h)
+      h = search_list(h);
+      set(h, 'Visible','on');
+      if strcmp(items{index},'figMenuEditGCO')
+        set(h, 'Callback','uiinspect(gco)')
+      elseif strcmp(items{index},'figMenuEditGCA')
+        set(h, 'Callback','uiinspect(gca)')
+      elseif strcmp(items{index},'figMenuEditGCF')
+        set(h, 'Callback','uiinspect(gcf)')
+      end
+    end
+  end
+  disp([ 'Info: You can also use ''inspect(' num2str(url) ')'' to edit properties of graphical objects.' ]);
+  return
+end
+
+disp([ mfilename ' ' url ]);
+% attempts to guess how to launch the editor
+if ~isempty(url), url = [ '"' url '"' ]; end
+if isempty(success), success=0; end
+
+if success == 0 % only try once per session to launch external editor in case of failure
+
+  % attempts to guess how to launch the editor
+  if ispc
+    success = system([ 'notepad ' url ])
+  elseif ismac
+    if ~isempty(dir(url(2:(end-1))))
+      success = system([ 'open -t ' url ]);
+    else
+      success = system('open -t');
+    end
+  else
+    editor = getenv('EDITOR');
+    if isempty(editor) || any(strcmp(editor,{'vi','vim','nano'}))
+      editor = '';
+      [flag, out]=system('locate gedit');
+      if isempty(editor) && ~isempty(out), editor='gedit'; end
+      [flag, out]=system('locate nedit');
+      if isempty(editor) && ~isempty(out), editor='nedit'; end
+      [flag, out]=system('locate kate');
+      if isempty(editor) && ~isempty(out), editor='kate'; end
+      [flag, out]=system('locate xedit');
+      if isempty(editor) && ~isempty(out), editor='xedit'; end
+      [flag, out]=system('locate xemacs');
+      if isempty(editor) && ~isempty(out), editor='xemacs'; end
+    end
+    if ~isempty(editor)
+      if ~isempty(url)
+        editor = [ editor ' ' url ];
+      end
+      success = system( editor );
+    end
+  end
+end
+
+% when external editor fails to launch, 'success ~=0'
+if success ~=0
+  fallback_edit(url); % in private
+end
+

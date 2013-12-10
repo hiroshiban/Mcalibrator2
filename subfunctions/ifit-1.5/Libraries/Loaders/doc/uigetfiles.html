@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR"
+ content="Mozilla/4.8 [en] (X11; U; Linux 2.4.20-4GB i686) [Netscape]">
+  <title>ILL library/Loaders/uigetfiles</title>
+</head>
+<body bgcolor="#ffffff" text="#000000">
+<div style="text-align: center;">&nbsp; <b><i><font size="+2"><a
+ href="../uigetfiles.m">Loaders/uigetfiles function</a></font></i></b></div>
+<hr width="100%">
+<center>[ <a href="#Overview">Overview</a> ][ <a href="#Syntax">Syntax</a>
+][ <a href="#Details">Details</a> ][ <a href="#Examples">Examples</a>
+][ <a href="#Technical">Technical
+notes</a>
+][ <a href="#License">License</a> ]<br>
+<hr width="100%"></center>
+<p><b><font size="+2">Usage</font></b>
+</p>
+<p><a name="Overview"></a><b><font size="+1">Overview</font></b>
+</p>
+<p>The <a href="../uigetfiles.m">Loaders/uigetfiles</a> function is a <i>multiple</i>
+file selector which is compatible in usage with the Matlab <i>uigetfile</i>
+function.
+It's main advantages is that is does not depend on the Java libraries,
+and always behaves the same with multiple-selection, independently of
+platforms and Matlab versions.<br>
+You may:
+</p>
+<ul>
+  <li>browse the file/directory structure (double click on directories
+to get
+into them, select the '..' item to go one level up, or the '<span
+ style="font-weight: bold;">Go up'</span>
+button</li>
+  <li>select a single file by double-clicking it</li>
+  <li>enter directly a path specification, optionally with a file name
+and/or
+a filter</li>
+  <li>perform a few basic file operations (edit or delete files, create
+directories...)</li>
+  <li>select one or multiple files, using the <span
+ style="font-weight: bold;">Shift-click </span>and <span
+ style="font-weight: bold;">Control-click</span>
+mouse
+operations</li>
+  <li>dynamically compute selected files size sum</li>
+</ul>
+<a name="Syntax"></a><b><font size="+1">Syntax: [filename, pathname] =
+uigetfiles(filterspec,
+title, x, y)</font></b>
+<p>The <i>uigetfiles</i> syntax is strictly compatible with the
+standart
+<i>uigetfile</i>
+(which calls java.awt).
+</p>
+<p>To start the multiple file selector, use
+</p>
+<blockquote>[filenames, pathnames] = uigetfiles;</blockquote>
+Returned values [filenames, pathnames] are cell string arrays, or two
+single
+character strings if only one item was selected.
+<br>
+Both files amd directories may be selected.
+<br>
+The filename output, when specified from the Path 'edit' field (top
+of the Dialog) is not checked for existence. Anyway, when selected from
+the list (that shows directory contents), the existence of files is
+certain.
+<br>
+Filters may be specified using a character array, or cellstring array
+such as
+<blockquote>filterspec = '*.m'; <br>
+filterspec = [ '*.m','*.mat']; <br>
+filterspec = {'*.m','Matlab files';'*.mat','Matlab data'};</blockquote>
+You may <i>not</i> use multiple filters as one filter entry, such as
+in
+'*.m;*.mat', it must be specified as a <span
+ style="font-style: italic;">cellstr</span>. This is a difference with
+the <span style="font-style: italic;">uigetfile</span> syntax.
+<br>
+The filter specification (first argument), when given as a single
+character
+string, may contain the startting directory, and optionally a file
+name,
+and an extension.
+<blockquote>filterspec = '/home/farhi/*.m';</blockquote>
+If no extension is specified, a default extension list is set. In any
+case,
+the 'All files' extension is appended as the last extension choice.
+<br>
+A title, and the window position may be additionally specified.
+<p>Default starting location is the current directory, or the last
+accessed
+directory stored in the UIGetFiles Dialog.<br>
+</p>
+<p><b><font size="+1"><a name="Examples"></a>Examples</font></b>
+<br>
+[filename, pathname] = uigetfiles('*.m', 'Pick one or more M-file(s)');<br>
+</p>
+<p><a name="Details"></a><b><font size="+1">Details</font></b>
+<br>
+&nbsp;
+<table nosave="" cols="2" width="100%">
+  <tbody>
+    <tr nosave="">
+      <td nosave="">
+      <center><img src="uigetfiles.gif" alt="uigetfiles.gif" nosave=""
+ align="middle" height="428" width="311"></center>
+      </td>
+      <td>
+      <center><b>UIGetFiles main interface</b></center>
+      <p>The uigetfiles main interface looks like a file selector. The
+upper
+part shows the current <b><font color="#3366ff">Path</font></b>,
+including
+filters. The directory contents is listed in the large central part
+(sliders
+appear when many items are to be listed). The items list may be <b>sorted</b>
+by Name, Date, Size and Extension, and pre-selected <b>filters</b> are
+available. </p>
+      <p>The user has access to the following buttons/actions: </p>
+      <ul>
+        <li> <b><font color="#3333ff">Path</font></b>: type a new Path
+and
+press enter
+to update directory listing</li>
+        <li> <b><font color="#3333ff">&gt;</font></b>: select a
+previously
+accessed directory
+(history)</li>
+        <li> <b>Sort as</b>: select sort type (Name, Date, Size and
+Extension)</li>
+        <li> <b>Filter</b>: select among available file filters, or
+the
+'All files'
+filter</li>
+        <li> <b>Go up</b>: go up one directory level</li>
+        <li> <b>Select All:</b> select all items in directory listing</li>
+        <li> <b>Deselect</b>: deselect all items in directory listing</li>
+        <li> <b>Directory listing</b>:&nbsp;</li>
+        <ul>
+          <li>select one or multiple files, using the Shift-click and
+Control-click
+mouse
+operations</li>
+          <li>double click to enter a directory</li>
+          <li>double click to select a single file</li>
+        </ul>
+        <li> <b>OK</b>: accept current selection</li>
+        <li> <b>Cancel</b>: abort file selection</li>
+        <li> <b>Options</b>: additional operations</li>
+        <ul>
+          <li>Help: show this help</li>
+          <li>Edit files: edit selected files</li>
+          <li>New Dir: create a new directory</li>
+          <li>Delete files: delete selected files (with warning)</li>
+          <li>Show/Hide hidden files<br>
+          </li>
+        </ul>
+      </ul>
+      <p><br>
+      <b>Tool Tips</b> (contextual help) are shown when the mouse
+pointer
+remains for more than a second over all <i>uicontrols</i> (buttons,
+menus,
+lists, ...). </p>
+      <p>Additionally, the Tool Tip for the selected items in the
+directory listing
+will compute the total and selected size for files.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <center><b>Directory short cuts (history)</b></center>
+      <p>When selecting the '<b><font color="#3366ff">&gt;</font></b>'
+button on
+the right of the <b><font color="#3366ff">Path</font></b> , a list of
+the
+last <b>10</b> previously accessed directories is shown. The user may
+then
+directly come back to his prefered location at once. <br>
+New locations are added when closing the Dialog (OK, Cancel).</p>
+      </td>
+      <td><img src="uigetfiles_history.gif" alt="uigetfiles_history.gif"
+ nosave="" height="270" width="343"></td>
+    </tr>
+    <tr>
+      <td><img src="uigetfiles_new_dir.gif" alt="uigetfiles_new_dir.gif"
+ nosave="" height="106" width="323"></td>
+      <td>
+      <center><b>Creating a new directory</b></center>
+      <p>A new directory may be created in the current Path.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <center><b>Deleting files/empty directories</b></center>
+      <p>You may delete selected files and empty directories. A warning
+Dialog
+is displayed for confirmation.</p>
+      </td>
+      <td><img src="uigetfiles_delete.gif" alt="uigetfiles_delete.gif"
+ nosave="" height="144" width="267"></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;"><span style="font-weight: bold;">Keyboard
+short-cuts</span><br>
+      </div>
+The following actions can be triggered when pressing a key:<br>
+      <span style="font-weight: bold;">o:</span> OK<br>
+      <span style="font-weight: bold;">c:</span> Cancel<br>
+      <span style="font-weight: bold;">e:</span> Edit file(s)<br>
+      <span style="font-weight: bold;">h:</span> Help<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"><br>
+      <br>
+n:</span> New Folder<br>
+      <span style="font-weight: bold;">a:</span> Select All<br>
+      <span style="font-weight: bold;">d:</span> Deselect all<br>
+      <span style="font-weight: bold;">u:</span> Go one level up</td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p><a name="Technical"></a><b><font size="+2">Technical notes</font></b>
+</p>
+<p>This multiple file selector is programmed in pure <i>Matlab</i> 6
+language,
+and is thus fully portable.
+</p>
+<blockquote>function [filename, pathname] = uigetfiles(filterspec,
+title,
+x, y)</blockquote>
+It comes into a single M-file <b><a href="../uigetfiles.m">uigetfiles.m</a></b>
+containing two private inline functions:
+<ol>
+  <li> <b>function fig = UIGetFilesBuild(smode)</b></li>
+  <ol>
+Builds-up the user interface, including tooltips, callbacks, <br>
+or make it visible if it was hidden previously. <br>
+Returns the UIGetFiles main window handle.
+  </ol>
+  <li> <b>function UD = UIGetFilesMain(object)</b></li>
+  <ol>
+Updates and sort the directory contents, tooltips, selections, ... <br>
+Returns the UIGetFiles <i>UserData</i> structure
+  </ol>
+</ol>
+Basically, <i>callbacks</i> are sent to <b><a href="../uigetfiles.m">uigetfiles</a></b>
+function with a structure as single parameter. This structure as the
+following
+fields
+<ul>
+  <li>action = 'string': callback type</li>
+  <li>object = handle: handle of the object that generated the callback</li>
+</ul>
+The following actions are supported:
+<ul>
+  <li> <i>show</i>: just update view without re-scanning directory</li>
+  <li> <i>update</i>: update directory contents, with new filters,
+etc...</li>
+  <li> <i>action</i>: use the popupmenu UIGetFiles.Action <i>Value</i>
+to
+select
+an other action ('Options' menu in Dialog)</li>
+  <li> <i>new folder</i>: create a new folder</li>
+  <li> <i>go up</i>: go up one level</li>
+  <li> <i>delete</i>: delete the dialog from memory, instead of
+hidding it
+(default)</li>
+  <li> <i>select all</i>: select all items</li>
+  <li> <i>previous</i>: shows a list of previously accessed
+directories
+(short-cuts)</li>
+  <li> <i>keypressed</i>: handle a key pressed on the <i>figure</i>
+area (<b>not</b>
+over the uicontrol)</li>
+  <li> <i>help</i>: display this help</li>
+  <li> <i>edit</i>: edit all selected files</li>
+  <li> <i>delete files</i>: delete selected files from disk</li>
+  <li> <i>handle list:</i> handle mouse clicks on the list,
+essentially
+tooltip
+update and directory double-click to open them.</li>
+  <li> <i>ok</i>: ends the Dialog uiwait loop, and returns selected
+file
+and directories.
+Stores current directory in short-cut list.</li>
+  <li> <i>cancel</i>: cancel Dialog, Stores current directory in
+short-cut
+list.</li>
+  <li><span style="font-style: italic;">toggle hidden files</span>: Do
+as mentioned<br>
+  </li>
+</ul>
+The Dialog is first built or made visible, updates the current
+directory,
+and enters an <i>uiwait</i> loop. This loop is broken when selecting
+OK
+or Cancel buttons, or closing the window. All these actions make the
+Dialog
+hidden (not deleted), in order to retain current settings.
+<p><a name="License"></a><b><font size="+2">License</font></b>
+</p>
+<p>This piece of software is part of the ILL/Risoe Matlab Library for
+Fitting (iFit). Refer
+to the <span style="font-style: italic;">License</span> file from the
+distribution
+for usage and distribution terms (EUPL).
+</p>
+<p></p>
+<hr width="100%"><br>
+iFit/Loaders/uigetfiles, June 2008, E. Farhi &lt;<a
+ href="mailto:farhi@ill.fr">farhi@ill.fr</a>&gt;, $Revision: 1035 $
+</body>
+</html>

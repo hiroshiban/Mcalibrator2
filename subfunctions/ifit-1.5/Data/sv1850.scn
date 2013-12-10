@@ -1,0 +1,53 @@
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+    1850      1      0
+ILL TAS data in the new ASCII format follow after the line VV...V               
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+      80      0                                                                 
+IN14  van Dijk   11-MAR-97 19:20:06                                             
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+INSTR: IN14
+EXPNO: 0000
+USER_: van Dijk
+LOCAL: teresa
+FILE_:   1850
+DATE_: 11-MAR-97 19:20:06
+TITLE: UPt3
+COMND: sc qh 1 0 0 0 dqh .003 0 0 0 np 15 ti 2
+POSQE: QH=  0.9790, QK=  0.0000, QL=  0.0000, EN=   0.0000, UN=meV
+STEPS: DQH      = 0.0030, DQK      = 0.0000, DQL      = 0.0000, DEN      = 0.0000,
+PARAM: DM=   3.35500, DA=   3.35500, SM= 1., SS=-1., SA= 1.
+PARAM: FX= 1., KFIX=   1.48000
+PARAM: ALF1=  40.00, ALF2=  40.00, ALF3=  60.00, ALF4=  60.00
+PARAM: BET1= 120.00, BET2= 120.00, BET3= 120.00, BET4= 120.00
+PARAM: ETAM=    30.0, ETAA=    30.0
+PARAM: AS=   5.74000, BS=   5.74000, CS=   4.90000
+PARAM: AA= 90.0000, BB= 90.0000, CC=120.0000, ETAS=     5.0
+PARAM: AX=   1.000, AY=   0.000, AZ=   0.000
+PARAM: BX=   0.000, BY=   1.000, BZ=   0.000
+VARIA: A1      =  39.26, A2      =  78.50, A3      =  65.29, A4      = -49.43,
+VARIA: A5      =  39.26, A6      =  78.50, CH      = 348.53, GU      =  -0.41,
+VARIA: GL      =  -0.04, TST     =   0.00, RBA     =  -0.02, RB      =  -0.03,
+VARIA: RF1     =  33.86, GA      =  -0.26, TA      =  19.38, RA      =   6.11,
+ZEROS: A1      =-115.75, A2      =  -6.21, A3      = -82.53, A4      =-194.59,
+ZEROS: A5      = -90.57, A6      =-182.03, CH      =   0.00, GU      = -24.41,
+ZEROS: GL      = -19.58, TST     =  -0.80, RBA     = -21.55, RB      =  -7.32,
+ZEROS: RF1     =   0.00, GA      = -20.56, TA      =   0.00, RA      =   0.00,
+PARAM: TI=      2.00
+FORMT: (I4,1X,F9.4,1X, F9.4,1X, F9.4,1X, F9.4,1X, 2(F8.0,1X),F9.2,1X,F8.0,1X) 
+DATA_: 
+  PNT     QH        QK        QL        EN        M1       M2      TIME      CNTS   
+   1    0.9791   -0.0001    0.0000   -0.0002   12754.       0.      2.00       0.  
+   2    0.9819    0.0000    0.0000   -0.0002   12545.       0.      2.00       1.  
+   3    0.9848    0.0000    0.0000   -0.0002   12741.       6.      2.00       3.  
+   4    0.9877    0.0002    0.0000   -0.0002   12344.      18.      2.00      30.  
+   5    0.9907    0.0002    0.0000   -0.0002   12505.      32.      2.00     191.  
+   6    0.9941    0.0000    0.0000   -0.0002   12569.      47.      2.00    1415.  
+   7    0.9973   -0.0002    0.0000    0.0008   12473.      73.      2.00    5099.  
+   8    0.9998    0.0001    0.0000   -0.0002   12444.      97.      2.00    7387.  
+   9    1.0027    0.0001    0.0000   -0.0002   12726.      85.      2.00    6999.  
+  10    1.0063   -0.0003    0.0000   -0.0002   12797.      88.      2.00    2640.  
+  11    1.0090   -0.0003    0.0000    0.0008   12545.      50.      2.00     531.  
+  12    1.0119   -0.0002    0.0000   -0.0002   12739.      30.      2.00     119.  
+  13    1.0148    0.0000    0.0000   -0.0002   12483.      16.      2.00      33.  
+  14    1.0177    0.0000    0.0000   -0.0002   12480.       0.      2.00      10.  
+  15    1.0214   -0.0003    0.0000   -0.0002   12432.       2.      2.00       2.  

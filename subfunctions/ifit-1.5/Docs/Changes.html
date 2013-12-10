@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+
+
+  
+  
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+
+
+  
+  
+<title>iFit: Changes and bugs</title>
+
+
+
+  </head><body><ifit: changes="" title=""></ifit:>
+
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: Changes and Bugs<br>
+</h1>
+
+
+
+<br>
+
+
+<ol id="mozToc"><!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId919749">Releases and Changes
+</a></li><li><a href="#mozTocId855650">Bugs list:</a><ol><li><a href="#mozTocId434193">File path names do not support spaces</a></li><li><a href="#mozTocId482415">Data set maximum size</a></li><li><a href="#mozTocId786389">CDF files written by Matlab can not be read by other software (hdfview, ncBrowse)</a></li><li><a href="#mozTocId332568">Convolution brings strange results (Models/fconv)
+</a></li><li><a href="#mozTocId473369">Too many warnings displayed</a></li><li><a href="#mozTocId556618">Execution/compilation issue with text files importer (iLoad/iData/load, looktxt, CrysFML/cif2hkl)</a></li><li><a href="#mozTocId63182">Limitations in the standalone (binary) package</a></li><li><a href="#mozTocId267093">iFit/McStas fails with a message such as 'version `GFORTRAN_1.4' not found'</a></li><li><a href="#mozTocId383867">Import of a text file fails</a></li></ol></li></ol>
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<h3><a class="mozTocH3" name="mozTocId919749"></a>Releases and Changes<br>
+</h3>
+
+
+<span style="font-weight: bold;"></span>
+<ul>
+
+
+
+  
+<li><b>1.5</b>: Improved <a href="Loaders.html">file importation</a> system, <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>, and NetCDF/CDF/NeXus/HDF support, import/export of <a href="http://www.mantidproject.org">Mantid</a> workspaces (HDF/NeXus), import of <a href="http://www.wavemetrics.com/">Igor pro</a> wave files and Wavefront <a href="http://en.wikipedia.org/wiki/Wavefront_.obj_file">Obj</a> 3D. <a href="Install.html">Installation</a> through Debian repository. Much faster save to MAT files. New <a href="Math.html#mozTocId539072">smooth, </a><a href="Math.html#mozTocId663052">continuous wavelet transform</a>, <a href="Math.html#mozTocId77311">k-means</a>, reshape and <a href="Math.html#mozTocId628538">resize</a> iData methods. Improvements in the iData processing speed and memory management.<br>
+</li>
+<li><b>1.4</b>: <a href="Python.html">PyFit</a> Python interface. Fix in <a href="Math.html">iData integration</a> routines 
+error bar propagation (trapz, sum, ...). Fix in iData/combine when 
+monitors are default (1). Better detection of duplicated data sets from 
+recursive <a href="Load.html">iData/load</a>. Fix in <a href="Loaders.html">text import</a> (supports NaN,Inf, faster by 15%). Fixed auto guess in gauss,lorz,... <a href="Models.html">Models</a>. Added 
+proper Unit/integration test infrastructure. Fixed some methods for <a href="iFunc.html">
+iFunc</a> objects with parameter names followed with comments. Support for McStas/mcdisplay as an Application. <br>
+<span style="font-weight: bold;"></span></li>
+
+
+<li><small><span style="font-weight: bold;">1.3.1</span>: Support for loading CIF/CFL/ShelX structure, <a href="http://www.msg.ucsf.edu/local/programs/ono/manuals/ofaq/Q.803.html">EZD</a>/<a href="http://en.wikipedia.org/wiki/MRC_%28file_format%29">MRC</a>/<a href="http://en.wikipedia.org/wiki/CCP4_%28file_format%29">CCP4</a> electron
+ density <a href="Loaders.html">formats</a>. Load/save of <a href="http://en.wikipedia.org/wiki/YAML">YAML</a>/<a href="http://en.wikipedia.org/wiki/JSON">JSON</a>/<a href="http://en.wikipedia.org/wiki/XML">XML</a> files. New <a href="Models.html#mozTocId344379">Rietveld</a> model that uses a McStas neutron diffractometer 
+model to convolve the structure factors and fit with diffractometer 
+data. Added TAS neutron spectrometer resolution computation <a href="../Applications/ResLibCal/doc/ResLibCal.html">ResLibCal</a> as an Application. <a href="iData.html">iData</a> <span style="font-style: italic;">commandhistory</span> can be <a href="Save.html">saved</a> as a Matlab script. Added <span style="font-style: italic;">nlorz</span> and <span style="font-style: italic;">ngauss</span> <a href="Models.html">Models</a>. Fix of iData/<span style="font-style: italic;">combine</span> with scalar Monitor values. Better memory handling in <a href="Load.html">iData/load</a>. <a href="iFunc.html">iFunc</a>
+ support parameter constraints fix/min/max/assign as 
+  <span style="font-style: italic;">object.&lt;par&gt;=&lt;value&gt;</span>. Fix in reading text files with 
+changing columns number. Execution speed improvement in all object 
+operators. Allow <a href="Fit.html">fitting</a> of event data sets. <br>
+
+  <span style="font-weight: bold;"></span></small></li>
+
+<li><small><span style="font-weight: bold;">1.3</span>: Support for <a href="Loaders.html#mozTocId361032">SIF, MarCCD, Roper SPE</a> <a href="http://www.adsc-xray.com/products.html">ADSC</a> X-ray CCD. Export to <a href="http://www.web3d.org/x3d/specifications/x3d_specification.html">X3D</a>, fix for some text file import, support for the <a href="http://www.mathworks.com/products/parallel-computing/">Parallel Computing Toolbox</a> (when available), improved interpolation, added <span style="font-style: italic;">meshgrid</span>, <span style="font-style: italic;">rotate, </span>radial integration (<a href="Math.html#mozTocId439767"><span style="font-style: italic;">cart2sph</span></a>), better support for event files, save of iFunc models to m-files. Added simple models for <a href="Models.html#mozTocId285330">small angle scattering</a> form factors and structure factors. Improved <a href="McStas.html">McStas</a>/McXtrace support. Embedded help system, array and graphics editor in <a href="iFit.html">standalone</a> version. Save object history to script file <span style="font-style: italic;">(Nov. 29th 2012)</span>.</small><br>
+<span style="font-weight: bold;"></span></li>
+
+<li><small><span style="font-weight: bold;">1.2</span>: Support for
+reading PLY, STL, OFF geometry files (vertices/faces). Improved import
+of text/ascii files containing numerics. Standalone <a href="iFit.html">iFit</a> distributable software. Speed-up by a factor x2.5. New <a href="iFunc.html">iFunc</a> model objects. Improved Optimizers and fitting. Reading of Chalk River <a href="http://www.nrc-cnrc.gc.ca/eng/ibp/cnbc.html">CNBC</a> data files, improved recursive reading of sub-directories and handling of iData arrays. New <a href="Plot.html#mozTocId406394">colormap</a> plotting method. Improvements in the Optimizers/McStas plotting. Speed up by +12% (March 16th, 2012)<br>
+
+  <span style="font-weight: bold;"></span></small></li><small>
+
+  </small><li><small><span style="font-weight: bold;">1.1</span>: new methods (save, diff, <a href="Math.html">hyperbolic functions</a>), fix of the <a href="Optimizers.html">Levenberg-Marquardt optimizer</a>,
+improved Error propagation for unary operators, support for <a href="Loaders.html">import</a> of
+Analyze MRI (hdr/img) and Crystallographic Binary File (cbf) format,
+import post-process for HDF RITA2@PSI files, direct drag-drop data
+files using the open{ext} functions with Matlab &gt;= 2010, added many <a href="Models.html">fit models</a> including 2D
+functions <span style="font-style: italic;">signal=f(x,y)</span>. Improved speed by e.g. +25% <span style="font-style: italic;">(Feb 14th 2012)</span>. significant performance improvements (speedup by factor 2-10).<span style="font-style: italic;"> (Oct 24th 2011)</span>. new fit <a href="Fit.html#mozTocId778987">criteria</a> (others than least-square), <a href="iData.html#mozTocId124075">link</a> as external/distant resources, better INX <a href="Load.html">import</a> <a href="Load.html#mozTocId338301">anchor</a> in file names for selective import, plenty of new <a href="Models.html">fit functions</a>, a few bug fixes (e.g. McStas 2D labels). <span style="font-style: italic;">(Sept 22nd 2011)</span><span style="text-decoration: underline;">. </span><a href="McStas.html">McStas</a> data files with Parameter member. New <a href="Plot.html#mozTocId734523">waterfall</a> plot stype for 3D data sets (<span style="font-style: italic;">Sept 6th, 2011</span>). Added correlation function method, plus a number of minor improvements
+(esp. in plot contextual menus), and bug fix for McStas 1D data set
+import <span style="font-style: italic;">(August 26th 2011</span>)</small><br>
+<span style="font-weight: bold;"></span></li>
+  <li><span style="font-weight: bold;">1.0</span>: First official iFit release <span style="font-style: italic;">(August 16th 2011</span>)<br>
+  </li>
+
+
+  
+
+  
+</ul>
+
+
+<h3><a class="mozTocH3" name="mozTocId855650"></a>Bugs list:</h3>
+
+
+
+<div style="margin-left: 40px;">You may test the package integrity by issuing the command:<br>
+</div>
+
+
+
+
+
+<pre style="margin-left: 80px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">ifittest</span></pre>
+
+
+
+<div style="margin-left: 40px;">
+
+which will test, in a few minutes, all the examples given in this documentation and report
+failures. The test may be aborted by closing the progress bar window.<br>
+<br>
+Please report bugs to  <a href="mailto:ifit-users@mccode.org">ifit-users@mccode.org</a> or to me <span style="font-weight: bold;">[farhi (at) ill.fr]</span>. You are encouraged to register to the <a href="http://mail.mccode.org/cgi-bin/mailman/listinfo/ifit-users">ifit-users</a> list.<br>
+</div>
+
+<h4><a class="mozTocH4" name="mozTocId434193"></a>File path names do not support spaces</h4>
+
+<p>Under Windows systems, file names including spaces, such as in '<span style="font-style: italic;">My Documents</span>'
+ may not be supported properly. In this case, move your files and 
+directories to another location which does not contain spaces.<br>
+</p>
+
+
+
+<h4><a class="mozTocH4" name="mozTocId482415"></a>Data set maximum size</h4>
+
+The iFit package may currently handle routinely data sets up to few 100
+Mb. Larger data sets can still be loaded, but are restricted by the
+disk access and the available memory. Currently, files can be read at
+about 8 Mb/s, mainly limited by the hard disk speed. Some binary files
+can be imported faster (HDF initial access is nearly immediate, whatever be the
+file size). We recommend to use SSD to load files with increased efficiency.<br>
+
+<h4><a class="mozTocH4" name="mozTocId786389"></a>CDF files written by Matlab can not be read by other software (hdfview, ncBrowse)</h4>
+
+The <a href="http://en.wikipedia.org/wiki/Common_Data_Format">CDF</a> format (which you can view with <a href="http://www.opendx.org/about.html">OpenDX</a> and <a href="http://autoplot.org/">Autoplot</a>) is incompatible with the <a href="http://www.unidata.ucar.edu/software/netcdf/">NetCDF</a> one (which you can e.g. view with <a href="http://meteora.ucsd.edu/%7Epierce/ncview_home_page.html">ncview</a>, <a href="http://www.hdfgroup.org/hdf-java-html/hdfview">hdfview</a>, <a href="http://www.epic.noaa.gov/java/ncBrowse/">ncBrowse</a>, <a href="http://www.giss.nasa.gov/tools/panoply/">Panoply</a>). In such cases, we recommend to rather export in HDF5 format with:<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span>(object, <span style="color: rgb(204, 51, 204);">'file.hdf5'</span>)</pre>
+
+
+
+<h4><a class="mozTocH4" name="mozTocId332568"></a>Convolution brings strange results (Models/fconv)<br>
+</h4>
+
+
+The <span style="font-style: italic;">fconv</span> function (FFT <a href="Math.html">convolution</a>) provided in the <a href="Models.html">Models</a> sub-library requires the two signals sampling not to be too coarse. Axes values too
+sparse will lead to inaccurate results. One solution is to re-sample
+the signals with more points. For <a href="iData.html">iData</a> objects, this can be
+achieved with e.g. the <span style="font-style: italic;">interp(object, 3)</span> to triple the number of points along axes.<br>
+
+
+<h4><a class="mozTocH4" name="mozTocId473369"></a>Too many warnings displayed</h4>
+
+
+If the warnings being displayed produce too much output, you may reduce the level of verbosity with:<br>
+
+
+<pre style="margin-left: 80px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">warning off backtrace	<span style="font-style: italic; color: rgb(0, 0, 0);">% reduce the warning message length</span><br><span style="color: rgb(0, 0, 0);">&gt;&gt; </span>warning off			<span style="color: rgb(0, 0, 0); font-style: italic;">% suppress all warnings (not recommended)</span><br></span></pre>
+
+
+
+
+
+
+
+
+
+<h4><a class="mozTocH4" name="mozTocId556618"></a>Execution/compilation issue with text files importer (iLoad/iData/load, looktxt, CrysFML/cif2hkl)</h4>
+
+
+
+In some cases, the provided
+iFit/Loaders/private/looktxt.mex* may fail to execute (wrong
+architecture, missing library).
+
+
+
+<br>
+
+
+
+Under Windows 64bit systems,
+you may need the Visual C++ runtime libraries e.g. <i>msvc[mpr]90.dll</i> which
+are provided with the Visual C++ installation (see below), to put in the 
+Windows system directory.<br>
+
+
+
+
+
+<br>
+
+
+
+
+In case this is not a problem of library, <span style="color: rgb(255, 0, 0);">remove</span> the invalid mex file 
+(in <i>iFit/Libraries/Loaders/private</i>) , and
+relaunch the importation process. A brand new MeX file will
+automatically be generated, using the system C compiler. For manual compilation, navigate to the <span style="font-style: italic;">iFit/Libraries/Loaders/private</span> directory and issue:<br>
+<pre style="margin-left: 40px;">mex -O looktxt.c -DUSE_MEX<br>mex -O cbf_uncompress<br></pre>
+
+
+
+Most systems provide a default C compiler. <br>
+
+
+<ul>
+
+<li>Linux systems usually ship with gcc.</li><li>MacOSX systems require to install the Xcode development tools. </li><li>Windows 32 systems may use the LCC compiler shipped with Matlab. </li><li>Windows 64 systems must have Microsoft Visual C++ installed (refer to the <a href="Install.html#mozTocId359173">Install</a> page for the procedure).</li>
+</ul>
+
+
+You may need to select the compiler with the <i>mex -setup</i> command from Matlab.<br>
+
+<div style="margin-left: 40px;">
+<br>
+</div>
+
+
+
+
+It has been reported that MeX compilation may fail when spaces are part 
+of the path name to the iFit location (esp. under Windows systems). Move <span style="font-style: italic;">iFit</span> to an other location which does not include spaces in its name (e.g. avoid <span style="font-style: italic;">My Documents</span>) for compilation.<br>
+<br>
+A Fortran compiler is required when using <span style="font-style: italic;">cif2hkl</span> (CIF,CFL,PCR,ShelX files), especially for the Rietveld model function. For manual compilation, navigate to the <span style="font-style: italic;">iFit/Scripts/Models/scattering/powder_diffraction</span> directory and issue:<br>
+<pre style="margin-left: 40px;"># gfortran -O2 -o cif2hkl cif2hkl.F90 -lm<br></pre>
+
+
+which creates the cif2hkl executable file, used by iFit.<br>
+<br>
+Refer to the related item in the <a href="Install.html#mozTocId359173">Install</a> page.<br>
+
+<h4><a class="mozTocH4" name="mozTocId63182"></a>Limitations in the standalone (binary) package</h4>
+
+When running the standalone version (binary), new Matlab functions can <span style="font-weight: bold; font-style: italic;">not</span> be defined, except anonymous functions (inline). You may use iFunc models as a substitute. Also, the <span style="font-style: italic;">doc, web</span> and <span style="font-style: italic;">edit</span> commands are limited, and may not work properly, depending on the system.<br>
+<h4><a class="mozTocH4" name="mozTocId267093"></a>iFit/McStas fails with a message such as '<font color="#800000">version</font><font color="#800000"> `GFORTRAN_1.4' not found'</font></h4>
+Matlab comes with its own C and Fortran libraries (e.g. in MATLABROOT/<font color="#800000"><span style="color: rgb(0, 0, 0);">sys/os/&lt;arch&gt;/)</span><span style="color: rgb(51, 102, 255);"></span></font>.
+ Some of these may not match those those from the running system (seen 
+on Linux systems). In this case, as McStas runs from a Matlab 
+environment that overloads libraries on top of the normal libraries from
+ the system - used by McStas - you may get a message such as (here <span style="font-style: italic; color: rgb(51, 102, 255);">libgfortran.so</span> is faulty) :<br>
+<pre style="margin-left: 40px;"><font color="#800000">Can't load '/usr/local/lib/perl/5.12.4/auto/PGPLOT/PGPLOT.so' for module</font> <font color="#800000">PGPLOT: <br>/usr/local/MATLAB/R2012a/sys/os/glnxa64/<span style="color: rgb(51, 102, 255);">libgfortran.so.3</span>: version</font> <font color="#800000">`GFORTRAN_1.4' not found <br>(required by /usr/lib/libpgplot.so.5) at</font> <font color="#800000">/usr/lib/perl/5.12/DynaLoader.pm line 192.</font> <br><font color="#800000">at /usr/local/lib/mcstas/tools/perl/mcstas_config.perl line 123</font></pre>
+In order to solve this, you need to update the faulty Matlab libraries 
+with the one from the system. The following procedure is valid for Linux
+ systems (where it was identified), assuming Matlab has been installed 
+in e.g. MATLABROOT = /usr/local/MATLAB/R2012a - but it may also be in 
+e.g. /opt/MATLAB/R2012a.<br>
+<br>
+We first look for locations of the faulty library in the system (requires package <span style="font-style: italic;">locate</span> or <span style="font-style: italic;">mlocate</span> to be installed - alternatively you can use <span style="font-style: italic;">ldconfig -v</span> and look where <span style="font-style: italic;">libgfortran</span> appears in the long list...)<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);"># locate libgfortran.so</span>
+/usr/lib/x86_64-linux-gnu/libgfortran.so.3 <span style="color: rgb(204, 51, 204); font-style: italic;">&lt;- this is the library from the system, to put in the Matlab location</span><br></pre>
+Then we first make a copy of the initial Matlab library to update<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);"># sudo mv /usr/local/MATLAB/R2012a/sys/os/glnxa64/libgfortran.so.3 /usr/local/MATLAB/R2012a/sys/os/glnxa64/libgfortran.so.3.org</span><br></pre>
+Then we copy the library from the system into the Matlab location<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);"></span><span style="color: rgb(51, 102, 255);"># sudo ln -s /usr/lib/x86_64-linux-gnu/libgfortran.so.3 /usr/local/MATLAB/R2012a/sys/os/glnxa64/</span></pre>
+Then, you need to restart Matlab/iFit to notice the issue has been fixed.<br>
+<h4><a class="mozTocH4" name="mozTocId383867"></a>Import of a text file fails</h4>
+First check that the looktxt MeX file is working (this will appear in 
+the error message). If not, remove the invalid one (in 
+iFit/Libraries/Loaders/private) and restart the importation. A new MeX 
+file will be compiled from the source (requires a valid compiler, see <a href="#mozTocId556618">above</a>).<br>
+<br>
+If you can not import a reluctant <span style="font-weight: bold;">text</span> file, try the most tolerant text reader configurations:<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','text format with fast import method'</span>)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'filename','Data (text format)'</span>)</pre>
+
+will import the raw content, without post formatting of the object in 
+memory. You will probably need to assign manually some of the Signal and
+ Axes (see <a href="iData.html">iData</a> object help).<br>
+<br>
+Text files containing <span style="font-weight: bold;">NaN's inside matrices</span>
+ are not imported properly (NaN is read as a text inside a matrix, and 
+thus breaks the matrix into bits). One way is to replace all NaN's by 0 
+values. This also stands for <b>Inf's</b> and other text embedded inside numerical blocks.<br>
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/Changes - </span><span style="font-style: italic;">
+$Date: 2013-09-19 16:24:38 +0200 (Thu, 19 Sep 2013) $ $Revision: 1166 $
+</span><span style="font-style: italic;"> </span>-
+back to <a href="index.html">Main
+iFit Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+</div>
+
+
+
+</body></html>

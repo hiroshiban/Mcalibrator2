@@ -1,0 +1,243 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of looktxt</TITLE>
+</HEAD><BODY>
+<H1>looktxt</H1>
+Section: USER COMMANDS (1)<BR>Updated: July 16, 2009<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+looktxt - Search and export numerics from any text/ascii file
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>looktxt</B>
+
+[-b][-c][-f FORMAT][-H][-s SEC ...][-m META ...] file1 file2 ...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+Extracting data from a text file is a never ending story. Usually, one will write a short script or program/function to analyse each specific input data format. The
+<B>looktxt</B>
+
+command purpose is to read any text data file containing numerical blocks just as a human would read it. Specifically, it looks for contiguous numerical blocks, which are stored into matrices, and other parts of the input file are classified as
+<I>headers</I>
+
+which are optionally exported. Numerical blocks are labelled according to the preceeding header block last word.
+<P>
+
+Blocks read from the data file can be sorted into sections. Each section
+<I>SEC</I>
+
+starts when it appears in a
+<I>header</I>
+
+and contains all following fields until a new section is found or the end of the file.
+Additionally, one may search for specific metadata keywords, at user's choice. Each data field matching the keyword metadata
+<I>META</I>
+
+in its
+<I>headers</I>
+
+will create a new entry in the
+<I>MetaData</I>
+
+section.
+<P>
+
+The output data files may be generated using &quot;Matlab&quot;, &quot;Scilab&quot;, &quot;IDL&quot;, &quot;Octave&quot;, &quot;XML&quot;, &quot;HTML&quot;, and &quot;Raw&quot; formats (using the -f FORMAT option), using a structure-like hierarchy. This hierarchy contains all
+<I>sections, metadata</I>
+
+and optionally
+<I>headers</I>
+
+that have been found during the parsing of the input data file.
+<P>
+
+After using
+<B>looktxt foo</B>
+
+the data is simply loaded into memory using e.g. 'matlab&gt; ans=foo;'. The exact method to import data is indicated at the begining of the output data file, and depends on the format.
+<P>
+
+The command can handle large files (hundreds of Mb) within a few secconds, with minimal memory requirements.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT>-h | --help<DD>
+displays the command help
+<DT>-b | --binary<DD>
+sets binary mode for large numerical blocks (more than 100 elements). This option creates an additional '.bin' file to be read accordingly to the references indicated for each field in the output text data file. This is transparently done when reading output files with <A HREF="/cgi-bin/man/man2html?1+matlab">matlab</A>(1), <A HREF="/cgi-bin/man/man2html?1+scilab">scilab</A>(1), <A HREF="/cgi-bin/man/man2html?1+idl">idl</A>(1), and <A HREF="/cgi-bin/man/man2html?1+octave">octave</A>(1).
+<DT>-c | --catenate<DD>
+Catenates similar numerical fields (which have similar dimensions and names)
+<DT>-F | --force<DD>
+Overwrites existing files
+<DT>-f FORMAT | --format=FORMAT<DD>
+Sets the output format for generated files
+<DT>--fortran | --wrapped<DD>
+Catenates single wrapped output lines with previous matrices (e.g. caused by the 80 chars per line limit in old data formats written by fortran codes)
+<DT>-H | --headers<DD>
+Extracts
+<I>headers</I>
+
+for each numerical field (recommended)
+<DT>-s SEC | --section=SEC ...<DD>
+Classifies fields into
+<I>sections</I>
+
+matching word SEC. This option can be repeated
+<DT>-m META | --metadata=META ...<DD>
+Extracts lines containing word META as user
+<I>metadata.</I>
+
+This option can be repeated
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>OTHER OPTIONS</H2>
+
+The command supports other options which are listed using
+<B>looktxt</B>
+
+-h
+<P>
+
+Among these are
+<DL COMPACT>
+<DT>--fast<DD>
+When numerical data blocks only use <A HREF="/cgi-bin/man/man2html?3+isspace">isspace</A>(3) separators (\n \r \f \t \v and space), the reading can be made faster with even lower memory requirements.
+<DT>--silent<DD>
+Silent mode, to only display fatal errors
+<DT>--verbose | -v | --debug<DD>
+To display plenty of informations
+<DT>--makerows=NAME ...<DD>
+When a numerical data block label matching NAME is found, it is transformed into a row vector. This may be used for wrapped files (--fortran option). This option can be repeated
+<DT>- o FILE | --outfile=FILE<DD>
+to use FILE as output file. The streams
+<B>stdout</B>
+
+and
+<B>stderr</B>
+
+may be used, but we then recommend to specifiy the --silent option to avoid unwanted messages in the output.
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<DL COMPACT>
+<DT>Typical usage (exporting headers as well)<DD>
+<B>looktxt</B>
+
+-H foo
+<DT>For large data files (using binary float storage, catenate and fortran mode)<DD>
+<B>looktxt</B>
+
+-F -c -H -b --fortran foo
+<DT>Sorting data into sections, and searching a metadata keyword<DD>
+<B>looktxt</B>
+
+-s SEC1 -s SEC2 -m META1 -H
+foo
+</DL>
+<P>
+
+will result in the following Matlab structure:
+<P>
+
+<PRE>
+     Creator: 'Looktxt 1.0.7 16 July 2009 Farhi E. [farhi at ill.fr]'
+        User: 'farhi on localhost'
+      Source: 'foo'
+        Date: 'Fri Dec 12 11:35:20 CET 2008'
+      Format: 'Matlab'
+     Command: [1x195 char]
+    Filename: 'foo.m'
+     Headers: struct SEC1, struct SEC2, struct MetaData (headers)
+        Data: struct SEC1, struct SEC2, struct MetaData (numerics)
+</PRE>
+
+<DL COMPACT>
+<DT>Some options that may be used for specific data formats:<DD>
+</DL>
+<P>
+
+<DL COMPACT>
+<DT>ILL ASCII data format:<DD>
+--headers --fortran --catenate --fast --binary --makerows=FFFF --makerows=JJJJ --makerows=IIII
+<DT>ILL TAS ASCII data format:<DD>
+--headers --section=PARAM --section=VARIA --section=ZEROS --section=POLAN --metadata=DATA
+<DT>SPEC data file (ESRF, X-rays...):<DD>
+--headers --metadata=&quot;#S &quot; --comment= 
+<DT>Most text-based data files:<DD>
+--fast --fortran --binary --force --catenate --comment=NULL
+</DL>
+<P>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+The
+<B>LOOKTXT_FORMAT</B>
+
+environment variable may be set to define the default export format. When not defined, the Matlab format is used as default.
+<A NAME="lbAI">&nbsp;</A>
+<H2>BUGS</H2>
+
+The command by itself should work properly. In case of trouble, you may have more information with the --verbose or --debug options. Most problems arise when importing data after running looktxt. E.g. these come from <A HREF="/cgi-bin/man/man2html?1+idl">idl</A>(1) and <A HREF="/cgi-bin/man/man2html?1+scilab">scilab</A>(1) limitations (lines too long, too many structure elements, ...). The --binary may solve some of these import issues.
+<P>
+
+In case of memory allocation problems, you may try the --fast option.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>EXIT STATUS</H2>
+
+looktxt returns -1 in case of error, 0 when no file was processed, or the number of processed files.
+<A NAME="lbAK">&nbsp;</A>
+<H2>INSTALLATION</H2>
+
+Usual procedure: ./configure; make; make install. An installer is available using 
+<B>matlab&gt; install</B>
+
+which may be used both from Linux/Unix and Windows systems. In principle, the
+only required file is the executable
+<B>looktxt</B>
+
+, to be copied in a system executable location, e.g. '/usr/local/bin', '/usr/bin', or 'c:\windows\system32'.
+<P>
+
+Binaries are pre-compiled for usual systems with the package.
+<A NAME="lbAL">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Emmanuel FARHI (farhi (at) ill.eu) and the Institut Laue Langevin at <A HREF="http://www.ill.eu">http://www.ill.eu</A>
+<A NAME="lbAM">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="/cgi-bin/man/man2html?1+matlab">matlab</A>(1), <A HREF="/cgi-bin/man/man2html?1+idl">idl</A>(1), <A HREF="/cgi-bin/man/man2html?1+scilab">scilab</A>(1), <A HREF="/cgi-bin/man/man2html?1+octave">octave</A>(1), <A HREF="/cgi-bin/man/man2html?1+xmlcatalog">xmlcatalog</A>(1), <A HREF="/cgi-bin/man/man2html?1+html2text">html2text</A>(1)
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">OTHER OPTIONS</A><DD>
+<DT><A HREF="#lbAG">EXAMPLES</A><DD>
+<DT><A HREF="#lbAH">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAI">BUGS</A><DD>
+<DT><A HREF="#lbAJ">EXIT STATUS</A><DD>
+<DT><A HREF="#lbAK">INSTALLATION</A><DD>
+<DT><A HREF="#lbAL">AUTHOR</A><DD>
+<DT><A HREF="#lbAM">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 15:00:52 GMT, July 16, 2009
+</BODY>
+</HTML>

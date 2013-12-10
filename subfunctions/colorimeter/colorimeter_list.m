@@ -30,16 +30,17 @@ function colorimeters=colorimeter_list()
 %   initialize
 %   measure
 %
-% For details, please see pr650 or cs100a object.
+% For details, please see pr650/cs100a (for serial connection) or brontesLL/colorcal (for USB connection) objects.
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2013-12-09 16:39:31 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-10 14:18:23 ban (ban.hiroshi@gmail.com)"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'KONICA-MINOLTA CS-100A','cs100a',0};
 colorimeters{3}={'Admesy Brontes-LL','brontesLL',1};
-colorimeters{4}={'CRS ColorCal2 Windows','colorcal',1};
-colorimeters{5}={'CRS ColorCal2 (PTB, not tested)','colorcal2',1};
+colorimeters{4}={'Cambridge Research Systems ColorCAL2 Win-USB','colorcal',1};
+colorimeters{5}={'Cambridge Research Systems ColorCAL2 (PTB, not tested)','colorcal2',1};
+colorimeters{6}={'Cambridge Research Systems OptiCal','optical',0};
 
 return

@@ -1,0 +1,154 @@
+<pkmkdoc spec="1.12"><properties><title>iFit</title><build>/Users/lamba/Desktop/iFit.pkg</build><organization>ill.eu</organization><userSees ui="easy"/><min-target os="3"/><domain system="true"/></properties><distribution><versions min-spec="1.000000"/><scripts></scripts></distribution><description>iFit generic data analysis and fitting to models
+Simple methods to be used for complex data analysis
+
+The iFit program provides a set of methods to load, analyze, plot, fit and optimize models, and export results. iFit is based on Matlab, but stand-alone version does not require a Matlab license to run. Any text file can be imported straight away, and a set of binary files are supported. Any data dimensionality can be handled, including event based data sets.
+
+The spirit of the software is to include simple object definitions for Data sets and Models, with a set of methods that provide all the means to perform the usual data analysis procedures.
+ - iData objects to hold data sets ; Import with:          iData('filename')
+ - iFunc objects to hold models ;    Create new ones with: iFunc('expression')
+ - fit model to data with: fits(data, model)
+ - documentation is available
+ 
+Main functionalities are: [ iData Load Plot Math Fit Save Optimization iFunc Models ]
+ 
+To use this software, you need to install the Matlab Compiler Runtime from the DMG available in the ifit.mccode.org website / Download binary section.
+
+To start iFit, start it from the Applications folder.
+
+Refer to &lt;ifit.mccode.org> for on-line documentation.
+Matlab is a registered trademark of The Mathworks Inc.</description><contents><choice title="iFit" id="choice12" tooltip="The iFit standalone Matlab(R) application" description="iFit generic data analysis and fitting to models
+Simple methods to be used for complex data analysis
+
+The iFit program provides a set of methods to load, analyze, plot, fit and optimize models, and export results. iFit is based on Matlab, but stand-alone version does not require a Matlab license to run. Any text file can be imported straight away, and a set of binary files are supported. Any data dimensionality can be handled, including event based data sets.
+
+The spirit of the software is to include simple object definitions for Data sets and Models, with a set of methods that provide all the means to perform the usual data analysis procedures.
+ - iData objects to hold data sets ; Import with:          iData('filename')
+ - iFunc objects to hold models ;    Create new ones with: iFunc('expression')
+ - fit model to data with: fits(data, model)
+ - documentation is available
+ 
+Main functionalities are: [ iData Load Plot Math Fit Save Optimization iFunc Models ]
+ 
+To use this software, you need to install the Matlab Compiler Runtime from the DMG available in the ifit.mccode.org website / Download binary section.
+
+To start iFit, start it from the Applications folder.
+
+Refer to &lt;ifit.mccode.org> for on-line documentation.
+Matlab is a registered trademark of The Mathworks Inc.n.  Matlab is a registered trademark of The Mathworks Inc." starts_selected="true" starts_enabled="true" starts_hidden="false"><customLoc>/Applications</customLoc><pkgref id="ill.eu.ifit.iFit.pkg"/></choice></contents><resources bg-scale="none" bg-align="topleft"><locale lang="en"><resource mod="true" type="background">/Users/lamba/Desktop/iFit-logo-large.png</resource><resource mime-type="text/rtf" kind="embedded" type="license"><![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf250
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs26 \cf0 ** License: {\field{\*\fldinst{HYPERLINK "https://joinup.ec.europa.eu/software/page/eupl/licence-eupl"}}{\fldrslt EUPL v1.1}} (c) {\field{\*\fldinst{HYPERLINK "http://www.ill.eu/"}}{\fldrslt ILL}} Computing for Science E. Farhi
+\b0 \
+\
+Basically this is open-source. Use it if you find it useful, and enrich it. If you do produce new methods, please send them back to me so that they are dded in the software and thus benefit to the community.\
+\
+In short, you can use, copy, distribute and modify the Code. However, a number of restrictions apply, especially when producing derived work (that is modify and redistribute the code in other products). In particular, the derived work must be licensed under the EUPL or a Compatible License, label all modifications explicitly, distribute the Source Code, and cite the Original work.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 In agreement with the Intergovernmental Convention of the ILL, this software 
+\b *cannot*
+\b0  be used in military applications.\cf0 \
+\
+The Source code of iFit is freely available at {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/index.html"}}{\fldrslt Main iFit Page}}<http://ifit.mccode.org>\
+\
+A number of third-party additions, included in the software, where obtained from the Matlab Central contributions, and are mostly BSD licensed, as listed in the {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Credits.html"}}{\fldrslt Credits}} page.\
+  \
+{\field{\*\fldinst{HYPERLINK "http://www.mathworks.com/"}}{\fldrslt Matlab}} is a registered trademark of The Mathworks Inc.\
+\
+** Disclaimer:\
+  This is not a professional tool, and there is no Dev team to actively take care of it. Expect occasional failures and bugs. However, I try my best to make the software efficient and reliable. }]]></resource><resource mime-type="text/rtf" kind="embedded" type="readme"><![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf250
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red255\green8\blue71;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf0 \
+                       
+\b \cf2 Welcome to the iFit/iData package\
+                              <ifit.mccode.org>
+\b0 \cf0 \
+                              \
+                        E. Farhi, ILL/CS <farhi@ill.fr>\
+                         Version 1.5 - Sep. 03, 2013\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 ** Purpose:
+\b0 \
+\
+This software aims at providing basic functionality to achieve some of the general tasks needed for scientific data analysis:\
+    Load, Plot, Save, Fit, Math operations, define and use Models\
+\
+
+\b ** Requirements:
+\b0 \
+\
+Stand-alone versions require the Matlab Compiler Runtime (MCR). You can get the MCR installer at {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Downloads/binary/mac32/MCRInstaller32.dmg"}}{\fldrslt MCRInstaller32.dmg}} (http://ifit.mccode.org/Downloads/binary)\
+\
+
+\b ** Installation:
+\b0 \
+\
+The iFit application will be installed in /Applications. In addition an 'ifit' command will be created in /usr/bin/, and a similar 'matlab' command will be created if Matlab(R) is not installed on your Mac.\
+\
+
+\b ** Quick start:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+Type at iFit prompt:\
+    >> doc(iData)\
+Then refer to the Quick Start tutorial (in iFit/Docs/QuickStart.html).\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 ** Contacts and Help:
+\b0 \
+\
+  You can register to the iFit mailing list {\field{\*\fldinst{HYPERLINK "http://mail.mccode.org/cgi-bin/mailman/listinfo/ifit-users"}}{\fldrslt ifit-users}}.\
+  Send messages to the ifit-users@mail.mccode.org.\
+  Help pages are available at {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/index.html"}}{\fldrslt Main iFit Page}} <http://ifit.mccode.org>\
+\
+}]]></resource><resource mime-type="text/rtf" kind="embedded" type="welcome"><![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf250
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red255\green51\blue18;\red1\green0\blue234;\red255\green5\blue11;
+}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs26 \cf2 iFit generic data analysis and fitting to models\
+Simple methods to be used for complex data analysis
+\b0 \cf0 \
+\
+The iFit program provides a set of methods to load, analyze, plot, fit and optimize models, and export results. iFit is based on {\field{\*\fldinst{HYPERLINK "http://www.mathworks.com/"}}{\fldrslt Matlab}}, but this stand-alone version does not require a Matlab license to run. Any text file can be imported straight away, and a set of binary files are supported. Any data dimensionality can be handled, including event based data sets.\
+\
+The spirit of the software is to include simple object definitions for Data sets and Models, with a set of methods that provide all the means to perform the usual data analysis procedures.\
+ - {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/iData.html"}}{\fldrslt 
+\f1\fs32 \cf3 \ul \ulc3 iData}} objects to hold data sets ; {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Load.html"}}{\fldrslt 
+\f1\fs32 \cf3 \ul \ulc3 Load}} with: \ul iData('filename')\ulnone \
+ - {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/iFunc.html"}}{\fldrslt 
+\f1\fs32 \cf3 \ul \ulc3 iFunc}} objects to hold models ; Create new ones with: i\ul Func('expression')\ulnone \
+ - {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Fit.html"}}{\fldrslt 
+\f1\fs32 \cf3 \ul \ulc3 Fit}} model to data with: \ul fits(data, model)\ulnone \
+ - documentation is available\
+ \
+Main functionalities are: 
+\f1\fs32 [ {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/iData.html"}}{\fldrslt \cf3 \ul \ulc3 iData}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Load.html"}}{\fldrslt \cf3 \ul \ulc3 Load}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Plot.html"}}{\fldrslt \cf3 \ul \ulc3 Plot}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Math.html"}}{\fldrslt \cf3 \ul \ulc3 Math}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Fit.html"}}{\fldrslt \cf3 \ul \ulc3 Fit}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Save.html"}}{\fldrslt \cf3 \ul \ulc3 Save}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Optimizers.html"}}{\fldrslt \cf3 \ul \ulc3 Optimization}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/iFunc.html"}}{\fldrslt \cf3 \ul \ulc3 iFunc}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Models.html"}}{\fldrslt \cf3 \ul \ulc3 Models}} {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Loaders.html"}}{\fldrslt \cf3 \ul \ulc3 File formats}}]
+\f0\fs26 \
+ \
+\cf4 To use this software, you need to install the Matlab Compiler Runtime which you can get here: {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/Downloads/binary/mac32/MCRInstaller32.dmg"}}{\fldrslt MCRInstaller32.dmg}} and from the ifit.mccode.org website / Download binary section.\cf0 \
+ \
+To start iFit, start it from the 
+\b Applications
+\b0  folder.\
+ \
+Refer to the {\field{\*\fldinst{HYPERLINK "http://ifit.mccode.org/index.html"}}{\fldrslt iFit web site}} <ifit.mccode.org> for on-line documentation.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+{\field{\*\fldinst{HYPERLINK "http://www.mathworks.com/"}}{\fldrslt \cf0 Matlab}} is a registered trademark of The Mathworks Inc.}]]></resource><resource mime-type="text/rtf" kind="embedded" type="conclusion"><![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf250
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf0 Thanks for installing iFit. \
+\
+Please subscribe to ifit-users@mccode.org mailing list, and report back any problem.}]]></resource></locale></resources><flags/><postinstall><action id="com.apple.packagemaker.actions.showfile"><value>/Applications</value><component>eu.ill.iFit</component><type>absolute-path</type></action></postinstall><item type="file">01ifit.xml</item><mod>properties.anywhereDomain</mod><mod>properties.systemDomain</mod><mod>properties.title</mod><mod>properties.userDomain</mod><mod>description</mod><mod>postinstallActions.actions</mod></pkmkdoc>

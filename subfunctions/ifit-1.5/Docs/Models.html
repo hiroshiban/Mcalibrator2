@@ -1,0 +1,646 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>iFit: Models model functions</title>
+</head><body>
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: Models (fit models)</h1>
+<br>
+<ol id="mozToc"><!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId147615">How to use models</a></li><li><a href="#mozTocId96090">List of default fit models</a></li><li><a href="#mozTocId285330">Specialized models</a><ol><li><a href="#mozTocId597620">Scattering models (neutrons, x-rays)</a></li><li><a href="#mozTocId344379">
+
+Powder structure refinement (Rietveld)</a></li></ol></li><li><a href="#mozTocId810939">Model builder: defining a new model easy
+  </a><ol><li><a href="#mozTocId775891">Creating complex
+functions from simple functions</a></li><li><a href="#mozTocId937554">Using signal
+convolution/correlation in new functions</a></li></ol></li><li><a href="#mozTocId854762">How to write manually a model function</a></li></ol>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">Commands we use in this page: <span style="font-style: italic;">fits, <a href="#mozTocId775891">ifitmakefunc, </a>fits(iData)</span>, <a href="iFunc.html">iFunc</a><br>
+</div>
+<br>
+<h3><a class="mozTocH3" name="mozTocId147615"></a>How to use models</h3>
+Models are numerical functions, that take input axes and a parameter
+set, and return a function evaluation. <br>
+<br>
+Such models are defined as <a href="iFunc.html">iFunc</a> objects, and used in iFit when there is a need to e.g. compute and
+plot a function evaluation corresponding with the axes of an iData
+object. Similarly, this
+function evaluation can be used iteratively in an optimization process
+in order to find a parameter set that matches best the iData object
+Signal, using the <span style="font-weight: bold;">fits</span> method (refer to the <a href="Fit.html">Fit</a> page).<br>
+<br>
+Models can be used in the following ways (for instance
+'model' may be 'gauss'):<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">model</span>		<span style="font-style: italic;">% display model information</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">disp(model</span>)		<span style="font-style: italic;">% idem, extensive information</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">plot(model</span><span style="color: rgb(204, 51, 204);"></span>)	<span style="font-style: italic;">	% plot the model with its default settings</span><span style="color: rgb(255, 0, 0); font-style: italic;"></span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">model</span>(p, x, y ...)	<span style="font-style: italic;">% evaluate the model with parameters p, and axes x,y,...<br>&gt;&gt; </span><span style="color: rgb(51, 102, 255);">model</span>([], x, y ...)	<span style="font-style: italic;">% evaluate the model with axes x,y,... and automatic parameter guess<br></span><span style="font-style: italic;">&gt;&gt; </span><span style="color: rgb(51, 102, 255);">model</span>(<span style="color: rgb(204, 51, 204);">'guess'</span>, x, y ...)	% idem<br>&gt;&gt; <span style="color: rgb(51, 102, 255);"></span>a(model, p)	<span style="font-style: italic;">	% evaluate the model onto the iData object 'a' axes with parameters p<br>&gt;&gt; </span><span style="color: rgb(51, 102, 255);">fits</span>(a, model, p)	<span style="font-style: italic;">% fit the model onto the iData object</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">fits</span>(model, a, p)	<span style="font-style: italic;">% same as above<br></span><span style="font-style: italic;"></span><br></pre>To create a model, use the <a href="#mozTocId775891">ifitmakefunc</a> dialogue window (see below), or instantiate an <a href="iFunc.html">iFunc</a> object.<br>
+<pre style="margin-left: 40px;">&gt;&gt; model = gauss;<br>&gt;&gt; model = <span style="color: rgb(51, 102, 255);">iFunc</span>(<span style="color: rgb(204, 51, 204);">'p(1)*x+p(2)'</span>)<br>&gt;&gt; model = <span style="color: rgb(51, 102, 255);">iFunc</span>(<span style="color: rgb(204, 51, 204);">'a=p(1); b=p(2); signal=a*x+b'</span>) <br></pre>
+You can edit their code to see how to define new models:<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">edit</span> gauss <span style="font-style: italic;">% edit the function definition (from a file)</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">edit</span> voigt<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">edit</span>(voig) <span style="font-style: italic;">% edit the object definition</span><br></pre>
+
+<pre style="margin-left: 40px;"><span style="font-style: italic;"></span></pre>
+
+<h3><a class="mozTocH3" name="mozTocId96090"></a><span style="font-weight: bold;">List of default fit models</span></h3>
+The 1D functions are <span style="font-style: italic;">signal=f(parameters, x)</span>, and the 2D functions are <span style="font-style: italic;">signal=f(parameters, x, y)</span>.<br>
+<span style="font-style: italic; font-weight: bold;"><br>
+</span>
+<table style="text-align: left; width: 1016px; height: 1301px;" cellpadding="2" cellspacing="2" border="1">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Function<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204);"><span style="font-style: italic; font-weight: bold; color: rgb(51, 102, 255);">Description</span><br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Dimensionality<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Parameters<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">allometric<br>
+      </td>
+      <td style="vertical-align: top;">Allometric (power/asymptotic law)<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Offset Exponent BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">bigauss</span><br>
+      </td>
+      <td style="vertical-align: top;">Asymmetric Gaussian<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth1
+HalfWidth2 Background</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">bilorz</span><br>
+      </td>
+      <td style="vertical-align: top;">Asymmetric Lorentzian<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth1
+HalfWidth2 Background</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 0, 0); font-weight: bold;">bose</td>
+      <td style="vertical-align: top;">Bose factor<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Tau <span style="font-style: italic;">[h/2pi/kT] in "x" units</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">dho<br>
+      </td>
+      <td style="vertical-align: top;">Damped harmonic oscillator<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background Temperature <span style="font-style: italic;">(in "x" unit)</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">dirac<br>
+      </td>
+      <td style="vertical-align: top;">Dirac peak<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Centre<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">doseresp<br>
+      </td>
+      <td style="vertical-align: top;">Dose-response curve with variable Hill slope. This is a sigmoid or S-shaped.<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center Slope BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">expon</span><br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Exponential_decay">Exponential</a> decay<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Tau Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">expstretched</span><br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Stretched_exponential_function">Exponential - Stretched</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Tau Exponent Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 0, 0); font-weight: bold;">gauss</td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Gaussian_function">Gaussian</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">green<br>
+      </td>
+      <td style="vertical-align: top;">Green function<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">heaviside</span><br>
+      </td>
+      <td style="vertical-align: top;">Heaviside (gap)<br>
+      <span style="font-style: italic;">The GapSide indicates raising (+) or falling (-) gap.</span><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Centre GapSide Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">langevin<br>
+      </td>
+      <td style="vertical-align: top;">Langevin function for magnetic polarization<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center Width BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">laplace<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Laplace_distribution">Laplace distribution function</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center Width BackGround</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">lognormal<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Log-normal_distribution">Log-Normal distribution</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center Width BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">lorz<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Lorentzian_function">Lorentzian</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">pareto<br>
+      </td>
+      <td style="vertical-align: top;">Pareto distribution function<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Exponent Width BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">poisson<br>
+      </td>
+      <td style="vertical-align: top;">Poisson distribution<br>
+      <span style="color: rgb(255, 0, 0);">WARNING:<span style="font-style: italic;"> </span></span><span style="font-style: italic;">The 'x' axis is assumed to be an integer array (counts)</span><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">pseudovoigt</span><br>
+      </td>
+      <td style="vertical-align: top;">Pseudo Voigt<br>
+      </td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 204, 0);">1D</span><br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Center Width BackGround LorentzianRatio<br>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">quadline</span><br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Parabola">Quadratic</a> line (parabola)<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Quadratic Linear Constant<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">sigmoid</span><br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Sigmoid_function">Sigmoidal</a> S-shaped curve (similar to Dose Response)<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Center Width BackGround</td>
+    </tr>
+<tr>
+      <td style="vertical-align: top; font-weight: bold;">sine<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Sine_function">Sine function</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Phase_Shift Period BackGround<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">sinedamp<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Damped_sine_wave">Damped Sine function</a> (exponential decay)<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Phase_Shift Period BackGround Decay<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">strline<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Straight_line">Straight line</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Gradient
+Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">triangl<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Triangular_function">Triangular</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">tophat</span><br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Rectangular_function">Top-Hat rectangular function</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth
+Background</td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">twoexp</span><br>
+      </td>
+      <td style="vertical-align: top;">Two exponential decay functions<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D</td>
+      <td style="vertical-align: top;">Amplitude1 Tau1 Amplitude2 Tau2 Background<br>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top; font-weight: bold;">voigt<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Voigt_profile">Voigt function</a><br>
+      </td>
+      <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Centre HalfWidth_Gauss HalfWidth_Lorz Background<br>
+      </td>
+    </tr><tr>
+      <td style="vertical-align: top; font-weight: bold;">gauss2d<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Gaussian_function">Gaussian</a> function with tilt angle<br>
+      </td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 102, 255);">2D</span><br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Centre_X Center_Y HalfWidth_X HalfWidth_Y Angle Background<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">lorz2d<br>
+      </td>
+      <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Lorentzian_function">Lorentzian</a> function with tilt angle</td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 102, 255);">2D</span></td>
+      <td style="vertical-align: top;">Amplitude Centre_X Center_Y HalfWidth_X HalfWidth_Y Angle Background</td>
+    </tr>
+<tr>
+      <td style="vertical-align: top; font-weight: bold;">plane2d<br>
+      </td>
+      <td style="vertical-align: top;">Planar function<br>
+      </td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 102, 255);">2D</span></td>
+      <td style="vertical-align: top;">Slope_X Slope_Y Background<br>
+      </td>
+    </tr><tr>
+      <td style="vertical-align: top; font-weight: bold;">pseudovoigt2d<br>
+      </td>
+      <td style="vertical-align: top;">Pseudo Voigt with tilt angle</td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 102, 255);">2D</span></td>
+      <td style="vertical-align: top;">Amplitude Centre_X Center_Y HalfWidth_X HalfWidth_Y Angle Background LorentzianRatio<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">quad2d<br>
+      </td>
+      <td style="vertical-align: top;">Quadratic (parabola) with tilt angle</td>
+      <td style="vertical-align: top;"><span style="color: rgb(51, 102, 255);">2D</span></td>
+      <td style="vertical-align: top;">Amplitude Centre_X Center_Y Curvature_X Curvature_Y Angle Background</td>
+    </tr>
+</tbody></table><br>
+<div style="text-align: center;"><a href="images/iFit_Models.png"><img title="iFit: default functions (in Models)" src="images/iFit_Models.png" alt="iFit: default functions (in Models)" style="border: 0px solid ; width: 560px; height: 420px;" align="middle"></a><br>
+</div>
+<span style="font-weight: normal;">To get one of these models, just type their function name:<br>
+</span>
+<pre style="margin-left: 40px;"><span style="font-weight: normal;">&gt;&gt; gauss<br>&gt;&gt; a = gauss;<br></span></pre>
+<pre><span style="font-weight: normal;"></span></pre>
+<span style="font-weight: normal;">The </span>list of <span style="font-weight: bold;">all available fit
+functions</span><span style="font-weight: normal;"> can be obtained from the
+command<span style="font-weight: bold;">:</span></span><br>
+
+
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">fits</span>(<span style="font-style: italic;">iData);<br></span></pre>which also produces the plot above.<br>
+<h3><a class="mozTocH3" name="mozTocId285330"></a>Specialized models</h3>
+<h4><a class="mozTocH4" name="mozTocId597620"></a>Scattering models (neutrons, x-rays)</h4>
+<p>We list below a number of models used to describe neutron and x-ray 
+scattering from matter. The structure factor S(q) accounts for the 
+structure of matter at the atomistic/molecular level, whereas the form 
+factor P(q) accounts for the geometrical arrangement of large scale 
+scattering units (micelles, tubes, ...). In practice, the scattering 
+from a material can be described by:<br>
+</p>
+<p style="text-align: center;"><span style="font-style: italic;">I(q) = P(q).S(q)</span><br>
+</p>
+<p style="text-align: left;">where <span style="font-style: italic;">q</span> is the momentum exchange in the material. These models have been extracted from the following sources:<br>
+</p>
+<ul>
+  <li><a href="http://kur.web.psi.ch/sans1/SANSSoft/sasfit.html">SASfit</a>, by
+    <a href="http://kur.web.psi.ch/sans1/SANSSoft/KJ33.html">Joachim
+Kohlbrecher</a> and <a href="mailto:ingo%28at%29cs.tu-berlin.de">Ingo
+Bressler</a> PSI (2006-2011)</li>
+<li>CrysFML by <a href="mailto:jrc@ill.eu">Juan Rodriguez-Carvajal</a> and <a href="mailto:jplatas@ull.es">Javier Gonzalez-Platas</a>, ILL and <span class="st">ULL, Tenerife, <em>Spain</em></span></li>
+
+</ul>
+<p style="text-align: left;"></p>
+<table style="text-align: left; width: 1016px; height: 13px;" cellpadding="2" cellspacing="2" border="1">
+
+<tbody><tr><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Structure factors<br>
+      </td><td style="vertical-align: top; background-color: rgb(255, 204, 204);"><span style="font-style: italic; font-weight: bold; color: rgb(51, 102, 255);">Description</span><br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Dimensionality<br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Parameters<br>
+      </td></tr><tr>
+    <td style="vertical-align: top; font-weight: bold;">sf_hard_spheres<br>
+    </td>
+    <td style="vertical-align: top;">Hard Sphere structure factor [Percus-Yevick]<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D
+    </td>
+    <td style="vertical-align: top;">R rho<br>
+    </td>
+  </tr><tr>
+    <td style="vertical-align: top; font-weight: bold;">sf_square_well <br>
+    </td>
+    <td style="vertical-align: top;">structure factor of particles interacting with a square well potential [Sharma]<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+    </td>
+    <td style="vertical-align: top;">R rho epsilon Delta T<br>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; font-weight: bold;">sf_sticky_hard_spheres<br>
+    </td>
+    <td style="vertical-align: top;">Sticky Hard Sphere structure factor [Baxter/Menon]<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+    </td>
+    <td style="vertical-align: top;">R rho tau<br>
+    </td>
+  </tr>
+
+</tbody>
+</table>
+<br>
+
+<table style="text-align: left; width: 1016px; height: 59px;" cellpadding="2" cellspacing="2" border="1">
+<tbody><tr><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Form factors: small angle<br>
+      </td><td style="vertical-align: top; background-color: rgb(255, 204, 204);"><span style="font-style: italic; font-weight: bold; color: rgb(51, 102, 255);">Description</span><br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Dimensionality<br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Parameters<br>
+      </td></tr><tr>
+    <td style="vertical-align: top; font-weight: bold;">ff_core_shell<br>
+    </td>
+    <td style="vertical-align: top;">Spherical/core shell form factor [Guinier]<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+    </td>
+    <td style="vertical-align: top;">R1 R2 eta1 eta2<br>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; font-weight: bold;">ff_sphere&nbsp; <br>
+    </td>
+    <td style="vertical-align: top;">Sphere form factor [Guinier]<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D<br>
+    </td>
+    <td style="vertical-align: top;">R eta<br>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<pre style="margin-left: 40px;"><span style="font-style: italic;"></span><span style="font-style: italic;"></span></pre>
+<h4><a class="mozTocH4" name="mozTocId344379"></a>
+
+Powder structure refinement (Rietveld)</h4>
+
+
+
+<table style="text-align: left; width: 1016px; height: 59px;" cellpadding="2" cellspacing="2" border="1">
+
+<tbody><tr><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Powder diffraction<br>
+      </td><td style="vertical-align: top; background-color: rgb(255, 204, 204);"><span style="font-style: italic; font-weight: bold; color: rgb(51, 102, 255);">Description</span><br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Dimensionality<br>
+      </td><td style="vertical-align: top; font-weight: bold; font-style: italic; color: rgb(51, 102, 255); background-color: rgb(255, 204, 204);">Parameters<br>
+      </td></tr><tr>
+    <td style="vertical-align: top; font-weight: bold;">rietveld<br>
+    </td>
+    <td style="vertical-align: top;"><a href="http://en.wikipedia.org/wiki/Rietveld_refinement">Rietveld</a> refinement of powder sample <br>
+with full McStas instrument model<br>
+    </td>
+    <td style="vertical-align: top; color: rgb(51, 204, 0);">1D, 2D, 3D<br>
+    </td>
+    <td style="vertical-align: top;">sample structure, <br>
+instrument parameters<br>
+    </td>
+  </tr>
+  
+</tbody>
+</table>
+
+
+<pre style="margin-left: 40px;"><span style="font-style: italic;"></span><span style="font-style: italic;"></span></pre>
+
+
+The 'rietveld' model allows to prepare a sample+instrument model in order to fit a diffraction/structure data set.<br>
+The syntax to build the model, and then perform the refinement is:<br>
+<div style="margin-left: 40px;">
+  <pre>&gt;&gt; model=<span style="color: rgb(51, 102, 255);">rietveld</span>(structure, ...., instrument, ....)<br>&gt;&gt; p = <span style="color: rgb(51, 102, 255);">fits</span>(model, measurement);<br></pre>
+</div>
+
+where <br>
+the 'structure' describes the initial sample structure (space group, 
+cell parameters abc &#945;&#946;&#947;, atom positions, ...); it can be given as a CIF,
+ FullProf or ShellX file, as well as from a <span style="font-style: italic;">struct</span> type variable with fields<span style="font-style: italic;"> 'Spgr' </span>and <span style="font-style: italic;">'cell'</span>, followed with atoms (giving xyz Biso occupancy spin charge, where only xyz are mandatory, others are optional):<br>
+<div style="margin-left: 40px;">
+  <pre>Sample.cell&nbsp; = [10.242696&nbsp; 10.242696&nbsp; 10.242696&nbsp; 90.000&nbsp; 90.000&nbsp; 90.000];
+Sample.Spgr&nbsp; = 'I 21 3';
+Sample.Ca1&nbsp;&nbsp; = [0.46737&nbsp; 0.00000&nbsp; 0.25000&nbsp; 0.60046&nbsp; 0.50000&nbsp;&nbsp; 0.0&nbsp;&nbsp; 2.0];<br>...<br></pre>
+</div>
+the instrument is the name of the McStas instrument description (<span style="font-style: italic;">templateDIFF.instr</span> is the default). The McStas simulation can be controlled using the default McStas options, as described in the <a href="McStas.html">dedicated help page</a> : <span style="font-weight: bold;">dir, ncount, mpi, seed, gravitation, compile, monitors</span>.
+ The monitors options is particularly recommended to specify which 
+monitor file to use from the virtual experiment. The resulting model 
+data set should be of the same type as the diffractometer measured data 
+set (e.g. TOF-angle, height-angle, ...), but not necessarily with same 
+binning and axes range.<br>
+<br>
+Any other '<span style="font-style: italic;">name=value</span>' argument
+ is assumed to be an instrument parameter. Any scalar parameter is made 
+into a model parameter, whereas string/char parameters are set as fixed 
+instrument parameters. By default, the sample structure (powder/single 
+crystal) is made available to the McStas instrument by mean of a <span style="font-style: italic;">'reflections.laz'</span> file which should be used by a <span style="font-style: italic;">PowderN</span> or <span style="font-style: italic;">Isotropic_Sqw</span> component. This name can be changed by specifying the 'CFML_write=filename' option.<br>
+<br>
+An example of Rietveld model is obtained from a CFL file, and the templateDIFF instrument including <span style="font-style: italic;">PowderN(reflections=Powder,...)</span>. We thus specify the fixed instrument parameter <span style="font-style: italic;">Powder='reflections.laz'</span>. The wavelength is kept fixed at 2.36, and we use monitor names matching <span style="font-style: italic;">BananaTheta</span>.<br>
+<pre style="margin-left: 40px;">&gt;&gt; model = <span style="color: rgb(51, 102, 255);">rietveld</span>([ <span style="color: rgb(51, 102, 255);">ifitpath</span> <span style="color: rgb(204, 51, 204);">'Data/Na2Ca3Al2F14.cfl'</span> ], <span style="color: rgb(204, 51, 204);">'templateDIFF.instr'</span>, <span style="color: rgb(204, 51, 204);">'Powder=reflections.laz; lambda="2.36"; monitors=BananaTheta'</span>);</pre>
+Once built, it is possible to set constraints on the model with the syntax such as (see <a href="iFunc.html#mozTocId579374">iFunc</a> page) :<br>
+<pre style="margin-left: 40px;">&gt;&gt; model.parameter=<span style="color: rgb(204, 51, 204);">'fix'</span>     <span style="font-style: italic;">% to lock its value during a fit process</span><br>&gt;&gt; model.parameter='<span style="color: rgb(204, 51, 204);">clear'</span>   <span style="font-style: italic;">% to unlock value during a fit process</span>
+&gt;&gt; model.parameter=[min max] <span style="font-style: italic;">% to bound value</span><br>&gt;&gt; model.parameter=[nan nan] <span style="font-style: italic;">% to remove bound constraint</span><br>&gt;&gt; model.parameter=<span style="color: rgb(204, 51, 204);">''</span>        <span style="font-style: italic;">% to remove all constraints on 'parameter'</span><br>&gt;&gt; model.Constraint=<span style="color: rgb(204, 51, 204);">''</span>       <span style="font-style: italic;">% to remove all constraints</span></pre>
+Then we import a data set<br>
+<pre style="margin-left: 40px;">&gt;&gt; measurement = iData([ <span style="color: rgb(51, 102, 255);">ifitpath</span> <span style="color: rgb(204, 51, 204);">'Data/nac_1645179.dat'</span> ]);</pre>
+
+The refinement is then obtained by starting :<br>
+<pre style="margin-left: 40px;">&gt;&gt; parameters = <span style="color: rgb(51, 102, 255);">fits</span>(model, measurement)</pre>
+
+with optional arguments as described in the <a href="Fit.html">Fit</a> page (the 'constraints' argument of <span style="font-style: italic;">fits</span> is partly redundant with the model constraints seen above).<br>
+Remember to bound most or all of the model parameters for a faster and more reliable convergence of the optimization.<br>
+<h3><a class="mozTocH3" name="mozTocId810939"></a><span style="font-weight: bold;">Model builder: defining a new model easy<br>
+  </span></h3>
+
+The <span style="font-style: italic;">ifitmakefunc</span> tool enables
+to define a new fit function/model from a simple dialog, by entering
+its <a href="images/ifitmakefunc.png"><img title="ifitmakefunc" src="images/ifitmakefunc.png" alt="ifitmakefunc" style="border: 0px solid ; width: 150px; height: 137px;" align="right"></a>expression
+as a function of the parameter vector <span style="font-style: italic; font-weight: bold;">p</span> and the axes <span style="font-style: italic; font-weight: bold;">x,y,z</span>,...<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">ifitmakefunc;<br><span style="color: rgb(0, 0, 0);">&gt;&gt; h=</span>edit<span style="color: rgb(0, 0, 0);">(iFunc);	<span style="font-style: italic;">% equivalent</span></span><br></span></pre>
+The only required argument is the expression, but you may as well&nbsp;
+enter a function name and description, parameter names and default
+values, as well as a constraint to be evaluated before computing the
+function value. When started without any parameters, the Gaussian
+function
+settings are used.<br>
+<br>
+The function both creates a function file, and returns its model object, that may evaluate and adjust to a data set with <a href="Fit.html"><span style="font-weight: bold;">fits</span></a>.<br>
+<pre style="margin-left: 40px;">&gt;&gt; [p,criteria,message,output]= <span style="color: rgb(51, 102, 255);">fits</span>(a, <span style="color: rgb(255, 0, 0);">h</span><span style="color: rgb(204, 51, 204);"></span>);<br>&gt;&gt; [p,criteria,message,output]= <span style="color: rgb(51, 102, 255);">fits</span>(<span style="color: rgb(255, 0, 0);">h</span><span style="color: rgb(204, 51, 204);"></span>, a); <span style="font-style: italic;">% same as above</span><br></pre>
+A quick definition, without using the dialog, can be performed with the
+syntax:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">ifitmakefunc<span style="color: rgb(0, 0, 0);">(<span style="color: rgb(204, 51, 204);">'p(1)*exp( (x-p(2))/p(3) )'</span>);</span></span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">fits</span>(a,<span style="color: rgb(51, 102, 255);">  iFunc<span style="color: rgb(0, 0, 0);">(<span style="color: rgb(204, 51, 204);">'p(1)*exp( (x-p(2))/p(3) )'</span>));</span></span> <span style="font-style: italic;">% same as above</span><br></pre>
+where&nbsp; <span style="font-weight: bold; font-style: italic;">p</span>
+is the vector that holds parameters. Axes are<span style="font-weight: bold; font-style: italic;"> x </span><span style="font-style: italic;">(rows)</span><span style="font-weight: bold; font-style: italic;">,y </span><span style="font-style: italic;">(columns)</span><span style="font-weight: bold; font-style: italic;">,z </span><span style="font-style: italic;">(pages)</span><span style="font-weight: bold; font-style: italic;">,t</span><span style="font-style: italic;"> (time)</span>. Beware to use a model expression with element-wise division and multiplication operators (<span style="font-weight: bold;">./</span> and <span style="font-weight: bold;">.*</span>). The function builder is known to work well for 1D and 2D functions.<br>
+<br>
+You can also build complex models from simpler ones using <a href="iFunc.html">iFunc</a> methods/operators, such as in<br>
+<pre style="margin-left: 40px;">&gt;&gt; h = gauss + lorz<br>&gt;&gt; h = convn(lorz, 3)<br>&gt;&gt; h = convn(gauss, lorz)<br>&gt;&gt; h = gauss .* lorz; % a 1D model<br>&gt;&gt; h = gauss  * lorz; % a 2D model
+<br></pre>
+
+The full syntax for the model builder is:<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">ifitmakefunc</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);">(</span></span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(204, 51, 204);">'expression'<span style="color: rgb(0, 0, 0);">);<br></span></span></span></span>&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">ifitmakefunc</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);">(</span></span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(204, 51, 204);"><span style="font-style: italic;">iFunc model</span><span style="color: rgb(0, 0, 0);">);</span></span></span></span>	<span style="font-style: italic;"><br>&gt;&gt; </span><span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">edit</span><span style="font-style: italic;">(</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(204, 51, 204);"><span style="font-style: italic;">iFunc model</span><span style="color: rgb(0, 0, 0);"><span style="font-style: italic;">);		</span></span></span></span></span><span style="font-style: italic;">% same as above</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(204, 51, 204);"><span style="color: rgb(0, 0, 0);"><span style="font-style: italic;"></span><br></span></span></span></span>&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">ifitmakefunc</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);">('function_name', 'description', 'Parameter1 Parameter2 ...', ...<br>	<span style="color: rgb(204, 51, 204);">'expression'<span style="color: rgb(0, 0, 0);">, </span></span>[default parameter values], <span style="color: rgb(204, 51, 204);">'constraint'</span>);<br></span></span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"></span></span></pre>
+which is equivalent to:<br>
+<pre style="margin-left: 40px;">&gt;&gt; fun.Name=<span style="color: rgb(204, 51, 204);">'function short name'</span>;<br>&gt;&gt; fun.Description=<span style="color: rgb(204, 51, 204);">'function description'</span>;		<span style="font-style: italic;">% function long description</span><br style="font-style: italic;">&gt;&gt; fun.Parameters=<span style="color: rgb(204, 51, 204);">'Parameter1 Parameter2 ...'</span>;		<span style="font-style: italic;">% parameter names</span>. When empty, names are given according to the Expression analysis (when appropriate)<br>&gt;&gt; fun.Guess=[0 1 2 ...] or <span style="color: rgb(204, 51, 204);">'automatic'</span>;		<span style="font-style: italic;">% parameter default values (vector), or automatic mode</span><br>&gt;&gt; fun.Expression=<span style="color: rgb(204, 51, 204); font-style: italic;">'expression using p and x,y,z,t...'</span>;	<span style="font-style: italic;">% value of the model</span> (required). p is the vector that holds parameters. Axes are x,y,z,t.<br>&gt;&gt; fun.Constraint=<span style="color: rgb(204, 51, 204);">'evaluated before Expression'</span>;	<span style="font-style: italic;">% constraint evaluated </span>prior<span style="font-style: italic;"> to the model Expression</span><br>&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);">iFunc</span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);">(fun);<br>&gt;&gt; </span></span><span style="color: rgb(51, 102, 255);">fits</span>(a, <span style="color: rgb(255, 0, 0);">h</span><span style="color: rgb(204, 51, 204);"></span>);<span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"></span></span></pre>
+The generated code will basically be:<br>
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);">function</span> y=Name(p, axes, ...)<br><span style="font-style: italic;">% Description</span><br style="font-style: italic;"><span style="font-style: italic;">% Parameters: [fun.Parameters]</span><br>Constraint;<br>y=Expression;<br></pre>
+The resulting function has the ability to identify itself (<span style="color: rgb(51, 102, 255);">disp(model)</span> provides
+detailed informations), compute automatic starting parameters with e.g.<span style="color: rgb(51, 102, 255);"> feval(model, 'guess')</span>, display
+itself <span style="color: rgb(51, 102, 255);">plot(model)</span>, and
+evaluate its value of course <span style="color: rgb(51, 102, 255);">feval(model, parameter_values, axes, ...)</span>. The resulting model is a <a href="iFunc.html">iFunc</a> object. Refer to that object description for more information.<br>
+<br>
+A large set of 1D (vector) and 2D (surface) models can be obtained from <a href="http://zunzun.com">ZunZun.com</a>.<br>
+<h4><a class="mozTocH4" name="mozTocId775891"></a>Creating complex
+functions from simple functions</h4>
+To <span style="font-weight: bold;">assemble existing functions</span>
+into new ones, you may use the iFunc operators <span style="font-style: italic;">e.g.</span>:&nbsp; <br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(255, 0, 0);">h</span>=<span style="color: rgb(51, 102, 255);"></span><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"></span></span><span style="color: rgb(204, 51, 204);"><span style="color: rgb(51, 102, 255);">gauss</span>+<span style="color: rgb(51, 102, 255);">lorz</span><span style="color: rgb(0, 0, 0);">; h.Constraint = </span></span><span style="color: rgb(204, 51, 204);">'p(8)=0'</span>;<br></pre>
+which creates a new function which is the <span style="font-weight: bold; font-style: italic;">sum</span> of a Gaussian and a
+Lorentzian.&nbsp; Unspecified arguments are guessed/automatically set. The second redundant Lorentzian Background <span style="font-style: italic;">p(8)</span> parameter
+is forced to 0 so that it does not correlate with the Gaussian
+Background <span style="font-style: italic;">p(4)</span>.
+<h4><a class="mozTocH4" name="mozTocId937554"></a>Using signal
+convolution/correlation in new functions</h4>
+It is possible to include a convolution (FFT based, multidimensional)
+in the core of the new function. The two function <span style="font-weight: bold; font-style: italic;">fconv</span> and <span style="font-weight: bold; font-style: italic;">fconvn</span> should
+then be used with the following syntax, where <span style="font-style: italic;">a</span> and <span style="font-style: italic;">b</span> are vectors/matrices:<br>
+<pre style="margin-left: 40px;">&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b);	<span style="font-style: italic;">	% returned convoluted object with size which is size(a)+size(b)+1</span><br>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'same'</span>);<span style="font-style: italic;">	% returned convoluted object </span><span style="font-style: italic;">with</span><span style="font-style: italic;"> size which is size(a)<br></span>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'valid'</span>);<span style="font-style: italic;">	% returned convoluted object </span><span style="font-style: italic;">with</span><span style="font-style: italic;"> size which is size(a)</span>-size(b)+1<br>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'pad'</span>);<span style="font-style: italic;">	% pads 'a' with starting/ending values to minimize border effects<br></span>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'center'</span>);<span style="font-style: italic;">	% centers 'b' so that convolution does not shift 'a'<br></span>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'norm'</span>);<span style="font-style: italic;">	% normalizes</span><span style="font-style: italic;"> 'b' so that convolution does not change 'a' integral<br></span>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'background'</span>);<span style="font-style: italic;">% subtracts</span><span style="font-style: italic;"> minimal value in 'b' so that convolution does not change 'a' integra</span>l<br>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'deconv'</span>);	<span style="font-style: italic;">% deconvolution, but very sensitive to noise (use with caution)</span><br></pre>
+When some data has to be convoluted with a response function (<span style="font-style: italic;">e.g.</span> instrument resolution
+function), the usual options to use should be:<br>
+<pre style="margin-left: 40px;">&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconv</span>(a,b, <span style="color: rgb(204, 51, 204);">'same pad background center norm'</span>);<br>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">fconvn</span>(a,b);	<span style="font-style: italic;">% same as above</span> in a shorter call</pre>
+These convolution methods have been ported to <a href="iFunc.html">iFunc</a> models as<br>
+<ul>
+<li><span style="font-weight: bold;">conv: </span>convolution (calls fconv)<br>
+</li><li><span style="font-weight: bold;">convn: </span>normalized convolution (calls fconvn)<br>
+</li><li><span style="font-weight: bold;">xcorr: </span>cross-correlation (calls fconv in correlation mode)<br>
+</li>
+</ul>
+If you wish to convolute two models, use<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">convn</span>(lorz, 3)		<span style="font-style: italic;">% convolution of a Lorentzian with a Gaussian of width 3<br></span>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">convn</span>(lorz, gauss)	<span style="font-style: italic;">% a Voigt function...<br></span>&gt;&gt; a = <span style="color: rgb(51, 102, 255);">convn</span>(lorz, <span style="color: rgb(204, 51, 204);">'double(b)'</span>)<span style="font-style: italic;">; </span>a.Constraint = <span style="color: rgb(204, 51, 204);">'global b'</span>;	% convolute with a global variable 'b'<span style="font-style: italic;"></span></pre>
+where the vector/matrix<span style="font-style: italic;"> 'b'</span>
+holds the response function (filter) <span style="font-style: italic;">with
+the same axis binning</span> as the object <span style="font-style: italic;">'a'</span>.<br>
+<br>
+<span style="color: rgb(255, 0, 0);">Warning: </span>The <span style="font-style: italic;">fconv</span> and <span style="font-style: italic;">fxcorr</span> functions require the <span style="font-style: italic;">x</span>
+axis not to be coarsely sampled. In case the models/data contain narrow
+peaks (described with few points underneath e.g. less than 5),
+the fit model above will fail convolving. One solution is to
+artificially create a finer sampled axis, evaluate the function, and
+reduce back to the initial number of points. The constraints are used
+to define the new finer axis <span style="font-style: italic;">xx</span>, and the final result is re-sampled with 1 point out of 5 :<br>
+<pre style="margin-left: 40px;">&gt;&gt; h = <span style="color: rgb(51, 102, 255);">convn</span>(dho, gauss); <br>&gt;&gt; h.Constraint=<span style="color: rgb(204, 51, 204);">'x=linspace(min(x),max(x), 5*length(x))';</span><span style="color: rgb(51, 102, 255);"></span><span style="color: rgb(204, 51, 204);">	<span style="color: rgb(0, 0, 0); font-style: italic;">% artificially extend the 'x' axis</span><br><span style="color: rgb(0, 0, 0);">&gt;&gt; h = h + </span>'signal=signal(1:5:end);'<span style="color: rgb(0, 0, 0);">;</span></span>				<span style="font-style: italic;">% shrink 'signal' back to initial size</span><br></pre>
+
+<pre style="margin-left: 40px;"><span style="color: rgb(51, 102, 255);"><span style="color: rgb(0, 0, 0);"></span></span></pre>
+<h3><a class="mozTocH3" name="mozTocId854762"></a><span style="font-weight: bold;">How to write manually a model function</span></h3>
+We suggest that you start from the<span style="color: rgb(51, 102, 255);"> 'gauss' </span>function in <span style="font-style: italic;">iFit/Scripts/Models, </span>and
+customize at will. Please retain the function core structure to ensure
+proper execution. More complex models can be derived from e.g. the <span style="color: rgb(51, 102, 255);">voigt</span> function.<br>
+<pre style="margin-left: 40px;">&gt;&gt; edit gauss<br>&gt;&gt; edit voigt<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">ifitmakefunc</span>(voigt)	<span style="font-style: italic;">% pop-up a dialogue</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">edit</span>(voigt)		<span style="font-style: italic;">% same as ifitmakefunc for iFunc objects</span><br></pre>
+
+
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/fit models - </span><span style="font-style: italic;">
+$Date: 2013-06-03 10:15:05 +0200 (Mon, 03 Jun 2013) $ $Revision: 1039 $
+</span><span style="font-style: italic;"> </span>-
+back to <a href="index.html">Main
+iFit Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+</div>
+
+
+</body></html>

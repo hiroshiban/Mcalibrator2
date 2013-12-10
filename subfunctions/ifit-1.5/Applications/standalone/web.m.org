@@ -1,0 +1,93 @@
+function web(varargin)
+% WEB Open Web browser on site or files.
+%    WEB opens up an empty internal web browser.  The default internal web
+%    browser includes a toolbar with standard web browser icons, and an address
+%    box showing the current address.
+% 
+%    WEB URL displays the specified URL (Uniform Resource Locator) in an
+%    internal web browser window.  If one or more internal web browsers are
+%    already running, the last active browser (determined by the last
+%    browser which had focus) will be reused.  If the URL is located underneath
+%    docroot, then it will automatically be displayed inside the Help
+%    browser.  If the file is on the MATLAB path, a fully qualified name is
+%    not necessary.  Also, the file can be referenced relative to the
+%    current working directory.
+
+if length(varargin)
+  url = varargin{1};
+else
+  url = '';
+end
+
+if ~isempty(private_help(url))
+  return
+end
+
+
+% launches our internal Web browser which follows 'matlab:' URL's
+fallback_web(url); % in private
+
+% ------------------------------------------------------------------------------
+
+function h=private_help(varargin)
+% HELP Display help text in Command Window, for iFit commands and methods
+%
+% HELP FUN displays a description of and syntax for the function FUN.
+%     When FUN is in multiple directories on the MATLAB path, HELP displays
+%     information about the first FUN found on the path.
+%
+% HELP PATHNAME/FUN displays help for the function FUN in the PATHNAME
+%     directory. Use this syntax to get help for overloaded functions.
+%
+% HELP CLASSNAME.METHODNAME displays help for the method METHODNAME of
+%     the fully qualified class CLASSNAME. To determine CLASSNAME for
+%     METHODNAME, use CLASS(OBJ), where METHODNAME is of the same class as
+%     the object OBJ.
+%
+%     HELP CLASSNAME displays help for the fully qualified class CLASSNAME.
+%
+% example: help iData/cos; help iFunc
+
+h = '';
+if length(varargin)
+  url = varargin{1};
+else
+  url = '';
+end
+if isempty(url), return; end
+if ~isdeployed
+  builtin('help',varargin{:});
+else
+  % attempts to guess what to display
+  [p,f,e] = fileparts(url);
+  h = fullfile(p , [f '.txt' ]); 
+  
+  % is the url a path to an iFit function ?
+  if ~isempty(dir(h))
+    fid = fopen(h, 'r');
+    h   = fread(fid, Inf, 'uint8=>char')';
+    fclose(fid);
+  elseif any(strcmp(strtok(url, '.'), {'iData','iFunc'}))
+  % is the url an iFit class.method or class
+    [c, m] = strtok(url, '.');
+    if isempty(m), m = c; else m=m(2:end); end
+    url    = fullfile('Objects', [ '@' c ], m);
+    feval(mfilename, url);
+    return
+  else
+  % is the url an iFit function ?
+    if ~isempty(dir(which(url))) && ~strcmp(url, which(url))
+      feval(mfilename, which(url));
+    else 
+      h=[]; 
+      disp([ 'help: ' url ' documentation can not be found in the standalone help system.' ]);
+      disp('Matlab help is fully available at <http://www.mathworks.com/help/techdoc>.');
+    end
+    return
+  end
+  % get the help string from the corresponding file (must have been generated at deploy stage)
+  
+  % display the help
+  fprintf(1, '%s', h);
+end
+

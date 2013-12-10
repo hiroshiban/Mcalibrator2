@@ -1,0 +1,623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>iFit: Saving/exporting data</title>
+</head><body>
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: Saving/exporting objects</h1>
+<br>
+<ul id="mozToc">
+<!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId939028">Conversion to other Matlab types </a></li>
+  <li><a href="#mozTocId219564">Export to lossless formats</a>
+    <ul>
+      <li><a href="#mozTocId593918">text based lossless formats</a></li>
+      <li><a href="#mozTocId238422">binary lossless formats</a></li>
+    </ul>
+  </li>
+  <li><a href="#mozTocId795353">Export to lossy formats</a></li>
+</ul>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">Commands we use in this page: <span style="font-style: italic;">iData</span>, saveas, <a href="Methods.html">methods</a><br>
+You may also refer to the <a href="Load.html">Load</a> and <a href="Loaders.html">Loaders</a> pages to learn about importable formats.<br>
+
+</div>
+<br>
+Once you have managed to actually <span style="font-style: italic;">do
+something,</span>
+it is desirable to save your work for future use and communication
+(print, edit, send to friends...). We thus provide a general interface
+to save the <a href="iData.html">iData</a> objects.<br>
+<br>
+Among the available formats, some retain the integrity of the object
+(or at least a significant portion of it) - labelled as <span style="font-style: italic;">lossless</span> formats, and some degrade
+the object information - labelled as <span style="font-style: italic;">lossy</span>
+formats. <br>
+<br>
+The text based formats are usually easier to read and edit by humans,
+whereas the binary formats are much more compact in storage but require
+dedicated libraries for reading/editing.<br>
+<br>
+The only method required for saving objects is <span style="font-weight: bold;">saveas</span><span style="font-style: italic;">(object, <span style="color: rgb(204, 51, 204);">filename</span>, <span style="color: rgb(204, 51, 204);">format</span>)</span>. When the
+filename is not specified (left empty as <span style="color: rgb(204, 51, 204);">''</span>), a default name is built
+from the object unique ID (tag). When the filename is set to<span style="color: rgb(204, 51, 204);"> 'gui'</span>, a file selector
+dialog pops-up. The filename extension defines the format to use, when
+this latter is not specified initially. Last, when the format is set to
+<span style="color: rgb(204, 51, 204);"> 'gui'</span>, a format
+selector dialog pops-up.The <span style="font-weight: bold;">save</span> method is equivalent to <span style="font-style: italic;">saveas.</span><br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">[</span><span style="color: rgb(204, 51, 204);"> ifitpath '</span><span style="color: rgb(204, 51, 204);">Data/ILL_IN6.dat'</span>])<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span>(a,<span style="color: rgb(204, 51, 204);">''</span>,<span style="color: rgb(204, 51, 204);">'pdf'</span>)               <span style="font-style: italic;">% save object as a PDF and use object ID as file name</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span>(a,<span style="color: rgb(204, 51, 204);">'MakeItSo'</span>,<span style="color: rgb(204, 51, 204);">'hdf5'</span>)      <span style="font-style: italic;">% save object as a HDF5 into specified filename. Extension is appended automatically</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">saveas</span>(a,<span style="color: rgb(204, 51, 204);">'MakeItSo'</span>,<span style="color: rgb(204, 51, 204);">'hdf5'</span>)        <span style="font-style: italic;">% 'save' is equivalent to 'saveas'</span></pre>
+
+We recommend the following formats for storing data sets:<br>
+<ul>
+  <li><span style="font-weight: bold;">text formats</span>: Matlab m
+and DAT<br>
+  </li>
+  <li><span style="font-weight: bold;">binary formats</span>: HDF5 and
+Matlab .mat (for re-use from Matlab)</li>
+  <li><span style="font-weight: bold;">for printing</span>: PDF and SVG, FIG if you want to edit the plot with Matlab<br>
+</li>
+</ul>The Matlab MAT workspace format can be generated in two forms:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span>(a,<span style="color: rgb(204, 51, 204);">''</span>,<span style="color: rgb(204, 51, 204);">'mat'</span>)             <span style="font-style: italic;">% save object as a serialized MAT (very fast)<br></span>&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span> a<span style="font-style: italic;">			% save object as normal MAT file<br></span></pre>
+The first form, using the dedicated 'save'/'saveas' iData methods, generates a MAT-file containing <span style="font-style: italic;">serialized</span> data (much faster to read/write, smaller files by ~30%), but requires to re-import the file using the iData methods, e.g.<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">load</span>(iData,<span style="color: rgb(204, 51, 204);">'mat_file'</span>)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">'mat_file'</span>)
+</pre>
+The second variant generates a normal MAT-file (slower to read/write, but portable).<br>
+<br>
+A short list of available export formats is displayed with:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">saveas</span>(iData, <span style="color: rgb(204, 51, 204);">'formats'</span>);</pre>
+Last, the <b>getframe</b> method generates a snapshot picture (thumbnail). The <span style="font-weight: bold;">class2str </span>function can more generally write any Matlab variable as a character string. And the <span style="font-weight: bold;">str2struct</span> function can read a character string and search for [<span style="font-style: italic;">name</span>{=: }<span style="font-style: italic;">value</span>] pairs in single lines, to set a return structure.<br>
+<br>
+To load back an m or mat file into memory for re-use, type the m-file name without extension, or <span style="font-style: italic;">load(iData,'filename.mat</span>') for MAT-files. Refer to the <a href="Load.html">Load</a> page for other ways to import data files and objects.<br>
+<br>
+Last, you can also save the object history, that is all operations 
+performed from creation to current status, as a Matlab script, by 
+issuing the command:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">commandhistory</span>(a)</pre>
+and selecting '<span style="font-style: italic;">Save all to file...</span>'
+ button. A file selector will pop-up. Enter a filename to generate an 
+m-file script. This script can be read back to reproduce the object. <span style="font-weight: bold; font-style: italic;">A warning is in place here</span>:
+ if the object was obtained using other objects, these must be available
+ at the time the script is executed. Also, if large static arrays have 
+been used in the process, as they can not be saved in the history the 
+corresponding commands will fail. Last, if you compress the object with 
+e.g. pack, some of the history may be lost.<br>
+<br>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId939028"></a> Conversion to other <span style="font-style: italic;">Matlab</span> types<br>
+</h3>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Convert
+to<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);">cell(a)<br>
+      </td>
+      <td style="vertical-align: top;">Convert the iData content and
+field names to cell arrays<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);">char(a)<br>
+      </td>
+      <td style="vertical-align: top;">Assemble Title/Label/Filename
+into a comprehensive description (does not actually export the data)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);"><span style="font-weight: bold;">double(a)</span><br>
+      </td>
+      <td style="vertical-align: top;">Extracts the object Signal as a
+double float array, this is the same as double(a.Signal/a.Monitor)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);">single(a)<br>
+      </td>
+      <td style="vertical-align: top;">Extracts the object Signal as a
+single float array, this is the same as single(a.Signal/a.Monitor), and uses less
+memory than double.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);"><span style="font-weight: bold;">struct(a)</span><br>
+      </td>
+      <td style="vertical-align: top;">Converts the object to a raw
+structure. iData methods can not apply on the structure itself. Use
+iData(structure) to come back to the initial object.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-style: italic; color: rgb(0, 153, 0);"><span style="font-weight: bold;">iData(a)</span><br>
+      </td>
+      <td style="vertical-align: top;">Import an
+array/structure/cell/file and check iData object structure<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId219564"></a>
+Export to lossless formats (retain object)<br>
+</h3>
+<h4><a class="mozTocH4" name="mozTocId593918"></a>text based lossless
+formats</h4>
+Text files have the advantage that any one can look inside files, and
+understand what it contains. However, files are usually <span style="font-weight: bold;">large</span>
+ as no
+compression mechanism is applied, natively. The time needed to generate 
+the file can then be substantially long. However, in some cases, a
+simple numerical representation can be very compact. And such files can
+be compressed afterwards with e.g. ZIP.<br>
+<br>
+The last column indicates if the generated format for export can be
+re-used afterwards and re-imported with iFit (see the <a href="Loaders.html">Loaders</a> and <a href="Load.html">Load</a> page).<br>
+<span style="font-weight: bold;"><br>
+</span>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">format (save)<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Text/Binary<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Lossless<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Description<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Read?</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"></span><span style="color: rgb(204, 51, 204); font-weight: bold;">'m'<br>
+      </span><span style="color: rgb(204, 51, 204);">Matlab<br>
+M-file</span><span style="color: rgb(204, 51, 204); font-weight: bold;"><br>
+      </span></td>
+      <td style="vertical-align: top;">text<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Yes</span><br>
+      </td>
+      <td style="vertical-align: top;">The M-file format is a flat text
+file which reconstructs the whole initial object.<span style="font-weight: bold;"><span style="font-weight: bold;"> </span></span>It
+is
+not
+easily readable by humans<span style="font-weight: bold;">, </span>and
+does
+not have any compression mechanism, producing large files. Such
+files can be imported directly by typing their name from Matlab, even
+without iFit/iData installed. They can also be edited with any text
+editor.<span style="font-weight: bold;"><br>
+      </span></td>
+      <td style="vertical-align: top;">Yes. <span style="font-style: italic;">Type the file name (without the .m extension) at the prompt</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'dat'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">flat text file</span><br>
+      </td>
+      <td style="vertical-align: top;">text<br>
+      </td>
+      <td style="vertical-align: top;">Mostly<br>
+      </td>
+      <td style="vertical-align: top;">The DAT format is a flat text
+file with numerical blocks preceded with a header and readable
+comments.
+It can be edited with any text editor. Can be
+re-<a href="Load.html">imported with iFit/iData</a>, but axes/alias
+definitions are not re-generated.<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr><tr>
+  <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'yaml','json'</span><br style="color: rgb(204, 51, 204);">
+
+    <span style="color: rgb(204, 51, 204);">meta language configuration files</span></td>
+  <td style="vertical-align: top;">text<br>
+  </td>
+  <td style="vertical-align: top;">Mostly<br>
+  </td>
+  <td style="vertical-align: top;">The <a href="http://en.wikipedia.org/wiki/YAML">YAML</a>/<a href="http://en.wikipedia.org/wiki/JSON">JSON</a> format is a hierarchical indented text file for configuration serialization.
+It can be edited with any text editor. Can be
+re-<a href="Load.html">imported with iFit/iData</a>, but you may need to tune the final object.</td>
+  <td style="vertical-align: top;">Yes<br>
+  </td>
+</tr><tr>
+  <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'xml'</span><br style="color: rgb(204, 51, 204);">
+
+      <span style="color: rgb(204, 51, 204);">XML description file</span></td>
+  <td style="vertical-align: top;">text<br>
+  </td>
+  <td style="vertical-align: top;">Mostly<br>
+  </td>
+  <td style="vertical-align: top;">The <a href="http://www.w3.org/XML/">XML</a> format</td>
+  <td style="vertical-align: top;">Yes<br>
+  </td>
+</tr>
+
+
+  </tbody>
+</table>
+<span style="font-weight: bold;"></span><br>
+<h4><a class="mozTocH4" name="mozTocId238422"></a>binary lossless
+formats</h4>
+<p>These file formats are usually fast to read/write.<br>
+</p>
+
+<span style="font-weight: bold;">
+</span>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">format (save)<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Text/Binary<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Lossless<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Description<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Read?</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"></span><span style="color: rgb(204, 51, 204); font-weight: bold;">'mat'<br>
+      </span><span style="color: rgb(204, 51, 204);">Matlab<br>
+Mat-file</span><span style="color: rgb(204, 51, 204); font-weight: bold;"><br>
+      </span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Yes</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"></span>The
+Matlab
+workspace
+binary
+file is compact and fast to read/write. It carries the whole object
+information. Such files require Matlab (or <a href="iFit.html">iFit standalone</a> or <a href="http://www.octave.org">Octave</a>) to be installed prior to
+importation. <span style="font-style: italic;">This file contains serialized data, to be re-imported into an iData object.</span><span style="font-weight: bold;"> </span></td>
+      <td style="vertical-align: top;">Yes<br>
+</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);">'hdf5'<br>
+      </span></span><span style="color: rgb(204, 51, 204);">HDF 5</span><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);"><br>
+      </span></span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+      <td style="vertical-align: top;">The <a href="http://www.hdfgroup.org/">HDF5</a> format is a compact,
+compressed binary storage format. However, in its use here, it does not
+reconstruct the whole object, but only its main values and alias/axes
+names. Such files can be edited/viewed with e.g <a href="http://www.hdfgroup.org/hdf-java-html/hdfview">hdfview</a>, <a href="http://www.opendx.org/about.html">OpenDX, </a><a href="http://autoplot.org/">Autoplot</a>. Such
+files can of course also be <a href="Load.html">imported into iData</a>
+objects.<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+  <td valign="top"><font color="#cc33cc"><b>'nxs','n5','nx',<br>
+'mantid'</b> Mantid workspace</font></td>
+  <td valign="top">binary</td>
+  <td valign="top">Yes</td>
+  <td valign="top">This is a flavor of the HDF format. Specific support for saving into <a href="http://www.mantidproject.org">Mantid</a>  workspaces by using the <span style="font-weight: bold;">'mantid'</span> format.<br>
+</td>
+  <td valign="top">Yes<br>
+  </td>
+</tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);">'nc'<br>
+      </span></span><span style="color: rgb(204, 51, 204);">NetCDF</span><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);"><br>
+      </span></span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">Mostly (no Attributes nor structure kept)<br>
+      </td>
+      <td style="vertical-align: top;">The <a href="http://www.unidata.ucar.edu/software/netcdf/">NetCDF</a> format is
+a compact binary format. However, in its use here, it does not
+reconstruct the whole object, but
+only its main values and alias/axes names. Such files can be
+edited/viewed with e.g <a href="http://meteora.ucsd.edu/%7Epierce/ncview_home_page.html">ncview</a>
+or <a href="http://www.epic.noaa.gov/java/ncBrowse/">ncBrowse</a>. <a href="http://www.opendx.org/about.html">OpenDX</a>,&nbsp;<a href="http://www.hdfgroup.org/hdf-java-html/hdfview">hdfview</a>, <a href="http://www.giss.nasa.gov/tools/panoply/">Panoply</a>, <a href="http://autoplot.org/">Autoplot</a>. Such files can of course
+also be <a href="Load.html">imported into iData</a> objects.</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr><tr>
+  <td valign="top"><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);">'cdf'<br>
+      </span></span><span style="color: rgb(204, 51, 204);">CDF</span><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);"><br>
+      </span></span></td>
+  <td valign="top">binary</td>
+  <td valign="top">Mostly (no Attributes nor structure kept)</td>
+  <td valign="top">The <a href="http://en.wikipedia.org/wiki/Common_Data_Format">CDF</a> format is a compact binary format. Such files can be
+edited/viewed with e.g <a href="http://www.opendx.org/about.html">OpenDX, </a><a href="http://autoplot.org/">Autoplot</a>. It is <i>incompatible</i> with NetCDF.</td>
+  <td valign="top">Yes<br>
+  </td>
+</tr>
+
+  </tbody>
+</table>
+<span style="font-weight: bold;"></span><span style="font-weight: bold;"><br>
+</span>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId795353"></a>Export to lossy formats</h3>
+The following formats are mainly intended to be used as object
+representations. They mostly display/export the object <span style="font-style: italic;">Signal</span>
+usually weighted by the
+Monitor, and with axes. No other metadata nor alias is exported. Most
+of these formats are restricted to flat images (1D and 2D). We recommend
+ binary formats, as they are more compact and the time needed to 
+generate them is smaller.<br>
+<br>
+<span style="font-weight: bold;">
+</span>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">format (save)<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Text/Binary<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Lossless<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(255, 204, 204); font-weight: bold; font-style: italic;">Description<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Read?</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold; color: rgb(204, 51, 204);">'fig' </span><span style="color: rgb(204, 51, 204);">Matlab figure</span><br>
+      </td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes</td>
+      <td style="vertical-align: top;">The Matlab figure contains the 'visible' part of the object, and can be re-opened/edited from Matlab.<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"></span><span style="color: rgb(204, 51, 204); font-weight: bold;">'csv'<br>
+      </span><span style="color: rgb(204, 51, 204);">Matlab<br>
+comma separated values</span><span style="color: rgb(204, 51, 204); font-weight: bold;"><br>
+      </span></td>
+      <td style="vertical-align: top;">text<span style="font-style: italic;"> (beware large objects)</span><br>
+      </td>
+      <td style="vertical-align: top;">signal only<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"></span>The
+comma
+separated
+value format is a single dump of the object <span style="font-style: italic;">Signal</span>. The other information is
+lost. Such files can be imported by e.g. any spreadsheet software (<a href="http://www.openoffice.org/">OpenOffice</a>, Excel, <a href="http://projects.gnome.org/gnumeric/">Gnumeric</a>), or
+with <a href="Load.html">iFit/iData</a><span style="font-weight: bold;"></span>.</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);">'hdf4'<br>
+      </span></span><span style="color: rgb(204, 51, 204);">HDF 4<br>
+image</span><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);"><br>
+      </span></span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal only<br>
+      </td>
+      <td style="vertical-align: top;">The <a href="http://www.hdfgroup.org/">HDF4</a> format is a compact, binary storage format. However, in its use here, it does not
+reconstruct the whole object, but only its <span style="font-style: italic;">Signal/Monitor</span> values as an <span style="font-weight: bold;">image. </span>Such files can be
+edited/viewed with e.g <a href="http://www.hdfgroup.org/hdf-java-html/hdfview">hdfview</a>. Such
+files can of course also be <a href="Load.html">imported into iData</a>
+objects. IDL and Matlab also have dedicated HDF 4 browsers (see <a href="matlab:doc%20hdftool">hdftool</a>).</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'edf'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">EDF ESRF Data format</span><br>
+      </td>
+      <td style="vertical-align: top;">binary with 512-multiple length
+text header<br>
+      </td>
+      <td style="vertical-align: top;">signal plus limited metadata<br>
+      </td>
+      <td style="vertical-align: top;">The EDF format is mainly used at
+the <a href="http://www.esrf.fr">ESRF</a> and can be viewed with e.g. <a href="http://pymca.sourceforge.net/">PyMCA</a>, <a href="http://www.sci.muni.cz/%7Emikulik/Soft4Synchro.html">Zimg</a>, <a href="http://www.gnuplot.info/">GnuPlot</a>, <a href="http://edfexplorer.sourceforge.net/">EDFExplorer</a>, <a href="http://www.esrf.eu/computing/scientific/FIT2D/">Fit2D</a>. This
+format saves a single image/numeric block plus some metadata in its
+header.<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);">'gif' 'bmp' 'png' 'tiff' 'jpeg'<br>
+      <br>
+      </span></span><span style="color: rgb(204, 51, 204);"></span><span style="font-weight: bold;"><span style="color: rgb(204, 51, 204);"> </span></span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal only<br>
+or signal/monitor<br>
+      </td>
+      <td style="vertical-align: top;">Standard image formats. Can be
+re-<a href="Load.html">imported with iFit/iData</a>, or used elsewhere
+(web, email, ...). View with e.g. <a href="http://www.gimp.org/">GIMP</a>, <a href="http://www.trilon.com/xv/xv.html">xv</a>, <a href="rsbweb.nih.gov/ij/">ImageJ</a>.<br>
+      </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'fits'</span><br style="color: rgb(204, 51, 204);">
+
+      <span style="color: rgb(204, 51, 204);">FITS astronomical image format</span></td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor,<br>
+only for 2D data.<br>
+      </td>
+      <td style="vertical-align: top;">The <a href="http://fits.gsfc.nasa.gov/">FITS</a> format is a standard data format used in astronomy. Can be displayed with e.g. <a href="http://www.gimp.org/">GIMP</a>, <a href="http://www.trilon.com/xv/xv.html">xv</a>, <a href="http://autoplot.org/">Autoplot</a>.</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+<tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold; color: rgb(204, 51, 204);">'ps' 'eps'</span><br>
+      <span style="color: rgb(204, 51, 204);">PostScript</span><br>
+      </td>
+      <td style="vertical-align: top;">text/binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes<br>
+      </td>
+      <td style="vertical-align: top;">Usual PostScript files. Can be
+directly printed. Edit/View with <a href="http://www.adobe.com/products/illustrator/">Adobe Illustrator</a>,
+      <a href="http://get.adobe.com/fr/reader/">Acrobat Reader</a>, <a href="http://projects.gnome.org/evince/">Gnome/Evince</a>, <a href="http://www.gimp.org/">GIMP</a>. </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold; color: rgb(204, 51, 204);">'pdf'</span><br>
+      <span style="color: rgb(204, 51, 204);">Adobe PDF</span><br>
+      </td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes<br>
+      </td>
+      <td style="vertical-align: top;">A portable format for
+displaying/printing with e.g. <a href="http://get.adobe.com/fr/reader/">Acrobat
+Reader</a> or <a href="http://www.google.com/chrome">Google Chrome</a>,
+      <a href="http://projects.gnome.org/evince/">Gnome/Evince</a>, <a href="http://www.gimp.org/">GIMP</a>. </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'ill'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">Adobe Illustrator</span><br>
+      </td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes</td>
+      <td style="vertical-align: top;">Similar to PostScript. Files are
+large. Edit/View with <a href="http://www.adobe.com/products/illustrator/">Adobe Illustrator</a>.<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'xls'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">Excel spreadsheet</span><br>
+      </td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">signal only<br>
+      </td>
+      <td style="vertical-align: top;">Exports as a single spreadsheet.
+Requires Excel to be installed. Can be
+re-<a href="Load.html">imported with iFit/iData</a>. </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'svg'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">Scalable Vector Graphics</span><br>
+      </td>
+      <td style="vertical-align: top;">text/binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes</td>
+      <td style="vertical-align: top;">A portable editable vectorial
+representation of the object. Can be viewed with e.g. <a href="http://inkscape.org/">Inkscape</a>, <a href="http://www.gimp.org/">GIMP</a>. </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'wrl'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">Virtual Reality world</span> (<a href="http://www.web3d.org/x3d/specifications/vrml/">VRML</a> 2.0)<br>
+      </td>
+      <td style="vertical-align: top;">text <span style="font-style: italic;"> (beware large objects)</span>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with axes</td>
+      <td style="vertical-align: top;">A portable editable vectorial
+representation of the object similar to X3D. Can be viewed with e.g <a href="http://freewrl.sourceforge.net/">Freewrl</a>, <a href="http://www.octaga.com/">Octaga Player</a>, <a href="http://vrml.cip.ica.uni-stuttgart.de/dune/">WhiteDune</a>, <a href="http://castle-engine.sourceforge.net/view3dscene.php">View3DScene</a>, <a href="http://www.cgl.ucsf.edu/chimera/">Chimera</a>, ...
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr><tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'vtk'</span><br style="color: rgb(204, 51, 204);">
+      <span style="color: rgb(204, 51, 204);">Visual ToolKit</span><br>
+      </td>
+      <td style="vertical-align: top;">text/binary<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with some metadata<br>
+      </td>
+      <td style="vertical-align: top;">A portable vectorial representation of 1D/2D/3D objects. Can be viewed with <a href="http://www.paraview.org/">ParaView</a> and <a class="reference external" href="https://svn.enthought.com/enthought/wiki/MayaVi">Mayavi2</a>.</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr><tr>
+  <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204);"><span style="font-weight: bold;">'x3d'</span> Virtual Reality world </span>(<a href="http://www.web3d.org/x3d/specifications/x3d_specification.html">X3D</a>)<br>
+  </td>
+  <td style="vertical-align: top;">text <span style="font-style: italic;"> (beware large objects)</span>
+  </td>
+  <td style="vertical-align: top;">signal/monitor, no axes<br>
+  </td>
+  <td style="vertical-align: top;">A portable editable vectorial
+representation of the object, similar to VRML. Can be viewed with e.g <a href="http://freewrl.sourceforge.net/">Freewrl</a>, <a href="http://www.octaga.com/">Octaga Player</a>, <a href="http://vrml.cip.ica.uni-stuttgart.de/dune/">WhiteDune</a>, <a href="http://castle-engine.sourceforge.net/view3dscene.php">View3DScene</a>, <a href="http://www.instantreality.org/">InstantPlayer</a> ...</td>
+  <td style="vertical-align: top;"><br>
+  </td>
+</tr>
+<tr>
+  <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204);"><span style="font-weight: bold;">'xhtml'</span> Extensible Web page </span>(XHTML/JavaScript/Flash)<br>
+  </td>
+  <td style="vertical-align: top;">text <span style="font-style: italic;"> (beware large objects)</span>
+  </td>
+  <td style="vertical-align: top;">signal/monitor, no axes</td>
+  <td style="vertical-align: top;">A web page showing objects in 3D, that can be opened with any modern Web browser such as <a href="http://www.google.com/chrome">Chrome</a> and <a href="http://www.mozilla.org">Firefox</a>.<br>
+  </td>
+  <td style="vertical-align: top;"><br>
+  </td>
+</tr>
+<tr>
+      <td style="vertical-align: top;"><span style="color: rgb(204, 51, 204); font-weight: bold;">'hdr'</span>+'img'<br style="color: rgb(204, 51, 204);">
+
+      <span style="color: rgb(204, 51, 204);">MRI 3D volume</span></td>
+      <td style="vertical-align: top;">binary (2 files)<br>
+      </td>
+      <td style="vertical-align: top;">signal/monitor, with some metadata</td>
+      <td style="vertical-align: top;">A
+MRI volume data format. The 'hdr' file requires an associated 'img'
+file. <a href="http://en.wikipedia.org/wiki/Analyze_%28imaging_software%29">Format</a> from the Analyze <a href="http://www.analyzedirect.com/">Biomedical Imaging Resource of the Mayo Clinic</a>. </td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr><tr>
+      <td style="vertical-align: top; color: rgb(204, 51, 204);"><span style="font-weight: bold;">'STL', 'STLB'</span> stereolithography</td>
+      <td style="vertical-align: top;">binary<br>
+      </td>
+      <td style="vertical-align: top;">XYZ points<br>
+      </td>
+      <td style="vertical-align: top;">The <a href="en.wikipedia.org/wiki/STL_%28file_format%29">STL</a> format is common in&nbsp; stereolithography CAD softwares.</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(204, 51, 204);">'<span style="font-weight: bold;">STLA' 'PLY' 'OFF' </span>stereolithography</td>
+      <td style="vertical-align: top;">text <span style="font-style: italic;"> (beware large objects)</span>
+      </td>
+      <td style="vertical-align: top;">XYZ points</td>
+      <td style="vertical-align: top;">The&nbsp; <a href="en.wikipedia.org/wiki/STL_%28file_format%29">STL</a> SLP <a href="http://www.geomview.org/docs/html/OFF.html">OFF</a>
+and <a href="http://en.wikipedia.org/wiki/PLY_%28file_format%29">PLY</a> formats are common in&nbsp; stereolithography CAD software.</td>
+      <td style="vertical-align: top;">Yes<br>
+      </td>
+    </tr>
+
+
+
+  </tbody>
+</table>
+<span style="font-weight: bold;"></span><br>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/iData saving data -&nbsp;</span><span style="font-style: italic;"> </span><span style="font-style: italic;">
+$Date: 2013-09-25 12:06:40 +0200 (Wed, 25 Sep 2013) $ $Revision: 1168 $
+</span><span style="font-style: italic;"> </span>- back to <a href="index.html">Main iFit Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+
+</body></html>

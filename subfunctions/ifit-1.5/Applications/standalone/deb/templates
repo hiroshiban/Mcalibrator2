@@ -1,0 +1,10 @@
+Template: ifit/link_matlab
+Type: boolean
+Default: true
+Description: Use iFit as Matlab(R) replacement ?
+ iFit can be used as a replacement to Matlab(R). Most Matlab(R) functionalities will be available.
+ In practive, a 'matlab' executable will be created, pointing to iFit.
+ .
+ If you do not have Matlab installed and wish to use iFit as replacement, select 
+ Yes. 
+

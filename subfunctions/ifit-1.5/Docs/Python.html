@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+  
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+
+  
+<title>iFit: Python interface</title>
+
+</head><body>
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: Python interface<br>
+</h1>
+
+
+<ol id="mozToc">
+<!--mozToc h3 1 h4 2--><li><a href="#mozTocId780492">Requirements: Python/NumPy
+</a></li><li><a href="#mozTocId638108">Usage</a></li>
+</ol>
+
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;"><span style="font-weight: bold; font-style: italic; color: rgb(255, 0, 0);">This feature is experimental.</span><br>
+</div>
+
+<h3><a class="mozTocH3" name="mozTocId780492"></a>Requirements: Python/NumPy
+</h3>
+<blockquote>Install  <a href="https://code.google.com/p/pythonxy/">Python(x,y)</a> for Windows, or <a href="https://www.enthought.com/products/canopy">Entought Canopy</a> for Windows and MacOSX. Linux flavors provide numpy as e.g. RPM and Debian packages.The <a href="http://ipython.org/">IPython</a> package is also recommended.<br>
+</blockquote>
+
+<h3><a class="mozTocH3" name="mozTocId638108"></a>Usage</h3>
+<p>Navigate to the iFit/Applications/Python directory and launch IPython or Python.<br>
+Then issue the command:<br>
+</p>
+<blockquote>
+  <pre>&gt;&gt;&gt; from mlabwrap import mlab</pre>
+</blockquote>
+<p>From there on, any iFit and Matlab expression can be executed from Python.<br>
+</p>
+<blockquote>
+  <pre>&gt;&gt;&gt; a = mlab.iData('filename')<br>&gt;&gt;&gt; mlab.plot(a)<br>&gt;&gt;&gt; b = mlab.rdivide(a,2)
+</pre>
+</blockquote>
+The main idea is that any call to iFit/Matlab should be prepended by '<b>mlab.</b>'. <br>
+<br>
+iFit objects are stored as Python NumPy arrays. Refer to the <a href="Methods.html">Methods</a> page to learn about all methods that can be called for <a href="iData.html">iData</a> and <a href="iFunc.html">iFunc</a> objects.<br>
+<br>
+In addition, there are specialized methods to communicate with iFit/Matlab:<br>
+<b>mlab._set('name' value) </b><br>
+<blockquote>assigns name=value in the iFit/Matlab workspace.<br>
+</blockquote>
+<b>mlab._get('name') </b><br>
+<blockquote>retrieves the named variable from the iFit/Matlab workspace.<br>
+</blockquote>
+<b>mlab._eval('expression') </b><br>
+<blockquote>evaluates the expression/code in the iFit/Matlab workspace.<br>
+</blockquote>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit Python - </span><span style="font-style: italic;">
+$Date: 2013-06-21 11:56:16 +0200 (Fri, 21 Jun 2013) $
+$Revision: 1069 $
+</span><span style="font-style: italic;"> </span>-
+back to <a href="index.html">Main
+iFit
+Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+
+</body></html>

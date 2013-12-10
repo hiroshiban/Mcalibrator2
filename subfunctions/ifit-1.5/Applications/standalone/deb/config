@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+# iFit: config
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+# link ifit to matlab ? only when matlab is not installed (default)
+db_set ifit/link_matlab true
+db_input medium ifit/link_matlab || true
+db_go || true
+
+

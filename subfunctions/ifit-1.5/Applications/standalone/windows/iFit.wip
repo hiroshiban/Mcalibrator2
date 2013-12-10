@@ -1,0 +1,289 @@
+[BUILDER_INFO]
+Version=4.5.15
+
+[GENERAL_INFO]
+ProductName=iFit
+ProductVersion=1.5
+ProductManufacturer=ILL France
+ProductCode={4FAD5CC2-DEB2-4BC2-83D8-CB09FB79FEB5}
+ProductUpdateCode={C038750F-BFD3-4305-B9A7-E84BF21B83C8}
+SummaryTitle=iFit 1.5 generic data analysis and fitting to models
+SummarySubject=Data Analysis
+SummaryAuthor=Emmanuel FARHI, Computing for Science, ILL
+SummaryKeywords=data analysis, matlab, math, import, export, plot, fit
+SummaryComments=Get more information at <http://ifit.mccode.org>
+SupportProductURL=http://ifit.mccode.org
+SupportURL=http://www.ill.eu
+SupportPhoneNumber=+33 476 207 135
+SupportContactPerson=Emmanuel FARHI <farhi@ill.eu>
+SupportProductUpdateURL=http://ifit.mccode.org
+SupportProductComments=Follow us on ifit.mccode.org
+
+[SETUP_INFO]
+DefaultRootFolderID=0
+CustomRootFolderPath=
+DefaultInstallationPath=%ProductName%
+DefaultShortcutFolderName=%ProductName%
+ShortcutsInCommonProgramGroups=Yes
+CreateUninstallerIcon=Yes
+UninstallerIconDescription=Uninstall %ProductName%
+ForceRestart=No
+PackageTypeID=0
+
+[SYSTEM_REQUIREMENTS]
+AnyWindows=Yes
+Windows95=Yes
+Windows98=Yes
+WindowsME=Yes
+WindowsNT4=Yes
+Windows2000=Yes
+WindowsXP=Yes
+Windows2003=Yes
+WindowsVista=Yes
+Windows2008=Yes
+Windows7=Yes
+Windows8=Yes
+CheckFX=No
+FXVersion=0
+CheckJava=No
+CheckCustomCondition1=No
+CustomCondition1=
+Description1=
+
+[DIALOGS]
+Layout=0
+CustomDialogImage=No
+SmallCustomDialogImage=Yes
+CustomCenterDialogImage=No
+CustomDialogBitmap_Pathname=
+CustomDialogSmallBitmap_Pathname=C:\Documents and Settings\Lambda\Bureau\make-win-setup\ifit-src\Applications\standalone\iFit-logo-large.jpg
+CustomCenterDialogBitmap_Pathname=
+Advertisement_Pathname=
+Advertisement_BitmapPathname=
+WelcomeDialog=No
+Version=Yes
+LicenseDialog=Yes
+ReadmeDialog=Yes
+UserInfoDialog=No
+TargetDirectoryDialog=No
+SetupTypeDialog=No
+CustomSetupDialog=No
+StartDialog=No
+FinishDialog=Yes
+AdvertisementDialog=No
+
+[LICENSE_DIALOG]
+License_Pathname=C:\Documents and Settings\Lambda\Bureau\make-win-setup\ifit-src\Applications\standalone\windows\License.rtf
+
+[README_DIALOG]
+Readme_Pathname=C:\Documents and Settings\Lambda\Bureau\make-win-setup\ifit-src\Applications\standalone\windows\ReadMe.rtf
+
+[FINISH_DIALOG]
+Show_ViewReadme_CheckBox=Yes
+Show_ViewReadme_Checked=Yes
+Show_RunApplication_CheckBox=Yes
+Show_RunApplication_Checked=Yes
+Readme_Pathname=%AppDir%\readme.txt
+Application_Pathname=%AppDir%\ifit.exe
+
+[CREATE_SETUP]
+OutputFolder=C:&bs;Documents and Settings&bs;Lambda&bs;Bureau
+SetupFilename=Setup.msi
+SetupExeFilename=iFit-Setup.exe
+SetupIconPathname=
+CreateSelfExtractedSetup=Yes
+IncludeMSIRuntime=Yes
+Language=English
+
+[APPLICATION_FILES]
+Folder=%AppDir%&bs;commands
+File=%AppDir%&bs;commands&bs;caxis.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;caxis.bat,1,0
+File=%AppDir%&bs;commands&bs;char.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;char.bat,1,0
+File=%AppDir%&bs;commands&bs;colormap.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;colormap.bat,1,0
+File=%AppDir%&bs;commands&bs;contour.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;contour.bat,1,0
+File=%AppDir%&bs;commands&bs;copyobj.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;copyobj.bat,1,0
+File=%AppDir%&bs;commands&bs;doc.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;doc.bat,1,0
+File=%AppDir%&bs;commands&bs;edit.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;edit.bat,1,0
+File=%AppDir%&bs;commands&bs;feval.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;feval.bat,1,0
+File=%AppDir%&bs;commands&bs;get.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;get.bat,1,0
+File=%AppDir%&bs;commands&bs;image.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;image.bat,1,0
+File=%AppDir%&bs;commands&bs;mesh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;mesh.bat,1,0
+File=%AppDir%&bs;commands&bs;plot.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;plot.bat,1,0
+File=%AppDir%&bs;commands&bs;plot3.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;plot3.bat,1,0
+File=%AppDir%&bs;commands&bs;reducevolume.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;reducevolume.bat,1,0
+File=%AppDir%&bs;commands&bs;scatter3.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;scatter3.bat,1,0
+File=%AppDir%&bs;commands&bs;slice.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;slice.bat,1,0
+File=%AppDir%&bs;commands&bs;subplot.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;subplot.bat,1,0
+File=%AppDir%&bs;commands&bs;surf.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;surf.bat,1,0
+File=%AppDir%&bs;commands&bs;surfc.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;surfc.bat,1,0
+File=%AppDir%&bs;commands&bs;surfl.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;surfl.bat,1,0
+File=%AppDir%&bs;commands&bs;waterfall.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;commands&bs;waterfall.bat,1,0
+Folder=%AppDir%&bs;Docs
+File=%AppDir%&bs;Docs&bs;Changes.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Changes.html,1,0
+File=%AppDir%&bs;Docs&bs;Credits.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Credits.html,1,0
+File=%AppDir%&bs;Docs&bs;Fit.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Fit.html,1,0
+File=%AppDir%&bs;Docs&bs;iData.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;iData.html,1,0
+File=%AppDir%&bs;Docs&bs;iFit.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;iFit.html,1,0
+File=%AppDir%&bs;Docs&bs;iFunc.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;iFunc.html,1,0
+File=%AppDir%&bs;Docs&bs;index.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;index.html,1,0
+File=%AppDir%&bs;Docs&bs;Install.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Install.html,1,0
+File=%AppDir%&bs;Docs&bs;Load.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Load.html,1,0
+File=%AppDir%&bs;Docs&bs;Loaders.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Loaders.html,1,0
+File=%AppDir%&bs;Docs&bs;Math.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Math.html,1,0
+File=%AppDir%&bs;Docs&bs;McStas.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;McStas.html,1,0
+File=%AppDir%&bs;Docs&bs;Methods.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Methods.html,1,0
+File=%AppDir%&bs;Docs&bs;Models.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Models.html,1,0
+File=%AppDir%&bs;Docs&bs;Optimizers.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Optimizers.html,1,0
+File=%AppDir%&bs;Docs&bs;Plot.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Plot.html,1,0
+File=%AppDir%&bs;Docs&bs;Python.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Python.html,1,0
+File=%AppDir%&bs;Docs&bs;QuickStart.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;QuickStart.html,1,0
+File=%AppDir%&bs;Docs&bs;Save.html,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;Docs&bs;Save.html,1,0
+Folder=%AppDir%&bs;models
+File=%AppDir%&bs;models&bs;allometric.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;allometric.bat,1,0
+File=%AppDir%&bs;models&bs;bigauss.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;bigauss.bat,1,0
+File=%AppDir%&bs;models&bs;bilorz.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;bilorz.bat,1,0
+File=%AppDir%&bs;models&bs;bose.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;bose.bat,1,0
+File=%AppDir%&bs;models&bs;constant.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;constant.bat,1,0
+File=%AppDir%&bs;models&bs;dho.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;dho.bat,1,0
+File=%AppDir%&bs;models&bs;dirac.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;dirac.bat,1,0
+File=%AppDir%&bs;models&bs;doseresp.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;doseresp.bat,1,0
+File=%AppDir%&bs;models&bs;expon.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;expon.bat,1,0
+File=%AppDir%&bs;models&bs;expstretched.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;expstretched.bat,1,0
+File=%AppDir%&bs;models&bs;ff_core_shell.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;ff_core_shell.bat,1,0
+File=%AppDir%&bs;models&bs;ff_sphere.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;ff_sphere.bat,1,0
+File=%AppDir%&bs;models&bs;gauss.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;gauss.bat,1,0
+File=%AppDir%&bs;models&bs;gauss2d.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;gauss2d.bat,1,0
+File=%AppDir%&bs;models&bs;green.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;green.bat,1,0
+File=%AppDir%&bs;models&bs;heaviside.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;heaviside.bat,1,0
+File=%AppDir%&bs;models&bs;langevin.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;langevin.bat,1,0
+File=%AppDir%&bs;models&bs;laplace.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;laplace.bat,1,0
+File=%AppDir%&bs;models&bs;lognormal.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;lognormal.bat,1,0
+File=%AppDir%&bs;models&bs;lorz.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;lorz.bat,1,0
+File=%AppDir%&bs;models&bs;lorz2d.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;lorz2d.bat,1,0
+File=%AppDir%&bs;models&bs;Maxwell.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;Maxwell.bat,1,0
+File=%AppDir%&bs;models&bs;ngauss.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;ngauss.bat,1,0
+File=%AppDir%&bs;models&bs;nlorz.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;nlorz.bat,1,0
+File=%AppDir%&bs;models&bs;pareto.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;pareto.bat,1,0
+File=%AppDir%&bs;models&bs;plane2d.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;plane2d.bat,1,0
+File=%AppDir%&bs;models&bs;poisson.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;poisson.bat,1,0
+File=%AppDir%&bs;models&bs;powerlaw.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;powerlaw.bat,1,0
+File=%AppDir%&bs;models&bs;pseudovoigt.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;pseudovoigt.bat,1,0
+File=%AppDir%&bs;models&bs;pseudovoigt2d.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;pseudovoigt2d.bat,1,0
+File=%AppDir%&bs;models&bs;quad2d.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;quad2d.bat,1,0
+File=%AppDir%&bs;models&bs;quadline.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;quadline.bat,1,0
+File=%AppDir%&bs;models&bs;sf_hard_spheres.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sf_hard_spheres.bat,1,0
+File=%AppDir%&bs;models&bs;sf_square_well.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sf_square_well.bat,1,0
+File=%AppDir%&bs;models&bs;sf_sticky_hard_spheres.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sf_sticky_hard_spheres.bat,1,0
+File=%AppDir%&bs;models&bs;sigmoid.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sigmoid.bat,1,0
+File=%AppDir%&bs;models&bs;sine.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sine.bat,1,0
+File=%AppDir%&bs;models&bs;sinedamp.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;sinedamp.bat,1,0
+File=%AppDir%&bs;models&bs;strline.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;strline.bat,1,0
+File=%AppDir%&bs;models&bs;tophat.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;tophat.bat,1,0
+File=%AppDir%&bs;models&bs;triangl.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;triangl.bat,1,0
+File=%AppDir%&bs;models&bs;twoexp.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;twoexp.bat,1,0
+File=%AppDir%&bs;models&bs;voigt.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;models&bs;voigt.bat,1,0
+Folder=%AppDir%&bs;operators
+File=%AppDir%&bs;operators&bs;abs.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;abs.bat,1,0
+File=%AppDir%&bs;operators&bs;acos.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;acos.bat,1,0
+File=%AppDir%&bs;operators&bs;acosh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;acosh.bat,1,0
+File=%AppDir%&bs;operators&bs;asin.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;asin.bat,1,0
+File=%AppDir%&bs;operators&bs;asinh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;asinh.bat,1,0
+File=%AppDir%&bs;operators&bs;atan.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;atan.bat,1,0
+File=%AppDir%&bs;operators&bs;atanh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;atanh.bat,1,0
+File=%AppDir%&bs;operators&bs;camproj.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;camproj.bat,1,0
+File=%AppDir%&bs;operators&bs;cat.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;cat.bat,1,0
+File=%AppDir%&bs;operators&bs;ceil.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ceil.bat,1,0
+File=%AppDir%&bs;operators&bs;combine.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;combine.bat,1,0
+File=%AppDir%&bs;operators&bs;conj.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;conj.bat,1,0
+File=%AppDir%&bs;operators&bs;conv.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;conv.bat,1,0
+File=%AppDir%&bs;operators&bs;convn.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;convn.bat,1,0
+File=%AppDir%&bs;operators&bs;cos.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;cos.bat,1,0
+File=%AppDir%&bs;operators&bs;cosh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;cosh.bat,1,0
+File=%AppDir%&bs;operators&bs;ctranspose.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ctranspose.bat,1,0
+File=%AppDir%&bs;operators&bs;cumsum.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;cumsum.bat,1,0
+File=%AppDir%&bs;operators&bs;cumtrapz.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;cumtrapz.bat,1,0
+File=%AppDir%&bs;operators&bs;del2.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;del2.bat,1,0
+File=%AppDir%&bs;operators&bs;diff.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;diff.bat,1,0
+File=%AppDir%&bs;operators&bs;dog.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;dog.bat,1,0
+File=%AppDir%&bs;operators&bs;eq.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;eq.bat,1,0
+File=%AppDir%&bs;operators&bs;exp.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;exp.bat,1,0
+File=%AppDir%&bs;operators&bs;fft.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;fft.bat,1,0
+File=%AppDir%&bs;operators&bs;fits.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;fits.bat,1,0
+File=%AppDir%&bs;operators&bs;fliplr.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;fliplr.bat,1,0
+File=%AppDir%&bs;operators&bs;flipud.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;flipud.bat,1,0
+File=%AppDir%&bs;operators&bs;floor.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;floor.bat,1,0
+File=%AppDir%&bs;operators&bs;full.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;full.bat,1,0
+File=%AppDir%&bs;operators&bs;ge.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ge.bat,1,0
+File=%AppDir%&bs;operators&bs;gradient.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;gradient.bat,1,0
+File=%AppDir%&bs;operators&bs;gt.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;gt.bat,1,0
+File=%AppDir%&bs;operators&bs;hist.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;hist.bat,1,0
+File=%AppDir%&bs;operators&bs;ifft.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ifft.bat,1,0
+File=%AppDir%&bs;operators&bs;imag.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;imag.bat,1,0
+File=%AppDir%&bs;operators&bs;interp.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;interp.bat,1,0
+File=%AppDir%&bs;operators&bs;intersect.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;intersect.bat,1,0
+File=%AppDir%&bs;operators&bs;isempty.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;isempty.bat,1,0
+File=%AppDir%&bs;operators&bs;le.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;le.bat,1,0
+File=%AppDir%&bs;operators&bs;linspace.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;linspace.bat,1,0
+File=%AppDir%&bs;operators&bs;log.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;log.bat,1,0
+File=%AppDir%&bs;operators&bs;log10.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;log10.bat,1,0
+File=%AppDir%&bs;operators&bs;logspace.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;logspace.bat,1,0
+File=%AppDir%&bs;operators&bs;lt.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;lt.bat,1,0
+File=%AppDir%&bs;operators&bs;max.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;max.bat,1,0
+File=%AppDir%&bs;operators&bs;mean.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;mean.bat,1,0
+File=%AppDir%&bs;operators&bs;median.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;median.bat,1,0
+File=%AppDir%&bs;operators&bs;minus.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;minus.bat,1,0
+File=%AppDir%&bs;operators&bs;mtimes.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;mtimes.bat,1,0
+File=%AppDir%&bs;operators&bs;ndims.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ndims.bat,1,0
+File=%AppDir%&bs;operators&bs;ne.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;ne.bat,1,0
+File=%AppDir%&bs;operators&bs;norm.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;norm.bat,1,0
+File=%AppDir%&bs;operators&bs;not.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;not.bat,1,0
+File=%AppDir%&bs;operators&bs;peaks.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;peaks.bat,1,0
+File=%AppDir%&bs;operators&bs;permute.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;permute.bat,1,0
+File=%AppDir%&bs;operators&bs;plus.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;plus.bat,1,0
+File=%AppDir%&bs;operators&bs;power.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;power.bat,1,0
+File=%AppDir%&bs;operators&bs;prod.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;prod.bat,1,0
+File=%AppDir%&bs;operators&bs;rdivide.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;rdivide.bat,1,0
+File=%AppDir%&bs;operators&bs;real.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;real.bat,1,0
+File=%AppDir%&bs;operators&bs;round.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;round.bat,1,0
+File=%AppDir%&bs;operators&bs;sign.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;sign.bat,1,0
+File=%AppDir%&bs;operators&bs;sin.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;sin.bat,1,0
+File=%AppDir%&bs;operators&bs;sinh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;sinh.bat,1,0
+File=%AppDir%&bs;operators&bs;sqrt.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;sqrt.bat,1,0
+File=%AppDir%&bs;operators&bs;std.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;std.bat,1,0
+File=%AppDir%&bs;operators&bs;sum.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;sum.bat,1,0
+File=%AppDir%&bs;operators&bs;tan.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;tan.bat,1,0
+File=%AppDir%&bs;operators&bs;tanh.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;tanh.bat,1,0
+File=%AppDir%&bs;operators&bs;times.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;times.bat,1,0
+File=%AppDir%&bs;operators&bs;transpose.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;transpose.bat,1,0
+File=%AppDir%&bs;operators&bs;trapz.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;trapz.bat,1,0
+File=%AppDir%&bs;operators&bs;uminus.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;uminus.bat,1,0
+File=%AppDir%&bs;operators&bs;union.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;union.bat,1,0
+File=%AppDir%&bs;operators&bs;xcorr.bat,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;operators&bs;xcorr.bat,1,0
+File=%AppDir%&bs;COPYING,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;COPYING,1,0
+File=%AppDir%&bs;ifit.exe,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;ifit.exe,0,0
+File=%AppDir%&bs;readme.txt,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-binary&bs;readme.txt,1,0
+
+[PERMISSIONS]
+
+[SHORTCUTS]
+Shortcut=0,%AppSCFolder%&bs;iFit,%AppDir%&bs;ifit.exe,,,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-src&bs;Applications&bs;standalone&bs;windows&bs;iFit-logo.ico,0,1,%AppDir%,iFit software (Matlab prompt)
+Shortcut=0,%AppSCFolder%&bs;iFit documentation,%AppDir%&bs;Docs&bs;index.html,,,,0,1,%AppDir%&bs;Docs,iFit documentation (local)
+Shortcut=0,%Desktop%&bs;iFit,%AppDir%&bs;ifit.exe,,,C:&bs;Documents and Settings&bs;Lambda&bs;Bureau&bs;make-win-setup&bs;ifit-src&bs;Applications&bs;standalone&bs;windows&bs;iFit-logo.ico,0,1,%AppDir%,iFit software (Matlab prompt)
+
+[REGISTRY_ENTRIES]
+
+[FILE_TYPES]
+
+[SEARCH]
+
+[ENVIRONMENT]
+PATH,%AppDir%,0,0,1,0
+
+[CUSTOM_ACTIONS]
+
+[SERVICES]
+
+[MERGE_MODULES]
+
+[ODBC]
+

@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>iFit: Quick Start/Tutorial</title>
+</head><body>
+<h1 style="text-align: center;"><a class="mozTocH1" name="mozTocId294096"></a>iFit: a quick start/tutorial</h1><br>
+<ol id="mozToc">
+<!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId889413">Starting</a></li><li><a href="#mozTocId112717">Load/import data
+</a></li><li><a href="#mozTocId59850">Axes and Aliases</a></li><li><a href="#mozTocId884273">Display objects</a></li><li><a href="#mozTocId590879">Mathematical operators</a></li><li><a href="#mozTocId383454">Advanced Math operators: interpolation,
+catenating, fitting
+</a></li><li><a href="#mozTocId892374">Saving your work</a></li>
+</ol>
+
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">Commands we use in this page: <span style="font-style: italic;">iData</span>, doc, plot, subplot, fits,
+saveas<br>
+</div>
+<br>
+In this document, we demonstrate shortly how to use the <a href="index.html">iFit</a> library, which mainly manipulates <a href="iData.html">iData</a> objects.<br>
+<br>
+The object of these tools is to<br>
+<ul>
+  <li>import transparently data files, whatever be their format [<a href="Load.html">Load</a>]<br>
+  </li>
+  <li>organize the data files contents, and in particular define their
+axes if needed [<a href="iData.html">iData axes and aliases</a>]<br>
+  </li>
+  <li>display/plot the data [<a href="Plot.html">Plot</a>]<br>
+  </li>
+  <li>apply mathematical operations [<a href="Math.html">Math</a>]<br>
+  </li>
+  <li>fit multi parameter models onto data sets [<a href="Fit.html">Fit</a>]<br>
+  </li>
+  <li>save results transparently into some common scientific formats [<a href="Save.html">Save</a>]<br>
+  </li>
+</ul>
+Each of these tasks has dedicated, detailed, documentation, as shown in
+links above.<br>
+<div style="text-align: center;">
+<h3><a class="mozTocH3" name="mozTocId889413"></a>Starting</h3>
+</div>
+Currently, iFit depends on a Matlab installation, and we assume that
+IFit has been installed properly before. If no, please refer to the <a href="Install.html">Install</a> page. Then we start Matlab, and
+declare the iFit library location.<br>
+<pre style="margin-left: 40px;">$ matlab                              <span style="font-style: italic;">% start Matlab (or click its icon)</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">addpath</span>(<span style="color: rgb(51, 102, 255);">genpath</span>(<span style="color: rgb(204, 51, 204);">'/path/to/iFit'</span>))  <span style="font-style: italic;">% declare the iFit library location</span><span style="color: rgb(51, 102, 255); font-style: italic;"></span><span style="font-style: italic;"> so that we can use it</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">doc</span>(iData)                         <span style="font-style: italic;">% open the iFit/iData documentation</span> (if you feel like reading it)<br></pre>
+We are ready to work. For the purpose of this tutorial, we shall handle
+some 1D and 2D example data sets.<br>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId112717"></a>Load/import data<br>
+</h3>
+Let's import a file from the iFit <a href="../Data/">example
+data
+files</a>. This is done by converting a character string, assumed to be
+a file name, as an <a href="iData.html">iData</a> object:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">[ ifitpath 'Data/ILL_IN6.dat' ]</span>);<span style="color: rgb(51, 102, 255);"></span></pre>
+which is a neutron scattering signal by a liquid, collected by the
+instrument IN6@ILL. Importation also works across the Internet with <span style="font-style: italic;">http://</span> and <span style="font-style: italic;">ftp://</span> file specifications, as well
+as with compressed contents. A file selector pops-up when the file name
+is given as <span style="color: rgb(204, 51, 204);">''</span> (empty
+string). The result of the importation is an <a href="iData.html">iData</a>
+object:<br>
+<pre style="margin-left: 40px;">&gt;&gt; a<br>a =  iData object:<br><br>    [Tag]     [Dimension]                           [Title] [Last command]          [Label]<br> tp574029     [340  1024] 'File ILL_IN6.dat ILL Data (n...' tp574029=load(iData,...  <br></pre>
+<div style="text-align: center;">
+<div style="text-align: right;"><span style="font-weight: bold;">More
+about</span> <a href="Load.html">Loading data files</a><br>
+</div>
+<h3><a class="mozTocH3" name="mozTocId59850"></a>Axes and Aliases</h3>
+</div>
+We may inquire the contents of that object with the get method<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">get</span>(a)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">disp</span>(a)</pre>
+which interestingly indicates that a <span style="font-style: italic;">Signal</span>
+has been defined (by default the largest numerical block in the
+object). This Signal is an <span style="font-style: italic;">Alias</span>
+which points to the Data area of the object, and more specifically in
+this case to the<span style="font-style: italic;">
+Data.IIIIIIIIIIIIIIIIIIIIIIIIIIIII_13</span> section. The naming of the
+section has been determined automatically from the file comments. The
+Signal may be re-assigned any time, as well as possible axes attached.
+This common mechanism uses the <a href="iData.html#mozTocId510414">Alias
+feature
+of
+the iData object</a>.<br>
+<br>
+The axes of the IN6 signal are related to a neutron detection time, and
+an angle w.r.t the direct beam. We thus define the labels for these two
+axes:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">xlabel</span>(a, <span style="color: rgb(204, 51, 204);">'Time channel'</span>); <span style="font-style: italic;">% 2nd axis (columns)</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">ylabel</span>(a, <span style="color: rgb(204, 51, 204);">'Angle channel'</span>);<span style="font-style: italic;">% 1st axis (rows)</span></pre>
+which depends on the convention used to represent matrices. In Matlab,
+matrices are stored in column-major order, that is first axis is a row,
+within which elements are stored along columns: <span style="font-style: italic;">Signal(row, column)</span>. As the 'X'
+axis usually refers to the horizontal one for a 2D signal
+(matrix), it thus relates to columns, that is the second dimension. The
+'Y' axis is vertical, and relates to rows, that is first dimension.<br>
+<br>
+Some of the importable file formats make it easy to find the <span style="font-style: italic;">Signal,
+</span>and its corresponding axes. But other formats may contain many
+numerical blocks within which none appears <span style="font-style: italic;">de facto</span> as <span style="font-style: italic;">The Signal</span>. This is the
+same for axes. Then, the Signal and axes may be redefined in order to
+match the user requirements.<br>
+<br>
+The concepts of Alias, Signal and Axes are of major importance,
+especially as they impact the way mathematical operators apply onto
+objects, and their rendering in plots.<br>
+<br>
+<div style="text-align: right;"><span style="font-weight: bold;">More
+about </span><a href="iData.html">iData object, alias, axes, Signal</a><br>
+</div>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId884273"></a>Display objects</h3>
+<a href="images/iFit_quickstart_plot.png"><img alt="iFit: Quick Start: plot" title="iFit: Quick Start: plot" src="images/iFit_quickstart_plot.png" style="border: 0px solid ; width: 229px; height: 203px;" align="right"></a>In
+order
+to
+display the object contents, that is its Signal as a function
+of axes, possibly weighted by a Monitor, a single command can be used
+independently of the data set dimensionality. <br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(a)</pre>
+but as, in this case, the Signal contains a single large value well
+above the interesting stuff, we may simply ask to display the object in
+log<sub>10</sub> scale.<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(<span style="color: rgb(51, 102, 255);">log10</span>(a))</pre>
+It is also possible to display more than one object overlayed onto a
+single plot, or side by side in the same window.<br>
+<div style="text-align: right;"><span style="font-weight: bold;">More
+about </span><a href="Plot.html">Plotting</a><br>
+</div>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId590879"></a>Mathematical operators</h3>
+A large set of mathematical operators can be applied on iData objects,
+and may be used to correct/analyze the Signal. Whenever the Signal or
+the axes are changed (by value or definition), the operator result will
+change accordingly. This way it is possible to define a series of
+operations for data processing, independently of the data files
+representation.<br>
+<br>
+Let's import a second IN6 data file, and set its axes labels as for the
+first object.<br>
+<pre style="margin-left: 40px;">&gt;&gt; b = <span style="color: rgb(51, 102, 255);">iData</span>(<span style="color: rgb(204, 51, 204);">[ ifitpath 'Data/ILL_IN6_2.dat' ]</span>);<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">xlabel</span>(b, <span style="color: rgb(204, 51, 204);">'Time channel'</span>); <span style="font-style: italic;">% 2nd axis (columns)</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">ylabel</span>(b, <span style="color: rgb(204, 51, 204);">'Angle channel'</span>);<span style="font-style: italic;">% 1st axis (rows)<br></span></pre>
+<a href="images/iFit_quickstart_math.png"><img alt="iFit: Quick Start: math and subplot" title="iFit: Quick Start: math and subplot" src="images/iFit_quickstart_math.png" style="border: 0px solid ; width: 229px; height: 203px;" align="right"></a>Then
+we
+may
+obtain the projection of this object onto the first dimension
+'Angle', as a new object. Then we normalize the first object 'a' by
+this projection, and plot the two initial data file contents, the
+projection of the second onto the Angle axis, and the normalization of
+the first object by this projection.<br>
+<pre style="margin-left: 40px;"><span style="font-style: italic;"></span><span style="font-style: italic;"></span>&gt;&gt; c = <span style="color: rgb(51, 102, 255);">camproj</span>(b)<br>&gt;&gt; <span style="color: rgb(51, 102, 255);">subplot</span>(<span style="color: rgb(51, 102, 255);">log10</span>([a b c a./c ]))<br></pre>
+In the latter command, the log<sub>10</sub> applies onto the vector of
+the 4 objects. Also, the division is made element by element with the
+./ operator and the projection <span style="font-style: italic;">c</span>
+(1D signal) is extended to a 2D object
+in order to perform the division.<br>
+<br>
+All binary operators can cope with objects that may have partly
+overlapping axes, possibly with different binning, and of different
+dimensionality. This is done transparently.<br>
+<br>
+Also, the Error estimates&nbsp; associated to the Signal are
+propagated, assuming distributions are Gaussians.<br>
+<br>
+<div style="text-align: right;"><span style="font-weight: bold;">More
+about </span><a href="Math.html">Math operators</a><br>
+</div>
+<br>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId383454"></a>Advanced Math operators: interpolation,
+catenating, fitting<br>
+</h3>
+The interpolation of an object onto a new set of axes is done
+transparently, whatever be the object dimensionality. An object
+rebinning is obtained by interpolating the object on its own axes, or a
+sub-set of it:<br>
+<pre style="margin-left: 40px;">&gt;&gt; d = <span style="color: rgb(51, 102, 255);">interp</span>(a, 1/4);    % rebin by dividing the length of axes by 4 <br></pre>
+<a href="images/iFit_quickstart_Fits.png"><img alt="iFit quick start: fitting" title="iFit quick start: fitting" src="images/iFit_quickstart_Fits.png" style="border: 0px solid ; width: 226px; height: 200px;" align="right"></a>Adjusting
+a function-model onto an object is easy, in order to
+determine the best parameter set that describes the <span style="font-style: italic;">Signal/Monitor</span>. The fitting
+procedure makes sure that the model matches the object dimensionality,
+and extends it if needed.<br>
+<pre style="margin-left: 40px;">&gt;&gt; d(<span style="color: rgb(51, 102, 255);">find</span>(d&gt;200))=0;    <span style="font-style: italic;">                     % first remove a large peak on the side</span><br>&gt;&gt; [pars,criteria,message,output] = <span style="color: rgb(51, 102, 255);">fits</span>(<span style="color: rgb(51, 102, 255);"></span>d); <span style="font-style: italic;">% fit with the default Gaussian model, extended to 2D</span><br>&gt;&gt; <span style="color: rgb(51, 102, 255);">plot</span>(<span style="color: rgb(51, 102, 255);">log10</span>([d output.modelValue*10]),<span style="color: rgb(204, 51, 204);">'tight'</span>)<br></pre>
+Any object can be cut into slices, or assembled with other objects to
+create a higher
+dimension object. The following command puts multiplications of the
+previous object side by side in order to create a 3D volume.<br>
+<pre style="margin-left: 40px;">&gt;&gt; e = <span style="color: rgb(51, 102, 255);">cat</span>(3, [d d*2 d*10 d*5 d*2 d])</pre>
+<div style="text-align: right;"><span style="font-weight: bold;">More
+about </span><a href="Math.html">Math interpolation</a><br>
+<span style="font-weight: bold;">More about</span> <a href="Fit.html">Fitting</a><br>
+</div>
+<h3 style="text-align: center;"><a class="mozTocH3" name="mozTocId892374"></a>Saving your work</h3>
+Any object can be exported to a large number of file formats. Some of
+these formats retain most of the object information, while other
+formats are much more restrictive.<br>
+<br>
+To save your work simply specify the object, a file name (or empty) and
+optionally a file format (which can also be set from the file name
+extension).<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">save</span>(a, <span style="color: rgb(204, 51, 204);">''</span>, <span style="color: rgb(204, 51, 204);">'svg'</span>)<br></pre>
+The recommended formats are Matlab MAT, HDF5, SVG, PDF, PNG, Matlab M and flat DAT.<br>
+<br>
+<div style="text-align: right;"><span style="font-weight: bold;">More about</span> <a href="Save.html">Saving</a><br>
+</div>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;"><span style="font-style: italic;">E.
+Farhi - iFit/quick start - </span><span style="font-style: italic;"></span><span style="font-style: italic;">
+$Date: 2013-05-14 17:58:05 +0200 (Tue, 14 May 2013) $ $Revision: 1035 $
+</span><span style="font-style: italic;"> </span>-
+back to <a href="index.html">Main
+iFit Page </a><a href="http://www.ill.eu/"><img title="ILL, Grenoble, France &lt;www.ill.eu&gt;" src="images/ILL-web-jpeg.jpg" alt="ILL, Grenoble, France &lt;www.ill.eu&gt;" style="border: 0px solid ; width: 53px; height: 50px;" align="right"></a>
+</div>
+</body></html>

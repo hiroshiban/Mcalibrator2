@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"></head><body>
+<h1 style=" text-align: center;"><a class="mozTocH1" name="mozTocId841636"></a>ResLibCal: a tool to compute triple-axis neutron spectrometer resolution</h1>
+<br>
+<div style="text-align: center;">E. Farhi, <span style="font-style: italic;">ILL/DS/CS - Version 1.0 Feb 2013</span><br>
+<br>
+</div>
+<div style="text-align: center;">
+using parts from <a href="http://www.neutron.ethz.ch/research/resources/reslib">ResLib</a>, <a href="http://www.ill.eu/en/instruments-support/computing-for-science/cs-software/all-software/matlab-ill/rescal-for-matlab/">ResCal5</a>, Res3ax and <a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/pkfit-and-filing/macos9-vms-linux/pkfitvmstutorial/">ResCal</a>
+</div>
+<hr style="width: 100%; height: 2px;"><br>
+<ol id="mozToc"><!--mozToc h3 1 h4 2 h4 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId771790">Purpose</a></li><li><a href="#mozTocId789429">Obtaining the package</a></li><li><a href="#mozTocId173490">Installation - starting</a></li><li><a href="#mozTocId637458">Usage</a><ol><li><a href="#mozTocId744097">Usage: the main interface</a></li><li><a href="#mozTocId444562">Usage: plotting the TAS resolution function</a></li><li><a href="#mozTocId244259">Usage: handling computation along a scan (measurement sequences)</a></li><li><a href="#mozTocId807901">Usage: reading saved configurations
+  </a></li><li><a href="#mozTocId927463">Usage: exporting the results, saving the configuration</a></li><li><a href="#mozTocId281751">Usage: non interactive mode (compute only)</a></li></ol></li><li><a href="#mozTocId393985">Help</a></li><li><a href="#mozTocId811100">Credits and disclaimer</a></li></ol>
+<br>
+<hr style="width: 100%; height: 2px;"><br>
+<h3><a class="mozTocH3" name="mozTocId771790"></a><span style="font-weight: bold;">Purpose</span></h3>
+This ResLibCal application gathers a set of analytical computation methods to 
+estimate the resolution function of a triple-axis neutron spectrometer 
+(TAS). ResLibCal is based on <a href="http://www.mathworks.com/">Matlab</a>. The Cooper-Nathans and Popovici methods are proposed [<a href="#mozTocId811100">1-5</a>], in different implementations from:<br>
+
+<ul>
+<li><span style="font-weight: bold;"><a href="http://www.neutron.ethz.ch/research/resources/reslib">ResLib</a></span> (A. Zheludev)<span style="font-style: italic;"></span></li><li><a href="http://www.ill.eu/en/instruments-support/computing-for-science/cs-software/all-software/matlab-ill/rescal-for-matlab/"><span style="font-weight: bold;">ResCal5</span></a> (A. Tennant and D. Mc Morrow)<span style="font-style: italic;"></span></li><li><span style="font-weight: bold;">Res3ax</span> (J. Ollivier)<span style="font-style: italic;"></span></li><li><a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/pkfit-and-filing/macos9-vms-linux/pkfitvmstutorial/"><span style="font-weight: bold;">ResCal</span></a> from (Hargreave,Hullah,1979), ported into <span style="font-weight: bold;"><a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/vtas/">vTAS</a>_view</span> (Y.Raoul/A. Bouvet/A. Filhol)</li>
+</ul>
+
+
+<h3><a class="mozTocH3" name="mozTocId789429"></a>Obtaining the package</h3>
+The package can be obtained <a href="http://ifit.mccode.org/Downloads/ResLibCal.zip">here</a> [ZIP 220 ko]. You can also browse the source code <a href="http://ifit.mccode.org/Applications/ResLibCal/">here</a>. <br>
+It does not depend on any other toolbox/library.<br>
+Simply extract the application archive. <br>
+
+<h3><a class="mozTocH3" name="mozTocId173490"></a>Installation - starting</h3>
+Just launch ResLibCal with:<br>
+<pre style="margin-left: 40px;">&gt;&gt; <span style="color: rgb(51, 102, 255);">ResLibCal</span>;<br></pre>
+If you use the source code distribution (requires a Matlab license), type:<br>
+
+<pre style="margin-left: 40px;">&gt;&gt; addpath(genpath(<span style="color: rgb(204, 51, 204);">'/path/to/ResLibCal</span>'))<br></pre>
+
+If you use the <a href="http://ifit.mccode.org/Install.html">standalone</a> (binary compiled) application, launch the application from <a href="http://ifit.mccode.org/iFit.html">iFit</a> by starting:<br>
+from the terminal: <br>
+<pre style="margin-left: 40px;">% ifit ResLibCal</pre>
+from iFit standalone: <br>
+<pre style="margin-left: 40px;">&gt;&gt; ResLibCal</pre>
+<br>
+
+<h3><a class="mozTocH3" name="mozTocId637458"></a>Usage</h3>
+The normal use of the application is through its GUI, which is a single window.<br>
+<ul>
+  <li>The <span style="font-weight: bold;">File menu</span> allows to 
+import a saved configuration, export the main window image, print it, 
+reset to the default/saved configuration, and quit.</li>
+  <li>The <span style="font-weight: bold;">View menu</span> allows to 
+select the representation of the resolution matrix, as 2D or 3D view, 
+select if you wish to compute it in the lattice frame (rlu) or in the 
+instrument frame (Q axis), force a re-computation manually, or allow an 
+automatic re-computation of the resolution when any change is made in 
+the GUI.</li>
+  <li>The <span style="font-weight: bold;">Help menu</span> mainly bring you here.<br>
+  </li>
+</ul>
+It is also possible to use the application from a Matlab script or prompt, without starting the GUI (see <a href="#mozTocId281751">below</a>).<br>
+The computation of the resolution is carried-out in about 11 ms, but the display can be slightly longer when using the GUI.<br>
+<h4><a class="mozTocH4" name="mozTocId744097"></a>Usage: the main interface</h4>
+<p>The main interface present all parameters required to configure a 
+Copper-Nathans or Popovici computation. All items have a contextual help
+ (bring the mouse pointer over to display a short tool-tip, with 
+signification and units). Parameters indicated in <span style="color: rgb(51, 102, 255);">blue</span> are used only in for the Popovici method. Parameters in <span style="color: rgb(255, 0, 0);">red</span>
+ are those which the user should mostly change (incident energy, 
+position of measurement HKLE) once the instrument configuration has been
+ set.<br>
+</p>
+<p>The main parameter categories are:<br>
+</p>
+<ul>
+  <li>The <span style="color: rgb(255, 0, 0);">method</span> to use</li>
+  <li>The <span style="color: rgb(255, 0, 0);">HKLE position</span>, which can be <span style="font-weight: bold;">vectors</span> for computations along a scan/set of positions</li>
+  <li>The collimators and distances in a table</li>
+  <li>The monochromator configuration</li>
+  <li>The sample configuration</li>
+  <li>The analyzer configuration</li>
+  <li>The incident beam and detector sizes</li>
+  <li>The <span style="color: rgb(255, 0, 0);">neutron energy</span> setting</li>
+</ul>
+<p></p>
+<p>When any value is changed, an automatic re-computation is performed if the <span style="font-style: italic;">View/Auto-update</span> menu item is checked (which is the default).<br>
+The result of the computation can be displayed from the <span style="font-style: italic;">View</span> menu in 2D and 3D.&nbsp;</p>
+<p>The resolution matrix is then shown either in <span style="font-style: italic;">reciprocal lattice units</span> (rlu) [Q1,Q2,E] depending on the lattice parameters and the vectors <span style="font-style: italic;">D1</span> and <span style="font-style: italic;">D2</span> which define the orientation of the crystal. Un-checking this option in the <span style="font-style: italic;">View</span> menu will switch to the [Qx,Qy,E] space along longitudinal momentum exchange Q.</p>
+<div style="text-align: center;">
+  <img style=" width: 570px; height: 643px;" alt="The ResLibCal main interface" title="The ResLibCal main interface" src="ResLibCal.png"><br>
+  <span style="font-style: italic;">The ResLibCal main interface. All items have contextual help. When the </span>View/Auto-update<span style="font-style: italic;"> menu item is checked, any change in the interface triggers a re-computation of the resolution, and an update of opened plots.</span><br>
+  <br>
+
+</div>
+<h4><a class="mozTocH4" name="mozTocId444562"></a>Usage: plotting the TAS resolution function</h4>
+<div style="text-align: left;">
+  To compute and plot the resolution function, select the <span style="font-style: italic;">View/Resolution Ellipsoid (2D and Matrix)</span> or <span style="font-style: italic;">View/Resolution Ellipsoid (3D)</span>
+ menu item. The 2D view also prints the resolution function, its 
+projection (flat phonon width) and intersection (Bragg width), and 
+equivalent ResCal parameters. The 3D view also shows the ellipsoid 
+projections. The corresponding full width values are indicated.<br>
+<br>
+</div>
+<div style="text-align: center;"><img style=" width: 652px; height: 570px;" alt="ResLibCal Resolution function: 2D plot and text output" title="ResLibCal Resolution function: 2D plot and text output" src="ResLibCal_View2.png"><br>
+  <span style="font-style: italic;">The 2D plot of the TAS resolution function, with a text box containing the computation results and detailed configuration.</span><br>
+  <br>
+</div>
+<div style="text-align: center;"><img style=" width: 652px; height: 570px;" alt="The ResLibCal resolution in 3D" title="The ResLibCal resolution in 3D" src="ResLibCal_View3.png"><br>
+  <span style="font-style: italic;">The 3D plot of the TAS resolution function. The axis has a contextual menu allowing to change the plot rendering.</span><br>
+  
+<div style="text-align: left;">
+<h4><a class="mozTocH4" name="mozTocId244259"></a>Usage: handling computation along a scan (measurement sequences)</h4>
+<a href="ResLibCal_View3_scan.png"><img alt="A computation along an energy scan" title="A computation along an energy scan" src="ResLibCal_View3_scan.png" style="border: 0px solid; width: 200px; height: 175px;" align="right"></a>Any
+ HKLE setting can be assign a vector, so that the resolution will be 
+computed, and potted in GUI mode for all measurements. The vector should
+ be set as values separated by spaces.<br>
+An example is for instance<br>
+<div style="margin-left: 40px;"><span style="font-style: italic; font-weight: bold;">H=1 K=0 L=0 </span><br style="font-style: italic; font-weight: bold;">
+  <span style="font-style: italic; font-weight: bold;">W=-5 0 5</span><br>
+</div>
+which shows a 3 steps scan along the energy axis.<br>
+  <h4><a class="mozTocH4" name="mozTocId807901"></a>Usage: reading saved configurations<br>
+  </h4>
+The <span style="font-style: italic;">'File/Open...'</span> menu item allows to read a saved <span style="font-style: italic;">ResLibCal</span> configuration (see below), a <span style="font-style: italic;">ResCal5</span> configuration (42 or 27 numbers), or any file with named Rescal parameters, such as in an ILL TAS data ascii file.<br>
+</div>
+
+
+</div>
+<h4><a class="mozTocH4" name="mozTocId927463"></a>Usage: exporting the results, saving the configuration</h4>
+The results can be saved using the <span style="font-style: italic;">'File/Saveas...'</span> menu item. Enter a <span style="font-style: italic;">'.m'</span>
+ filename, and the full ResLibCal configuration (instrument, sample, 
+position, method) is saved as a Matlab script. An example of such configuration file is available <a href="ResLibCal.ini">here</a>.<br>
+You can further edit this
+ file and change manually values in the 'EXP' ResLib-compatible 
+structure.<br>
+<br>
+The main ResLibCal GUI can also be exported as graphics image in a set 
+of formats, including PDF, EPS, PNG, TIFF, BMP, and Matlab Fig. Plot windows can be exported using the <span style="font-style: italic;">File/Saveas</span> menu item.<br>
+<br>
+When exiting the application, the current configuration is saved in the Matlab preferences directory.<br>
+<h4><a class="mozTocH4" name="mozTocId281751"></a>Usage: non interactive mode (compute only)</h4>
+It is possible to compute the resolution without launching the GUI, which is then very fast. <br>
+For this, send the configuration file from which the computation is defined as an argument to ResLibCal:<br>
+<pre style="margin-left: 40px;">&gt;&gt; out = ResLibCal(<span style="color: rgb(204, 51, 204);">'config_file'</span>)<br>ans =<br>         Title: 'ResLibCal configuration'<br>        handle: 173.0160<br>           EXP: [1x1 struct]<br>    <span style="color: rgb(255, 0, 0);">resolution: </span>[1x1 struct]<br>        ResCal: [1x1 struct]<br></pre>
+The file can be a saved <span style="font-style: italic;">ResLibCal</span> configuration (see below), a <span style="font-style: italic;">ResCal5</span>
+ configuration (42 or 27 numbers), or any file with named Rescal 
+parameters, such as in an ILL TAS data ascii file. Alternatively, an EXP
+ ResLib or full ResLibCal configuration structure can be sent, as well 
+as a ResCal parameter list with keyword <span style="color: rgb(204, 51, 204);">'Rescal:'</span>.<br>
+<pre style="margin-left: 40px;">&gt;&gt; out = ResLibCal(<span style="color: rgb(204, 51, 204);">'ResCal: DA=3.355; DM=3.355; ...'</span>)</pre>
+In order to modify an existing configuration ResLib <span style="font-style: italic;">EXP</span> or full ResLibCal <span style="font-style: italic;">out</span>, use:<br>
+<pre style="margin-left: 40px;">&gt;&gt; out = ResLibCal(<span style="color: rgb(204, 51, 204);">'ResCal: DA=3.355; DM=3.355; ...'</span>, out or EXP structure)<br>&gt;&gt; out = ResLibCal(<span style="color: rgb(204, 51, 204);">'file'</span>, out or EXP structure)<br></pre>
+
+The result is then available in 'out.resolution'<br>
+<pre>&gt;&gt; out.resolution<br>   &nbsp;method: 'Popovici (ResLib)'<br>        R0: 357.5551<br>        RM: [4x4 double]	<span style="font-style: italic;">% resolution matrix in [Qx,Qy,E]</span><br>       RMS: [4x4 double]	<span style="font-style: italic;">% resolution matrix in [Q1,Q2,E] using D1 and D2</span></pre>
+The parameters used for the computation are listed in the 'out.EXP' 
+structure (ResLib-like), but are also shown in the Rescal terminology in
+ 'out.ResCal'.<br>
+<pre style="margin-left: 40px;">&gt;&gt; out.ResCal<br>ans = <br><br>                DM: 3.3542<br>                DA: 3.3542<br>              ETAM: 30<br>              ETAA: 25<br>              ETAS: 5<br>                SM: -1<br>                SS: 1<br>                SA: -1<br>              KFIX: 2.6620<br>                FX: 2<br>              ALF1: 40<br>              ALF2: 40<br>              ALF3: 40<br>              ALF4: 40<br>              BET1: 120<br>              BET2: 159.9648<br>              BET3: 120<br>              BET4: 120<br>                AS: 6.2800<br>                BS: 6.2800<br>                CS: 6.2800<br>                AA: 90<br>                BB: 90<br>                CC: 90<br>                AX: 1<br>                AY: 0<br>                AZ: 0<br>                BX: 0<br>                BY: 1<br>                BZ: 0<br>                QH: 2<br>                QK: 0<br>                QL: 0<br>                EN: 0<br>               DQH: 0<br>               DQK: 0<br>               DQL: 0<br>               DEN: 1<br>                GH: 0<br>                GK: 0<br>                GL: 1<br>              GMOD: 0<br>         BeamShape: 1<br>                WB: 10<br>                HB: 10<br>             Guide: 0<br>               GDH: 0<br>               GDV: 0<br>       SampleShape: 1<br>                WS: 1<br>                TS: 1<br>                HS: 4<br>    DetecteorShape: 1<br>                WD: 2.5400<br>                HD: 5<br>                TM: 0.2000<br>                WM: 10<br>                HM: 10<br>                TA: 0.2000<br>                WA: 10<br>                HA: 10<br>                L1: 150<br>                L2: 150<br>                L3: 150<br>                L4: 150<br>               RMH: 0.0067<br>               RMV: 0.0067<br>               RAH: 0.0067<br>               RAV: 0.0067<br></pre>
+You can change any configuration parameter, including the method for the computation:<br>
+<pre style="margin-left: 40px;">&gt;&gt; out.EXP.method = <span style="color: rgb(204, 51, 204);">'Cooper-Nathans ResCal'</span></pre>
+The method should mention '<span style="font-style: italic;">Cooper-Nathans</span>' or<span style="font-style: italic;"> 'Popovici', </span>with a flavour <span style="font-style: italic;">'ResLib','ResCal'</span> or<span style="font-style: italic;"> 'Res3Ax' </span>as free text. The position of the measurement is:<br>
+<pre style="margin-left: 40px;">&gt;&gt; [ out.EXP.QH out.EXP.QK out.EXP.QL out.EXP.W ]<br>ans =<br>     2     0     0     0<br>&gt;&gt; out.EXP.W = 1;<br>&gt;&gt; out = ResLibCal(out);	<span style="font-style: italic;">% request a new computation with modified choices</span><br></pre>
+The full list of ResLib parameters are described in the <a href="http://www.neutron.ethz.ch/research/resources/reslib">ResLib</a> package documentation.<br>
+<h3><a class="mozTocH3" name="mozTocId393985"></a>Help</h3>
+If you find bugs please send them to me <span style="font-weight: bold;">[farhi (at) ill.fr]</span> with:<br>
+
+
+
+
+<ol>
+<li>your Matlab version</li><li>the ResLibCal version which you can get from the <span style="font-style: italic;">Help/About</span> menu item.<br>
+  </li><li>the TAS configuration you use and the associated procedure to reproduce the error<br>
+</li><li>a copy of the error messages produced by the script/command.<br>
+  </li><li>a smile ;-)</li>
+</ol>
+<h3><a class="mozTocH3" name="mozTocId811100"></a>Credits and disclaimer</h3>
+This application was written by E. Farhi (c) ILL/DS/CS 2013 &lt;farhi@ill.eu&gt; using<br>
+<ul>
+  <li><span style="font-weight: bold;"><a href="http://www.neutron.ethz.ch/research/resources/reslib">ResLib</a></span> (A. Zheludev), using especially <span style="font-style: italic;">ResMat, ResMatS </span>and<span style="font-style: italic;"> ResPlot3D</span></li>
+  <li><a href="http://www.ill.eu/en/instruments-support/computing-for-science/cs-software/all-software/matlab-ill/rescal-for-matlab/"><span style="font-weight: bold;">ResCal5</span></a> (A. Tennant and D. Mc Morrow), using especially <span style="font-style: italic;">rc_cnmat, rc_popma, rc_projs</span></li>
+  <li><span style="font-weight: bold;">Res3ax</span> (J. Ollivier), using <span style="font-style: italic;">res3ax5</span></li>
+  
+<li><a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/pkfit-and-filing/macos9-vms-linux/pkfitvmstutorial/"><span style="font-weight: bold;">ResCal</span></a> from (Hargreave,Hullah,1979), ported into <span style="font-weight: bold;"><a href="http://www.ill.eu/instruments-support/computing-for-science/cs-software/all-software/vtas/">vTAS</a>_view</span> (Y. Raoul/A. Bouvet/A. Filhol)</li>
+
+</ul>
+Some bugs have been corrected in ResLib, ResCal5/rc_popma, and Res3ax by cross comparing codes and independent 
+benchmarking.<br>
+<br>
+The application is distributed with an <a href="COPYING">EUPL</a> license (GPL compatible).<br>
+<br>
+<span style="font-weight: bold;">References:</span><br>
+<div style="margin-left: 40px;">[1] M. J. Cooper and R. Nathans, <span style="font-style: italic;">Acta Cryst. </span><span style="font-weight: bold;">23</span>, 357, (1967).<br>
+[2] N. J. Chesser and J. D. Axe, <span style="font-style: italic;">Acta Cryst.</span> <span style="font-weight: bold;">A29</span>, 160, (1972).<br>
+[3] M. Popovici, <span style="font-style: italic;">Acta Cryst</span> <span style="font-weight: bold;">A31</span>, 507 (1975).<br>
+[4] G. E. Bacon and R. D. Lowde, <span style="font-style: italic;">Acta Cryst.</span> (1948).<br>
+[5] S. A. Werner and R. Pynn, <span style="font-style: italic;">J. Appl. Phys.</span> <span style="font-weight: bold;">42</span>, 4736, (1971).<br>
+</div>
+<br>
+
+
+
+
+<span style="color: rgb(255, 0, 0); font-weight: bold;">Disclaimer:</span><br>
+
+
+
+
+This software is experimental, and should not be considered
+bullet-proof. In particular, expect bugs - which should be
+reported to me <span style="font-weight: bold;">[farhi (at) ill.fr]</span>
+if you want them to be fixed quickly. There is no guaranty that the 
+resolution computation is correct, but as we propose a set of methods, 
+we expect that it gives a fair representation of its accuracy.<br>
+<br>
+<br>
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: center;">&nbsp;<span style="font-style: italic;">E.
+Farhi - ResLibCal - </span><span style="font-style: italic;">$Date: 2013-06-28 10:23:47 +0200 (Fri, 28 Jun 2013) $ $Revision: 1075 $</span> <a href="http://www.ill.eu"><img alt="The ILL web site" title="The ILL web site" src="ILL-web-jpeg.jpg" style="border: 0px solid; border: 0px solid; width: 64px; height: 60px;" align="middle"></a><br>
+</div>
+
+</body></html>

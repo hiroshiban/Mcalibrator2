@@ -1,0 +1,13 @@
+#!/bin/sh
+# script for execution of PyFit
+#
+
+exe_name=$0
+exe_dir=`dirname "$0"`
+
+# currently only works with matlab, not with iFit
+if [ -f "`which ipython`" ]; then
+  ipython --color-info --pprint --i $exe_dir/mlabwrap.py
+else
+  python -i $exe_dir/Python/mlabwrap.py
+fi

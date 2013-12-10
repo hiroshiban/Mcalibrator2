@@ -1,0 +1,58 @@
+#!/bin/sh
+# script for execution of iFit standalone
+#
+# Sets up the MCR environment for the current $ARCH and executes 
+# the specified command.
+#
+exe_name=$0
+exe_dir=`dirname "$0"`
+
+# check for /opt/ or /Applications/ under MacOSX
+# default location
+MCRlinux="/opt/MATLAB/MATLAB_Compiler_Runtime/v713"
+MCRmacosx="/Applications/MATLAB/MATLAB_Compiler_Runtime/v713"
+if [ -d $MCRlinux ]
+then
+  MCRROOT=$MCRlinux
+fi
+if [ -d $MCRmacosx ]
+then
+  MCRROOT=$MCRmacosx
+fi
+
+if [ ! -d $MCRROOT ]
+then
+  echo "The Matlab Compiler Runtime can not be found. "
+  echo "If it has been installed already, define the MCRROOT"
+  echo "variable to the proper location such as:"
+  echo "  export MCRROOT=$MCRlinux"
+  echo "  export MCRROOT=$MCRmacosx"
+  echo "."
+  echo "You can get the MCR installer at "
+  echo "  http://ifit.mccode.org/Downloads/binary/"
+  echo "Download and install it with: ./sudo MCRInstaller.bin or MCRInstaller.dmg"
+  echo "and specify the /opt/MATLAB location (linux) and the default (MacOSX)."
+else
+  echo Starting iFit using $MCRROOT
+  DYLD_LIBRARY_PATH=.:${MCRROOT}/runtime/maci ;
+  DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}:${MCRROOT}/bin/maci ;
+  DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}:${MCRROOT}/sys/os/maci;
+	DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}:/System/Library/Frameworks/JavaVM.framework/JavaVM:/System/Library/Frameworks/JavaVM.framework/Libraries;
+  export DYLD_LIBRARY_PATH;
+  
+  LD_LIBRARY_PATH=.:${MCRROOT}/runtime/glnxa64 ;
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRROOT}/bin/glnxa64 ;
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRROOT}/sys/os/glnxa64;
+	MCRJRE=${MCRROOT}/sys/java/jre/glnxa64/jre/lib/amd64 ;
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE}/native_threads ; 
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE}/server ;
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE}/client ;
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MCRJRE} ;  
+  XAPPLRESDIR=${MCRROOT}/X11/app-defaults ;
+  export LD_LIBRARY_PATH;
+  export XAPPLRESDIR;
+
+  "${exe_dir}"/run_ifit $*
+fi
+exit
+
