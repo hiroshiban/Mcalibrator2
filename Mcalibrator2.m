@@ -29,7 +29,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-10 18:27:49 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-11 09:17:45 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1393,13 +1393,18 @@ function plot_color_pushbutton_Callback(hObject, eventdata, handles)
   rawxyY=getDataFromStr(get(handles.xyY_edit,'String'));
   mesxyY=getDataFromStr(get(handles.results_xyY_edit,'String'));
   set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...');
-  if isempty(phosphors), disp('WARNING: phosphor tristimulus values have not been measured yet. using dummy values...'); end %#ok
-  if isempty(rawxyY), disp('WARNING: xyY values you want have not been set yet...'); end %#ok
-  if isempty(mesxyY), disp('WARNING: actual xyY values have not been measured yet...'); end %#ok
+  if isempty(phosphors)
+    tri_flg=0;
+    disp('WARNING: phosphor tristimulus values have not been measured yet. using dummy values...');
+  else
+    tri_flg=1;
+  end
+  if isempty(rawxyY), disp('WARNING: xyY values you want have not been set yet...'); end
+  if isempty(mesxyY), disp('WARNING: actual xyY values have not been measured yet...'); end
   axes(handles.color_figure); %#ok
   hold off;
-  PlotCIE1931xy((rawxyY(:,1:2))',phosphors,-1,1,1,1);
-  PlotCIE1931xy((mesxyY(:,1:2))',phosphors,0,1,1,0);
+  PlotCIE1931xy((rawxyY(:,1:2))',phosphors,-1,tri_flg,1,1);
+  PlotCIE1931xy((mesxyY(:,1:2))',phosphors,0,tri_flg,1,0);
   hold off;
 
   set(handles.information_text,'String','Plotting measured data on the CIE1931 diagram...Done.');

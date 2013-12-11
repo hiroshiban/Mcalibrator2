@@ -1,0 +1,22 @@
+************************************************************
+citation.txt
+
+If you have space in "References" section of your research
+paper and want to acknowledge use of this software, would 
+you please allow us to ask you to cite the article below?
+If you have no space, please cite somewhere someday next time.
+Thank you so much.
+
+Created    : "2013-12-11 10:25:58 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-11 14:13:48 ban (ban.hiroshi@gmail.com)"
+************************************************************
+
+1. Ban, H., & Yamamoto, H. (2013).
+A non-device-specific approach to display characterization based on linear, nonlinear, and hybrid search algorithms.
+Journal of Vision, 13(6):20, 1-26, http://www.journalofvision.org/content/13/6/20, doi:10.1167/13.6.20.
+
+(if you have some more spaces)
+2. Ban, H., Yamamoto, H., & Ejima, Y. (2006).
+Mcalibrator: MATLAB integrated GUI software for display calibration - A proposal of a new color calibration procedure
+applicable to a wide range of display devices and evaluation of its efficiency.
+Japanese Journal of Psychonomic Science, 24, 149-161.

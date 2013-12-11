@@ -2,8 +2,10 @@
 README.txt on utility functions of Mcalibrator2
 
 Created    : "2012-04-12 11:29:15 ban"
-Last Update: "2013-12-10 16:09:42 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-11 12:02:35 ban (ban.hiroshi@gmail.com)"
 ****************************************
+
+The MATLAB packages here are used to develop Mcalibrator2 GUI window and to generate/update html-based help documents.
 
 1. To modify Mcalibrator2 for your own purposes and functions,
    please run the commands below on MATLAB (please do not use a MATLAB-native "guide" function)
@@ -14,6 +16,3 @@ Last Update: "2013-12-10 16:09:42 ban (ban.hiroshi@gmail.com)"
 2. To update Mcalibrator2 html-based help files, please run
    ~/Mcalibrator2/update_Mcalibrator2_docs.m
    on MATLAB shell.
-
-
-Enjoy!
