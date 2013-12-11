@@ -1,8 +1,9 @@
 function c313878xyz=LoadC313878()
 
+% Loads c31378 values to the memory.
 % function c313878xyz=LoadC313878()
 %
-% Load c31378 values to the memory
+% This function loads c31378 values to the memory.
 %
 % [input]
 % no input variable
@@ -12,7 +13,7 @@ function c313878xyz=LoadC313878()
 %
 %
 % Created    : "2012-04-09 21:42:53 ban"
-% Last Update: "2012-04-09 21:49:30 ban"
+% Last Update: "2013-12-11 17:46:16 ban (ban.hiroshi@gmail.com)"
 
 c313878xyz=[
 0.0014 0.0000 0.0065;

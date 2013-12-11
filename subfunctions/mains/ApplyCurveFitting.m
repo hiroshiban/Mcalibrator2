@@ -1,5 +1,6 @@
 function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg)
 
+% Applies curve fitting to the measured luminance data.
 % function fit=ApplyCurveFitting(lum,:method,:monotonic_flg,:lowpass_flg,flare_correction_flg,:display_flg,:save_flg)
 % (: is optional)
 %
@@ -41,7 +42,7 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2012-04-25 18:44:35 ban"
+% Last Update: "2013-12-11 17:45:02 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end

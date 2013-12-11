@@ -1,5 +1,6 @@
 function hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 
+% Estimates the best RGB video input values to get the requested CIE1931 xyY, using Nelder-Mead direct-search algorithm combined with recursive linear estimations.
 % function hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce CIE 1931 xyY values you want to display.
@@ -40,7 +41,7 @@ function hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,phosphors,flare_XY
 %
 %
 % Created    : "2012-05-30 20:15:22 ban"
-% Last Update: "2013-12-10 16:18:18 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:41:00 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<7, help(mfilename()); hybrid_estimate=[]; return; end

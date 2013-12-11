@@ -1,5 +1,6 @@
 function XYZ=xyY2XYZ(xyY,flares)
 
+% Converts CIE1931 xyY to XYZ tristimulus values.
 % fucntion XYZ=xyY2XYZ(xyY,flares)
 % (: is optional)
 %
@@ -15,7 +16,7 @@ function XYZ=xyY2XYZ(xyY,flares)
 %
 %
 % Created    : "2012-04-09 20:49:52 ban"
-% Last Update: "2012-04-09 21:08:11 ban"
+% Last Update: "2013-12-11 22:09:50 ban (ban.hiroshi@gmail.com)"
 
 if nargin<2, flares=[]; end
 

@@ -1,5 +1,6 @@
 function nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,phosphors,lut,colorimeterhandler,displayhandler,options)
 
+% Estimates the best RGB video input values to get the requested CIE1931 xyY, using Nelder-Mead direct-search algorithm.
 % function nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,phosphors,lut,colorimeterhandler,displayhandler,options);
 %
 % Estimate [R,G,B] values to produce xyY you want to display using non-linear Nelder-Mead Simplex (direct) procedures
@@ -31,7 +32,7 @@ function nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,phosphors,lu
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:35:24 ban (ban.hiroshi@gmail.com)"
 
 %% check input variables
 if nargin<6, help(mfilename()); nonlinear_estimate=[]; return; end

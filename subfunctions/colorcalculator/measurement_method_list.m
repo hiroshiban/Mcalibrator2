@@ -1,5 +1,6 @@
 function meas_methods=measurement_method_list()
 
+% A list of color measurement/estimation methods.
 % function meas_methods=measurement_method_list()
 %
 % Mcalibrator2, measurement_method_list
@@ -18,7 +19,7 @@ function meas_methods=measurement_method_list()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2012-05-29 16:32:07 ban"
+% Last Update: "2013-12-11 17:18:51 ban (ban.hiroshi@gmail.com)"
 
 meas_methods{1}={'Measure simply','calculator_measure_simply'};
 meas_methods{2}={'[auto] Recursive linear estimation with unifrnd()','calculator_auto_estimation_linear'};

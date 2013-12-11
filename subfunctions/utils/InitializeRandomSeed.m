@@ -1,8 +1,9 @@
 function cseed=InitializeRandomSeed
 
+% Initializes MATLAB internal state of a random seed.
 % function InitializeRandomSeed
 %
-% initialize MATLAB internal state of random seed
+% This function initializes MATLAB internal state of random seed
 %
 % [no input]
 %
@@ -10,7 +11,7 @@ function cseed=InitializeRandomSeed
 % cseed  : struct, the current rand settings & seed
 %
 % Created : Jan 29 2010 Hiroshi Ban
-% Last Update: "2013-05-14 22:14:28 ban"
+% Last Update: "2013-11-22 23:18:35 ban (ban.hiroshi@gmail.com)"
 
 if ~exist('RandStream','file')
 

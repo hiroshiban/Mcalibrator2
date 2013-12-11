@@ -1,5 +1,6 @@
 function update_Mcalibrator2_docs()
 
+% Updates Mcalibrator2 html-based documents.
 % function update_Mcalibrator2_docs()
 %
 % This function updates html-based documents of Mcalibrator2
@@ -14,7 +15,7 @@ function update_Mcalibrator2_docs()
 %
 %
 % Created    : "2011-11-02 11:31:48 banh"
-% Last Update: "2013-12-11 09:18:47 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
 
 % add path to m2html
 m2htmlpath=fullfile(fileparts(mfilename('fullpath')),'utils','m2html');

@@ -1,9 +1,10 @@
 function [Ys,xs,ys,displayhander,colorimeterhandler]=MeasureCIE1931xyYs(displayhandler,colorimeterhandler,rgbs,fullscr_flg,fig_id,repetitions,method)
 
+% Measures multiple CIE1931 xyY values for multiple input rgb values using displayhandler and colorimeterhandler.
 % function [xyYs,displayhander,colorimeterhandler]=MeasureCIE1931xyYs(displayhandler,colorimeterhandler,rgbs,:fullscr_flg,:fig_id,:repetitions,:method)
 % (: is optional)
 %
-% Measures CIE1931 xyY values for input rgb values using colorimeterhandler
+% This function measures CIE1931 xyY values for multiple input rgb values using displayhandler and colorimeterhandler
 %
 % [input]
 % displayhandler     : function handle to display color window
@@ -26,7 +27,7 @@ function [Ys,xs,ys,displayhander,colorimeterhandler]=MeasureCIE1931xyYs(displayh
 %
 %
 % Created    : "2012-04-14 23:24:35 ban"
-% Last Update: "2012-04-25 18:17:41 ban"
+% Last Update: "2013-12-11 17:49:07 ban (ban.hiroshi@gmail.com)"
 
 % set global variables
 

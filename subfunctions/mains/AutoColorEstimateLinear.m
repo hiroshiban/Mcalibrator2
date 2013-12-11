@@ -1,5 +1,6 @@
 function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 
+% Estimates the best RGB video input values to get the requested CIE1931 xyY, using recursive linear estimations with random sampling.
 % function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce xyY you want to display based on least-square estimation assuming piecewise linearity
@@ -35,7 +36,7 @@ function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XY
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-10 16:18:18 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:37:19 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<7, help(mfilename()); linear_estimate=[]; return; end

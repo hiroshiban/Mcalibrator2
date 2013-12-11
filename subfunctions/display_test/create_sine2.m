@@ -1,5 +1,8 @@
 function Y = create_sine2(wl,step)
-%mc_creat_sine2
+
+% Creats sine waves for testing display flicker (iso-spatial frequency).
+% function Y = create_sine2(wl,step)
+%
 % creating sine value
 %
 % May 2004 Hiroshi Ban

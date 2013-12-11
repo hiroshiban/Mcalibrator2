@@ -1,5 +1,6 @@
 function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 
+% Estimates the best RGB video input values to get the requested CIE1931 xyY, using recursive linear estimations with grid sampling.
 % function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce xyY you want to display based on least-square estimation assuming piecewise linearity
@@ -41,7 +42,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:35:56 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<7, help(mfilename()); lineargrid_estimate=[]; return; end

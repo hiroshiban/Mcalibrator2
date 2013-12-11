@@ -1,9 +1,10 @@
 function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
 
+% Plots CIE1931 xy value(s) with a CIE1931 chromaticity diagram frame.
 % function PlotCIE1931xy(xy,:Phospher,:new_fig_flg,:tri_flg,:color_flg,:marker_type)
 % (: is optional)
 %
-% Plot CIE1931 xy value(s) with a CIE1931 chromaticity diagram frame.
+% This function plots CIE1931 xy value(s) with a CIE1931 chromaticity diagram frame.
 %
 % [input]
 % xy      : CIE1931 chromaticity value(s), [2 x n] matrix
@@ -27,7 +28,7 @@ function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
 %
 %
 % Created    : "2012-04-09 21:46:42 ban"
-% Last Update: "2012-06-05 11:06:24 ban"
+% Last Update: "2013-12-11 17:49:27 ban (ban.hiroshi@gmail.com)"
 
 % persistent variables
 persistent gen_flg;

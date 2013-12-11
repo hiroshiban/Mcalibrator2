@@ -1,5 +1,6 @@
 function idx=getLUTidx(lut,rgb)
 
+% Gets indices to the elements in Color LookUpTable that are closest to the input RGB values.
 % function idx=getLUTidx(lut,rgb)
 %
 % a subfunction to handle data
@@ -7,7 +8,7 @@ function idx=getLUTidx(lut,rgb)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2012-05-29 16:32:07 ban"
+% Last Update: "2013-12-11 17:22:15 ban (ban.hiroshi@gmail.com)"
 
 idx=zeros(size(rgb,2),3);
 for nn=1:1:size(rgb,2), idx(nn,:)=ceil((rgb(:,nn))'.*size(lut,1)); end

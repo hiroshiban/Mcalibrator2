@@ -1,8 +1,9 @@
 function [x,y,z,C]=LoadCIE1931xy()
 
+% Loads CIE1931 xy color tables to the memory.
 % function [x,y,z,C]=LoadCIE1931xy()
 %
-% Load CIE1931 xy color tables to the memory
+% This function loads CIE1931 xy color tables to the memory.
 %
 % [input]
 % no input variable
@@ -15,7 +16,7 @@ function [x,y,z,C]=LoadCIE1931xy()
 %
 %
 % Created  : "2012-04-17 07:23:31 ban"
-% Last Update: "2012-04-17 07:25:07 ban"
+% Last Update: "2013-12-11 17:46:44 ban (ban.hiroshi@gmail.com)"
 
 persistent xx;
 persistent yy;

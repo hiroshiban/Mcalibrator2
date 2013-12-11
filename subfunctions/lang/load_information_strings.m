@@ -1,12 +1,13 @@
 function strings=load_information_strings()
 
+% Defines strings displayed in Information window of Mcalibrator2.
 % function strings=load_information_strings()
 %
 % This function defines strings displayed in Information window
 %
 %
 % Created    : "2012-04-15 01:23:24 ban"
-% Last Update: "2013-12-10 17:57:55 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:09:28 ban (ban.hiroshi@gmail.com)"
 
 % string for "config" tab
 strings{1}=...

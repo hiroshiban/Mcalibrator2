@@ -1,5 +1,6 @@
 function xyY = RGB2xyY(RGB,phosphors,flares)
 
+% Converts RGB video inputs to CIE1931 xyY.
 % function xyY=RGB2xyY(RGB,phosphors,:flares)
 % (: is optional)
 %
@@ -22,7 +23,7 @@ function xyY = RGB2xyY(RGB,phosphors,flares)
 %
 %
 % Created    : "2012-04-09 20:51:42 ban"
-% Last Update: "2013-12-10 16:18:20 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:09:02 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<2, help(mfilename()); xyY=[]; return; end

@@ -1,5 +1,6 @@
 function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 
+% A sample to run the recursive linear color estimation from your own script/function.
 % function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,:phosphors)
 % (: is optional)
 %
@@ -21,7 +22,7 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 % [input]
 % myxyY      : xyY values we want, [3 x n] matrix
 % lut        : color lookup table, [n x 3(r,g,b)] matrix, set lut=[]; if you do not need to use LUTs
-% phosphors  : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] after preprocessing
+% phosphors  : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] (RGB) at max voltage level of the display
 %
 % [output]
 % stimate    : cell structure {n x 1}, holding the estimation results with the variables below
@@ -38,7 +39,7 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 %
 %
 % Created    : "2013-12-11 13:15:17 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 14:21:37 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<3, help(mfilename()); return; end

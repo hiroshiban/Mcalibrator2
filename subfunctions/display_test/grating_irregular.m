@@ -1,5 +1,7 @@
 function grating_irregular
-% mc_grating_irregular
+
+% Create irregular spatial frequency gratings for testing display flickers.
+% function grating_irregular
 %
 % Test your display with grating spatial frequency
 % random version

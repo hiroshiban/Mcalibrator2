@@ -1,5 +1,6 @@
 function calculator_auto_estimation_linear(hObject, eventdata, handles)
 
+% A wrapper function of AutoColorEstimateLinear to call it from Mcalibrator2 with GUI-based data handling.
 % function calculator_auto_estimation_linear(hObject, eventdata, handles)
 %
 % This is a wrapper to AutoColorEstimateLinear function.
@@ -21,7 +22,7 @@ function calculator_auto_estimation_linear(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-10 17:39:23 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:37:42 ban (ban.hiroshi@gmail.com)"
 
 global config;
 global colorimeterhandler;

@@ -1,5 +1,7 @@
 function flicker_horizontal
-% mc_flicker
+
+% Displays color flier for testing display flicker -- horizontal version.
+% function flicker_horizontal
 %
 % Color Flicker Display Test -- horizontal version
 % Apr. 2004 Hiroshi Ban

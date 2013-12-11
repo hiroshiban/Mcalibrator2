@@ -1,5 +1,7 @@
 function grating_equally
-% mc_grating_equally
+
+% Create gratings for testing display flickers.
+% function grating_equally
 %
 % Test your display with grating spatial frequency
 % random version

@@ -1,5 +1,6 @@
 function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg)
 
+% Applies gamma-correction to the measured luminance data and generates the corresponding Color LookUpTable.
 % function [lut,lumfiltered,flare,fit]=...
 %   ApplyGammaCorrection(lum,:method,:numluttbl,:monotonic_flg,:lowpass_flg,:flare_correction_flg,:display_flg,:save_flg)
 % (: is optional)
@@ -48,7 +49,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2012-04-25 19:00:57 ban"
+% Last Update: "2013-12-11 17:45:48 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end

@@ -1,9 +1,10 @@
 function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 
+% Displays a color patch window (using MATLAB-native figure) with specific RGB values.
 % function [fig_id,success]=DisplayColorWindow(rgb,:fullscr_flg,:fig_id,:scr_num)
 % (: is optional)
 %
-% displays a color window with specific RGB values
+% This function displays a color window with specific RGB values
 %
 % [input]
 % rgb         : color (RGB) to be displayed
@@ -18,7 +19,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2013-12-04 15:25:59 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:54:46 ban (ban.hiroshi@gmail.com)"
 
 % persistent/global variable
 persistent hpush;

@@ -1,5 +1,6 @@
 function RGB=XYZ2RGB(XYZ,phosphorXYZ)
 
+% Converts XYZ tristimulus values to RGB video inputs.
 % function RGB=XYZ2RGB(XYZ,phosphorXYZ)
 %
 % Compute phosphor coodinates RGB(0 - 1) from XYZ.
@@ -15,7 +16,7 @@ function RGB=XYZ2RGB(XYZ,phosphorXYZ)
 %
 %
 % Created    : "2012-04-09 20:51:42 ban"
-% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:08:13 ban (ban.hiroshi@gmail.com)"
 
 RGB=phosphorXYZ\XYZ;
 

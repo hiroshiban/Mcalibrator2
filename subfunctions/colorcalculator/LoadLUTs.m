@@ -1,5 +1,6 @@
 function lut=LoadLUTs()
 
+% Loads Color LookUpTable into memory to handle it in Mcalibrator2.
 % function lut=LoadLUTs()
 %
 % a subfunction to handle data
@@ -7,7 +8,7 @@ function lut=LoadLUTs()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-10 17:40:13 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:20:15 ban (ban.hiroshi@gmail.com)"
 
 global config;
 

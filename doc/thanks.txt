@@ -11,7 +11,7 @@ We also clearly denote that our Mcalibrator2 suite fulfills
 all the license requirements to use these tools.
 
 Created    : "2012-05-16 16:41:51 ban"
-Last Update: "2012-05-31 15:02:08 ban"
+Last Update: "2013-12-11 15:57:50 ban (ban.hiroshi@gmail.com)"
 ************************************************************
 
 * for creating GUI window
@@ -21,6 +21,11 @@ tabpanel     : Elmar Tarajan
 * for creating html documents
 m2html       : Guillaume Flandin
                [ref] http://www.artefact.tk/software/matlab/m2html/
+
+* for transforming chromatic values across different units and spaces
+  We appreciate the developer of this tool as Mcalibrator2 CIE1931 color window is inspired by his tool.
+optprop      : Jerker Wagberg
+               [ref] http://www.mathworks.com/matlabcentral/fileexchange/13788-optprop-a-color-properties-toolbox
 
 * for filtering raw luminance data
 smoothn      : Damien Garcia

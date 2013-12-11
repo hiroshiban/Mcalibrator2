@@ -1,5 +1,6 @@
 function colorimeters=colorimeter_list()
 
+% A list of colorimeter/photometer used in Mcalibrator2.
 % function colorimeters=colorimeter_list()
 %
 % Mcalibrator2, colorimeter_list
@@ -34,7 +35,7 @@ function colorimeters=colorimeter_list()
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2013-12-11 12:03:42 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:51:05 ban (ban.hiroshi@gmail.com)"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'KONICA-MINOLTA CS-100A','cs100a',0};

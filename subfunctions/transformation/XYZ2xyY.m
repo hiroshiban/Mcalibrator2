@@ -1,5 +1,6 @@
 function xyY=XYZ2xyY(XYZ)
 
+% Converts XYZ tristimulus values to CIE1931 xyY.
 % function xyY=XYZ2xyY(XYZ)
 %
 % Compute chromaticity and luminance from
@@ -13,7 +14,7 @@ function xyY=XYZ2xyY(XYZ)
 %
 %
 % Created    : "2012-04-09 20:53:01 ban"
-% Last Update: "2012-04-09 21:01:41 ban"
+% Last Update: "2013-12-11 22:08:03 ban (ban.hiroshi@gmail.com)"
 
 xyY=zeros(3,size(XYZ,2));
 for i=1:1:size(xyY,2)

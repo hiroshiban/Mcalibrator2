@@ -1,5 +1,6 @@
 function powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 
+% Estimates the best RGB video input values to get the requested CIE1931 xyY, using Powell line-search algorithm combined with recursive linear estimations.
 % function powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
 % Estimate [R,G,B] values to produce CIE 1931 xyY values you want to display.
@@ -41,7 +42,7 @@ function powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,phosph
 %
 %
 % Created    : "2012-05-30 20:15:22 ban"
-% Last Update: "2013-12-10 16:18:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:41:11 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<7, help(mfilename()); powel_hybrid_estimate=[]; return; end

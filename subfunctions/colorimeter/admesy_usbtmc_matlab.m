@@ -1,9 +1,10 @@
 function [methodinfo,structs,enuminfo,ThunkLibName]=admesy_usbtmc_matlab
 
+% A MATLAB version of header file, admesy_usbtmc.h
 % function [methodinfo,structs,enuminfo,ThunkLibName]=admesy_usbtmc_matlab
 %
 % Created    : "2012-10-30 20:02:11 banh"
-% Last Update: "2012-10-30 20:49:43 banh"
+% Last Update: "2013-12-11 17:50:30 ban (ban.hiroshi@gmail.com)"
 %
 % [about]
 % ADMESY_USBTMC_MATLAB Create structures to define interfaces found in 'admesy_usbtmc'.

@@ -1,5 +1,6 @@
 function varargout = Mcalibrator2(varargin)
 
+  % Mcalibrator2 -- display luminance/chromaticity characterization software package.
   % function varargout = Mcalibrator2(varargin)
   %
   % MCALIBRATOR2 M-file for Mcalibrator2.fig
@@ -29,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-11 09:17:45 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 

@@ -1,5 +1,7 @@
 function fluctuation
-%mc_fluctuation  
+
+% Creates fluctuated L-shaped membrane animation for testing display flickers and ghost.
+% function fluctuation
 %
 % for display fluctuation checking
 %

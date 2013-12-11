@@ -1,5 +1,6 @@
 function displayroutines=displayroutine_list()
 
+% A list of functions to be used to display color patches in light measurement.
 % function displayroutines=displayroutine_list()
 %
 % Mcalibrator2, displayroutine_list
@@ -21,7 +22,7 @@ function displayroutines=displayroutine_list()
 %
 %
 % Created    : "2013-12-10 15:08:42 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-10 15:20:41 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:52:56 ban (ban.hiroshi@gmail.com)"
 
 displayroutines{1}={'MATLAB figure','DisplayColorWindow'};
 displayroutines{2}={'Psychtoolbox','DisplayColorWindowPTB'};
