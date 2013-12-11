@@ -2,7 +2,7 @@
 TODO.txt on Mcalibrator2
 
 Created    : "2013-12-10 16:47:36 ban (ban.hiroshi@gmail.com)"
-Last Update: "2013-12-10 18:35:46 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-11 22:32:13 ban (ban.hiroshi@gmail.com)"
 **************************************************
 
 *DONE* 1. Add an option to select a directory to save the measurement results.
@@ -24,3 +24,7 @@ Last Update: "2013-12-10 18:35:46 ban (ban.hiroshi@gmail.com)"
 5. Add option(s) to set optimization parameters more easily.
 
 6. GUI window adjusting so that we can display a color window on multiple display(s)
+
+7. add color unit transformation functions such as xyY2Lab, xyY2Luv etc.
+
+8. Update Mcalibrator2 PDF manuals.
