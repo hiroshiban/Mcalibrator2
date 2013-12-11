@@ -11,7 +11,7 @@ We also clearly denote that our Mcalibrator2 suite fulfills
 all the license requirements to use these tools.
 
 Created    : "2012-05-16 16:41:51 ban"
-Last Update: "2013-12-11 15:57:50 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-11 22:29:04 ban (ban.hiroshi@gmail.com)"
 ************************************************************
 
 * for creating GUI window
@@ -23,7 +23,7 @@ m2html       : Guillaume Flandin
                [ref] http://www.artefact.tk/software/matlab/m2html/
 
 * for transforming chromatic values across different units and spaces
-  We appreciate the developer of this tool as Mcalibrator2 CIE1931 color window is inspired by his tool.
+  We appreciate the developer of this tool as CIE1931 color disk on Color Calculator tab of Mcalibrator2 was generated based on this tool.
 optprop      : Jerker Wagberg
                [ref] http://www.mathworks.com/matlabcentral/fileexchange/13788-optprop-a-color-properties-toolbox
 
