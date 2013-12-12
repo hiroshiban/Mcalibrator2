@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 13:34:02 ban"
+Last Update: "2013-12-12 15:28:04 ban"
 **************************************************
 
 [about]
@@ -43,10 +43,10 @@ can help your research projects.
 To launch Mcalibrator on MATLAB, please run
 >> Mcalibrator2
 
-If you face some problems related to "tabselectionfcn" function,
-please run
->> Mcalibrator2_tabfunc_disabled
-instead of Mcalibrator2.
+Please note that when you use MATLAB version 2012 or later,
+a tab-related function, "tabselectionfcn", will be disabled
+due to incompatibility of this function with the recent MATLAB.
+I will sort this problem out soon.
 
 
 [How to generate/update html-based Mcalibrator2 help files]

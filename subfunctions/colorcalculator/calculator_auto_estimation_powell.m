@@ -22,7 +22,7 @@ function calculator_auto_estimation_powell(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:42:39 ban"
+% Last Update: "2013-12-12 14:53:05 ban"
 
 global config;
 global colorimeterhandler;
@@ -108,7 +108,7 @@ set(handles.results_xyY_edit,'String',str_xyY);
 set(handles.results_RGB_edit,'String',str_rgb);
 
 % save the results
-eval(sprintf('save %s powell_estimate -append;',save_fname));
+save(save_fname,'-append','powell_estimate');
 
 set(handles.information_text,'String','Automatic estimation of xyY values using Powell with Coggins line search started...Done.');
 

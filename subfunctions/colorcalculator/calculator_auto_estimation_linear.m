@@ -22,7 +22,7 @@ function calculator_auto_estimation_linear(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:37:42 ban"
+% Last Update: "2013-12-12 14:52:03 ban"
 
 global config;
 global colorimeterhandler;
@@ -104,7 +104,7 @@ set(handles.results_xyY_edit,'String',str_xyY);
 set(handles.results_RGB_edit,'String',str_rgb);
 
 % save the results
-eval(sprintf('save %s linear_estimate -append;',save_fname));
+save(save_fname,'-append','linear_estimate');
 
 set(handles.information_text,'String','Automatic linear least-square estimation of xyY values started...Done.');
 

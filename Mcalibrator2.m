@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-12 13:33:57 ban"
+  % Last Update: "2013-12-12 15:29:43 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -94,7 +94,7 @@ function Mcalibrator2_OpeningFcn(hObject, eventdata, handles, varargin)
   set(handles.information_text,'FontAngle','normal','FontName','Tahoma','FontSize',10.0,'FontUnits','pixels','String',[{'This is Mcalibrator2 config panel.',''},strings{1}]);
 
   % disable some tabs when opening Mcalibrator2
-  tabselectionfcn(hObject,'McalibratorTab',2:4,'off');
+  tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(hObject,'McalibratorTab',2:4,'off'); end; clear tver;
   tabhandle=hObject;
 
 
@@ -291,7 +291,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   if get(handles.config_ok_togglebutton,'Value')
 
     % enable some tabs
-    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on');
+    tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on'); end; clear tver;
     manageConfigTab(handles,'off');
     manageMeasureTab(handles,'on');
     manageLUTTab(handles,'on');
@@ -364,7 +364,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
 
         % disable some tabs
-        tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+        tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
         manageConfigTab(handles,'on');
         manageMeasureTab(handles,'off');
         manageLUTTab(handles,'off');
@@ -381,7 +381,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     if ~exist(save_fname,'file')
       save(save_fname,'config');
     else
-      eval(sprintf('save %s config -append;',save_fname));
+      save(save_fname,'-append','config');
     end
 
     PlaySound(1);
@@ -389,7 +389,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   else
 
     % disable some tabs
-    tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off');
+    tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
     manageConfigTab(handles,'on');
     manageMeasureTab(handles,'off');
     manageLUTTab(handles,'off');
@@ -607,7 +607,24 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   title('measured luminance');
 
   % save the results
-  eval(sprintf('save %s lum -append;',save_fname));
+  save(save_fname,'-append','lum');
+
+  % save the phosphor xyY matrix and flare xyY as text files when red, green, and blue phosphor luminance values were obtained.
+  if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
+    fid=fpen(fullfile(save_dir,'phosphors.txt'),'w');
+    if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
+    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
+    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
+    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
+    fclose(fid);
+
+    fid=fpen(fullfile(save_dir,'flares.txt'),'w');
+    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    fprintf(fid,'%.4f\n',mean(lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)));
+    fprintf(fid,'%.4f\n',mean(lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)));
+    fprintf(fid,'%.4f\n',mean(lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)));
+    fclose(fid);
+  end
 
   PlaySound(1);
 
@@ -736,7 +753,7 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
   hold off;
 
   % create luminance file format
-  eval(sprintf('save %s fitting_method fitlum -append;',save_fname));
+  save(save_fname,'-append','fitting_method','fitlum');
 
   PlaySound(1);
 
@@ -833,11 +850,19 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     ylabel('video input (0.0-1.0)');
     title('generated LUTs');
 
-    % save the generated LUT to a text file
+    % save the generated LUTs to text files
     fid=fopen(fullfile(save_dir,sprintf('%s.lut',color_str{ii})),'w');
     if fid==-1, error('can not open a %s LUT file to write.',color_str{ii}); PlaySound(0); end
     for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.4f\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
+
+    % save a combined RGB LUT to a text file
+    if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
+      fid=fopen(fullfile(save_dir,'rgb_gamma.lut'),'w');
+      if fid==-1, error('can not open rgb_gamma.lut to write.'); PlaySound(0); end
+      for mm=1:1:size(lut{1},2), fprintf(fid,'%.4f %.4f %.4f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
+      fclose(fid);
+    end
 
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...Done.',color_str{ii}));
   end
@@ -847,7 +872,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   if windows_flg, ppt.saveAs(fullfile(save_dir,'display_calibration_result.ppt')); end
 
   % save the results
-  eval(sprintf('save %s fitting_method lut -append;',save_fname));
+  save(save_fname,'-append','fitting_method','lut');
 
   % save the generaged LUT(s) for PTB3
   if lutoutbit==256
@@ -996,7 +1021,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     hold off;
 
     % create luminance file format
-    eval(sprintf('save %s checklum -append;',save_fname));
+    save(save_fname,'-append','checklum');
 
   end % if handles.easycheck_togglebutton % easy mode
 
@@ -1179,7 +1204,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
   hold off;
 
   % save the results
-  eval(sprintf('save %s phosphors flares -append;',save_fname));
+  save(save_fname,'-append','phosphors','flares');
 
   PlaySound(1);
 
@@ -1350,7 +1375,7 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
   estimate.results_RGB=getDataFromStr(get(handles.results_RGB_edit,'String'));
 
   % save the results
-  eval(sprintf('save %s estimate -append;',save_fname));
+  save(save_fname,'-append','estimate');
 
   % save the results to a text file
   estimate_files=wildcardsearch(save_dir,'estimate_*.txt');
