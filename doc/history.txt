@@ -1,13 +1,14 @@
 Mcalibrator2 --- MATLAB software for display luminance/color characterization
 
-Copyright (c) 2012, Hiroshi Ban, Kyoto University, Japan.
-All rights reserved.
+Copyright (c) 2013, Hiroshi Ban, Kyoto University, and
+National Institute of Information and Communications Technology, Japan.
 
 Created    : "July 01 2012 2:26:30 ban"
-Last Update: "2013-12-11 10:08:27 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-12 10:48:24 ban (ban.hiroshi@gmail.com)"
 
 ==================== History ====================
 July 01 2012 Mcalibrator2 ver.1.0 released. The first stable version of Mcalibrator2.
 May  31 2013 Mcalibrator2 paper by H.Ban & H.Yamamoto was published in Journal of Vision (2013) 13(6).20, 1-26. doi: 10.1167/13.6.20
 June 09 2013 Mcalibrator2 ver.1.1 released. Compatible with Mac OSX10.8.3 and Windows 8 professional 64bit with MATLAB2013a
 Dec  11 2013 Mcalibrator2 ver.1.2 released. Several modifications. For details, please see .git revision log
+Dec  12 2013 Mcalibrator2 was registered to GitHub
