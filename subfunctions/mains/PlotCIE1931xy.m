@@ -1,7 +1,7 @@
-function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
+function PlotCIE1931xy(xy,Phosphor,new_fig_flg,tri_flg,color_flg,marker_type)
 
 % Plots CIE1931 xy value(s) with a CIE1931 chromaticity diagram frame.
-% function PlotCIE1931xy(xy,:Phospher,:new_fig_flg,:tri_flg,:color_flg,:marker_type)
+% function PlotCIE1931xy(xy,:Phosphor,:new_fig_flg,:tri_flg,:color_flg,:marker_type)
 % (: is optional)
 %
 % This function plots CIE1931 xy value(s) with a CIE1931 chromaticity diagram frame.
@@ -17,7 +17,7 @@ function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
 %               if -1, the plots will be clear first and redisplayed without any toolbar and menubar
 %                      in the existing figure window
 %               1 by default
-% tri_flg     : if 1, triangle enclosed by 3 phospher xy values will be displayed, 0 by default
+% tri_flg     : if 1, triangle enclosed by 3 phosphor xy values will be displayed, 0 by default
 % color_flg   : if 1, CIE 9131 xy color disk will be displayed, 1 by default
 % marker_type : if 1, marker='o', if 0, marker='x', 1 by default
 %
@@ -28,7 +28,7 @@ function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
 %
 %
 % Created    : "2012-04-09 21:46:42 ban"
-% Last Update: "2013-12-11 17:49:27 ban"
+% Last Update: "2013-12-13 09:35:10 ban"
 
 % persistent variables
 persistent gen_flg;
@@ -39,17 +39,17 @@ persistent htri;
 
 % check input variable
 if nargin<1, help(mfilename()); return; end
-if nargin<2 || isempty(Phospher)
-  % set phospher xyY values measured at HBRC, Kyoto University, as 'dummy' phospher data
-  Phospher=[0.68,0.23,0.13; 0.32,0.71,0.075; 51.56,128.30,25.60];
+if nargin<2 || isempty(Phosphor)
+  % set phosphor xyY values measured at HBRC, Kyoto University, as 'dummy' phosphor data
+  Phosphor=[0.68,0.23,0.13; 0.32,0.71,0.075; 51.56,128.30,25.60];
 end
 if nargin<3 || isempty(new_fig_flg), new_fig_flg=1; end
 if nargin<4 || isempty(tri_flg), tri_flg=0; end
 if nargin<5 || isempty(color_flg), color_flg=1; end
 if nargin<6 || isempty(marker_type), marker_type=1; end
 
-if size(Phospher,1)~=3 || size(Phospher,2)~=3
-  error('Phospher should be [Rx Gx Bx; Ry Gy By; RY GY BY]. check input variable.');
+if size(Phosphor,1)~=3 || size(Phosphor,2)~=3
+  error('Phosphor should be [Rx Gx Bx; Ry Gy By; RY GY BY]. check input variable.');
 end
 
 % generate figure window
@@ -110,13 +110,13 @@ if new_fig_flg==1 || isempty(gen_flg)
   hdisk=surf(cxx,cyy,czz,cCC,'FaceColor','interp','EdgeColor','none','Visible','off');
   clear cxx cyy czz cCC;
 
-  % plot triangle enclosed by 3 phospher xy values
-  htri(1)=plot(Phospher(1,1:2),Phospher(2,1:2),'k-','Visible','off');
-  htri(2)=plot(Phospher(1,2:3),Phospher(2,2:3),'k-','Visible','off');
-  htri(3)=plot(Phospher(1,[1,3]),Phospher(2,[1,3]),'k-','Visible','off');
-  htri(4)=plot(Phospher(1,1),Phospher(2,1),'Marker','o','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor',[0,0,0],'Visible','off');
-  htri(5)=plot(Phospher(1,2),Phospher(2,2),'Marker','o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor',[0,0,0],'Visible','off');
-  htri(6)=plot(Phospher(1,3),Phospher(2,3),'Marker','o','MarkerSize',10,'MarkerFaceColor','b','MarkerEdgeColor',[0,0,0],'Visible','off');
+  % plot triangle enclosed by 3 phosphor xy values
+  htri(1)=plot(Phosphor(1,1:2),Phosphor(2,1:2),'k-','Visible','off');
+  htri(2)=plot(Phosphor(1,2:3),Phosphor(2,2:3),'k-','Visible','off');
+  htri(3)=plot(Phosphor(1,[1,3]),Phosphor(2,[1,3]),'k-','Visible','off');
+  htri(4)=plot(Phosphor(1,1),Phosphor(2,1),'Marker','o','MarkerSize',10,'MarkerFaceColor','r','MarkerEdgeColor',[0,0,0],'Visible','off');
+  htri(5)=plot(Phosphor(1,2),Phosphor(2,2),'Marker','o','MarkerSize',10,'MarkerFaceColor','g','MarkerEdgeColor',[0,0,0],'Visible','off');
+  htri(6)=plot(Phosphor(1,3),Phosphor(2,3),'Marker','o','MarkerSize',10,'MarkerFaceColor','b','MarkerEdgeColor',[0,0,0],'Visible','off');
 
   gen_flg=true;
 
@@ -149,7 +149,7 @@ end
 
 % plot xy values
 if ~isempty(xy)
-  rgb=xyY2RGB([xy;100*ones(1,size(xy,2))],Phospher); % get RGB value(s) for input xy(+ dummy Y);
+  rgb=xyY2RGB([xy;100*ones(1,size(xy,2))],Phosphor); % get RGB value(s) for input xy(+ dummy Y);
   rgb(rgb>1.0)=1.0;
   rgb(rgb<0.0)=0.0;
   for nn=1:1:size(xy,2)

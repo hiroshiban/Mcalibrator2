@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 17:17:25 ban"
+Last Update: "2013-12-13 09:38:28 ban"
 **************************************************
 
 [about]
@@ -10,6 +10,7 @@ Last Update: "2013-12-12 17:17:25 ban"
 Mcalibrator2 is a MATLAB-based display luminance/chromaticity
 characterization software package. For details, please read
 documents in ~/Mcalibrator2/doc directory.
+(Matlab is a registered trademark of The Mathworks Inc.)
 
 Thank you for using our software. We are happy if Mcalibrator2
 can help your research projects.
@@ -17,25 +18,26 @@ can help your research projects.
 
 [System Requirements]
 
-- OS: Windows XP/VISTA/7/8 and Mac OSX
-  note 1: Windows is required to use some photometer as their
-          drivers are only compatible with Windows.
-  note 2: On MacOSX box, an interface to a virtual serial port
-          is required (generally implemented by default).
+- OS: Windows XP/VISTA/7/8 or Mac OSX
+  note 1: Windows bos is required to use some photometers with
+          Mcalibrator2 as only Windows drivers are distributed
+          for them.
+  note 2: On a Mac OSX box, an interface to a virtual serial
+          port is required (generally implemented by default).
           Please check your environments first.
-  note 3: We have not tested Mcalibrator2 on Linux box. But it
-          would work once you can get a proper serial or usb
-          interfaces with valid drivers to control your photometers.
+  note 3: We have not tested Mcalibrator2 on any Linux box. But
+          it would work once you can get a proper serial or usb
+          interface with valid drivers to control your photometers.
 
-- MATLAB R2009a or later and "optimization" toolbox
+- MATLAB R2009a or later and "optimization" and "statistics" toolboxes
   note 1: Mcalibrator2 works even without optimization toolbox,
           but to use full functionality of the software (e.g.
           automatic non-linear RGB video input estimations),
           the toolbox is required.
   note 2: Mcalibrator2 can not be launched correctly on MATLAB
-          R2007 or an older version as GUI control system that
+          R2007 or older since the GUI control system that
           Mcalibrator2 adopted is quite different from the
-          conventions of the older MATLAB's one.
+          conventions of the older MATLABs.
 
 
 [How to launch Mcalibrator2]

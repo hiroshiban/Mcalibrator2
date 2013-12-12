@@ -22,7 +22,7 @@ function calculator_auto_estimation_hybrid(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-12 14:51:25 ban"
+% Last Update: "2013-12-13 11:14:36 ban"
 
 global config;
 global colorimeterhandler;
@@ -73,12 +73,15 @@ else
 end
 
 % linear/non-linear hybrid estimation(s) of [R,G,B] values to display CIE1931 xyY(s) you want
-options.lin.iteration=3;
-options.lin.samples=18;
-options.lin.rmserror=1; % percent error
-options.lin.ss0=2.0; % search space, from ss0 to ss1
-options.lin.ss1=1.0;
-options.nonlin=optimset('Display','iter','MaxFunEvals',150,'TolFun',0.5,'TolX',1e-3,'MaxIter',50,'DiffMinChange',1e-3);
+options=getOptimizationParams(get(handles.calculator_method_popupmenu,'Value'));
+if isempty(options)
+  options.lin.iteration=3;
+  options.lin.samples=18;
+  options.lin.rmserror=1; % percent error
+  options.lin.ss0=2.0; % search space, from ss0 to ss1
+  options.lin.ss1=1.0;
+  options.nonlin=optimset('Display','iter','MaxFunEvals',150,'TolFun',0.5,'TolX',1e-3,'MaxIter',50,'DiffMinChange',1e-3);
+end
 hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,myphosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options);
 
 % plotting

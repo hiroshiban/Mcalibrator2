@@ -22,7 +22,7 @@ function calculator_auto_estimation_powell(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-12 14:53:05 ban"
+% Last Update: "2013-12-13 11:16:13 ban"
 
 global config;
 global colorimeterhandler;
@@ -72,15 +72,18 @@ else
 end
 
 % Optimize RGB values using Powell with Coggins line search
-options=optimset; % empty structure
-options.Display='iter';
-options.TolFun =0.1;
-options.TolX   =1e-3;
-options.MaxIter=100;
-options.MaxFunEvals=200;
-options.Hybrid = 'Coggins';
-options.algorithm  = 'Powell Search (by Secchi) [ fminpowell ]';
-options.optimizer = 'fminpowell';
+options=getOptimizationParams(get(handles.calculator_method_popupmenu,'Value'));
+if isempty(options)
+  options=optimset; % empty structure
+  options.Display='iter';
+  options.TolFun =0.1;
+  options.TolX   =1e-3;
+  options.MaxIter=100;
+  options.MaxFunEvals=200;
+  options.Hybrid = 'Coggins';
+  options.algorithm  = 'Powell Search (by Secchi) [ fminpowell ]';
+  options.optimizer = 'fminpowell';
+end
 powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,myphosphors,lut,colorimeterhandler,displayhandler,options);
 
 % plotting

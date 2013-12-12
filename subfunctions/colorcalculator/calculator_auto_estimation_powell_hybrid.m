@@ -22,7 +22,7 @@ function calculator_auto_estimation_powell_hybrid(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-12 14:53:25 ban"
+% Last Update: "2013-12-13 11:15:07 ban"
 
 global config;
 global colorimeterhandler;
@@ -73,20 +73,23 @@ else
 end
 
 % linear/non-linear hybrid estimation(s) of [R,G,B] values to display CIE1931 xyY(s) you want
-options.lin.iteration=3;
-options.lin.samples=18;
-options.lin.rmserror=1; % percent error
-options.lin.ss0=2.0; % search space, from ss0 to ss1
-options.lin.ss1=1.0;
-options.powell=optimset(); % empty structure
-options.powell.Display='iter';
-options.powell.TolFun =0.5;
-options.powell.TolX   =1e-3;
-options.powell.MaxIter=80;
-options.powell.MaxFunEvals=200;
-options.powell.Hybrid = 'Coggins';
-options.powell.algorithm  = 'Powell Search (by Secchi) [ fminpowell ]';
-options.powell.optimizer = 'fminpowell';
+options=getOptimizationParams(get(handles.calculator_method_popupmenu,'Value'));
+if isempty(options)
+  options.lin.iteration=3;
+  options.lin.samples=18;
+  options.lin.rmserror=1; % percent error
+  options.lin.ss0=2.0; % search space, from ss0 to ss1
+  options.lin.ss1=1.0;
+  options.powell=optimset(); % empty structure
+  options.powell.Display='iter';
+  options.powell.TolFun =0.5;
+  options.powell.TolX   =1e-3;
+  options.powell.MaxIter=80;
+  options.powell.MaxFunEvals=200;
+  options.powell.Hybrid = 'Coggins';
+  options.powell.algorithm  = 'Powell Search (by Secchi) [ fminpowell ]';
+  options.powell.optimizer = 'fminpowell';
+end
 powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,myphosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options);
 
 % plotting

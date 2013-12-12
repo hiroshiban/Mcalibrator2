@@ -1,6 +1,6 @@
 function calculator_measure_simply(hObject, eventdata, handles)
 
-% Simply measures CIE1931 xyY values for the RGB video inputs set on Mcalibrator2 "Color Calculator" tab.
+% A wrapper function of MeasureCIE1931xyY to call it from Mcalibrator2 with GUI-based data handling.
 % function calculator_measure_simply(hObject, eventdata, handles)
 %
 % This function simply measures CIE1931 xyY values estimated by the standard
@@ -18,7 +18,7 @@ function calculator_measure_simply(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:32:22 ban"
+% Last Update: "2013-12-13 10:07:38 ban"
 
 global config;
 global colorimeterhandler;

@@ -22,7 +22,7 @@ function calculator_auto_estimation_nonlinear(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-12 14:52:46 ban"
+% Last Update: "2013-12-13 11:15:59 ban"
 
 global config;
 global colorimeterhandler;
@@ -74,8 +74,11 @@ end
 % non-linear estimations of RGB values using a simplex-search method (direct search, having a local-minimum problem).
 % here, estimation is done in XYZ space, not in xyY, to make the estimation stable.
 % if we estimate in xyY space, the results will be distorted as Y is too large compared with the other values
-%options=optimset('Display','iter','MaxFunEvals',250,'TolFun',0.1,'TolX',5e-2,'MaxIter',50);
-options=optimset('Display','iter','MaxFunEvals',250,'TolFun',0.1,'TolX',1e-2,'MaxIter',50,'DiffMinChange',1e-3);
+options=getOptimizationParams(get(handles.calculator_method_popupmenu,'Value'));
+if isempty(options)
+  %options=optimset('Display','iter','MaxFunEvals',250,'TolFun',0.1,'TolX',5e-2,'MaxIter',50);
+  options=optimset('Display','iter','MaxFunEvals',250,'TolFun',0.1,'TolX',1e-2,'MaxIter',50,'DiffMinChange',1e-3);
+end
 nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,myphosphors,lut,colorimeterhandler,displayhandler,options);
 
 % plotting

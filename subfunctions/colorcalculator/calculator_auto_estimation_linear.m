@@ -22,7 +22,7 @@ function calculator_auto_estimation_linear(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-12 14:52:03 ban"
+% Last Update: "2013-12-13 11:15:34 ban"
 
 global config;
 global colorimeterhandler;
@@ -72,11 +72,14 @@ else
 end
 
 % least-square estimation of RGB video input values to produce xyY you want
-options.iteration=5;
-options.samples=18;
-options.rsmerror=1; % percent error
-options.ss0=2.0; % search space, from ss0 to ss1
-options.ss1=1.0;
+options=getOptimizationParams(get(handles.calculator_method_popupmenu,'Value'));
+if isempty(options)
+  options.iteration=5;
+  options.samples=18;
+  options.rsmerror=1; % percent error
+  options.ss0=2.0; % search space, from ss0 to ss1
+  options.ss1=1.0;
+end
 linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,myphosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options);
 
 % plotting

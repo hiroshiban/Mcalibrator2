@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-12 16:56:59 ban"
+  % Last Update: "2013-12-13 11:42:15 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -261,6 +261,7 @@ function manageColorTab(handles,state)
   set(handles.results_RGB_edit,'Enable',state);
   set(handles.calculator_view_pushbutton,'Enable',state);
   set(handles.calculator_save_pushbutton,'Enable',state);
+  set(handles.calculator_parameters_pushbutton,'Enable',state);
 
 
 function param=setparam(handleobject)
@@ -613,16 +614,22 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
     fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
     if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
-    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
-    fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
+    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
+    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
+    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
     fclose(fid);
 
-    fid=fopen(fullfile(save_dir,'flares.txt'),'w');
+    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
     if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.4f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
-    fprintf(fid,'%.4f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
-    fprintf(fid,'%.4f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
+    fprintf(fid,'%.6f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
+    fprintf(fid,'%.6f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
+    fprintf(fid,'%.6f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
+    fclose(fid);
+  % when gray-scale luminance values were obtained, generate flares.txt
+  elseif sum(lum{4}(1,:))~=0 % gray-scale
+    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
+    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    fprintf(fid,'%.6f\n%.6f\n%.6f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
     fclose(fid);
   end
 
@@ -853,16 +860,8 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     % save the generated LUTs to text files
     fid=fopen(fullfile(save_dir,sprintf('%s.lut',color_str{ii})),'w');
     if fid==-1, error('can not open a %s LUT file to write.',color_str{ii}); PlaySound(0); end
-    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.4f\n',mm,lut{ii}(1,mm)); end
+    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.6f\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
-
-    % save a combined RGB LUT to a text file
-    if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
-      fid=fopen(fullfile(save_dir,'rgb_gamma.lut'),'w');
-      if fid==-1, error('can not open rgb_gamma.lut to write.'); PlaySound(0); end
-      for mm=1:1:size(lut{1},2), fprintf(fid,'%.4f %.4f %.4f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
-      fclose(fid);
-    end
 
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...Done.',color_str{ii}));
   end
@@ -873,6 +872,14 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
 
   % save the results
   save(save_fname,'-append','fitting_method','lut');
+
+  % save a combined RGB LUT to a text file
+  if measure_flg(1) && measure_flg(2) && measure_flg(3)
+    fid=fopen(fullfile(save_dir,'rgb_gamma.lut'),'w');
+    if fid==-1, error('can not open rgb_gamma.lut to write.'); PlaySound(0); end
+    for mm=1:1:size(lut{1},2), fprintf(fid,'%.6f %.6f %.6f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
+    fclose(fid);
+  end
 
   % save the generaged LUT(s) for PTB3
   if lutoutbit==256
@@ -1398,7 +1405,7 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
                'percentage_error_x percentage_error_y percentage_error_Y\n']);
   for nn=1:1:size(estimate.my_xyY,1)
     prc_error=(estimate.my_xyY(nn,:)-estimate.results_xyY(nn,:))./estimate.my_xyY(nn,:).*100;
-    fprintf(fid,'color_%04d %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f\n',...
+    fprintf(fid,'color_%04d %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n',...
             nn,estimate.my_xyY(nn,1),estimate.my_xyY(nn,2),estimate.my_xyY(nn,3),...
                estimate.my_RGB(nn,1),estimate.my_RGB(nn,2),estimate.my_RGB(nn,3),...
                estimate.results_xyY(nn,1),estimate.results_xyY(nn,2),estimate.results_xyY(nn,3),...
@@ -1457,6 +1464,19 @@ function color_separate_pushbutton_Callback(hObject, eventdata, handles)
   set(gcf,'Name','Mcalibrator2: CIE1931 chromaticity diagram','NumberTitle','off')
 
   PlaySound(1);
+
+
+function calculator_parameters_pushbutton_Callback(hObject, eventdata, handles)
+
+  ans_str=questdlg({'you are going to change the optimization parameter settings.',...
+                    'This may affect the behavior of Mcalibrator2.','Do you want to proceed?'},...
+                    'Warning: Mcalibrator2 paramter setting','Proceed','Quit','Cancel','Cancel');
+  if strcmp(ans_str,'Proceed')
+    PlaySound(1);
+    edit('getOptimizationParams.m');
+  else
+    playSound(0);
+  end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
