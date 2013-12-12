@@ -1,6 +1,7 @@
 Mcalibrator2 --- MATLAB software for display luminance/color characterization
 
-Copyright (c) 2012, Hiroshi Ban, Kyoto University, Japan.
+Copyright (c) 2013, Hiroshi Ban, Kyoto University, and
+National Institute of Information and Communications Technology, Japan.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 

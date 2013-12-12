@@ -22,8 +22,8 @@ function xyY=generate_random_xyY_in_xyY_for_test(phosphors,num_xyY,flares,limits
 % [example]
 % >> phosphors=[0.6544,0.3056,0.1501; 0.3224,0.6169,0.0390; 48.9632,168.9902,10.8905];
 % >> num_xyY=50;
-% >> flares=[0;0;0];
-% >> xyY=generate_random_xyY_for_test(phosphors,num_xyY,flares);
+% >> flares=[];
+% >> xyY=generate_random_xyY_in_xyY_for_test(phosphors,num_xyY,flares);
 %
 % [input]
 % phosphors : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] (RGB) at max voltage level of the display.
@@ -39,7 +39,7 @@ function xyY=generate_random_xyY_in_xyY_for_test(phosphors,num_xyY,flares,limits
 %
 %
 % Created    : "2013-12-11 14:46:51 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 17:15:59 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-12 10:13:20 ban (ban.hiroshi@gmail.com)"
 
 % check input variables.
 if nargin<1, help(mfilename()); return; end
@@ -63,9 +63,6 @@ end
 limits(isnan(limits(:,1)),1)=-Inf;
 limits(isnan(limits(:,2)),2)=Inf;
 
-lowerbounds=repmat(limits(:,1),[1,num_xyY]);
-upperbounds=repmat(limits(:,2),[1,num_xyY]);
-
 % add path to Mcalibrator2 subfunctions
 addpath(genpath(fullfile(pwd,'..','subfunctions')));
 
@@ -78,28 +75,28 @@ InitializeRandomSeed();
 
 % generate random xyY
 fprintf('generating %d random xyY...',num_xyY);
-xyY=[unifrnd(0.0,1.0,[2,num_xyY]);unifrnd(0.0,sum(phosphors(3,:)),[1,num_xyY])];
+xyY=[unifrnd(max([0.0,limits(1,1)]),min([0.8,limits(1,2)]),[1,num_xyY]);
+     unifrnd(max([0.0,limits(2,1)]),min([0.9,limits(2,2)]),[1,num_xyY]);
+     unifrnd(max([0.0,limits(3,1)]),min([sum(phosphors(3,:)),limits(3,2)]),[1,num_xyY])];
 rgb=xyY2RGB(xyY,phosphors,flares);
 
 % get outliers thresholding by limits
-idx1=find( xyY-lowerbounds<0 | upperbounds-xyY<0 );
-idx2=find( rgb<0 | 1<rgb );
-idx=union(idx1,idx2);
+idx=find( rgb<0 | 1<rgb );
 [row,col]=ind2sub([3,num_xyY],idx);
 idx=unique(col);
 
 % modify the outliers
 while numel(idx)>0
   % generate new xyY values for the outliers
-  tmpxyY=[unifrnd(0.0,1.0,[2,numel(idx)]);unifrnd(0.0,sum(phosphors(3,:)),[1,numel(idx)])];
+  tmpxyY=[unifrnd(max([0.0,limits(1,1)]),min([0.8,limits(1,2)]),[1,numel(idx)]);
+          unifrnd(max([0.0,limits(2,1)]),min([0.9,limits(2,2)]),[1,numel(idx)]);
+          unifrnd(max([0.0,limits(3,1)]),min([sum(phosphors(3,:)),limits(3,2)]),[1,numel(idx)])];
   xyY(:,idx)=tmpxyY;
   tmprgb=xyY2RGB(tmpxyY,phosphors,flares);
   rgb(:,idx)=tmprgb;
 
   % update the outlier index
-  idx1=find( xyY-lowerbounds<0 | upperbounds-xyY<0 );
-  idx2=find( rgb<0 | 1<rgb );
-  idx=union(idx1,idx2);
+  idx=find( rgb<0 | 1<rgb );
   [row,col]=ind2sub([3,numel(idx)],idx);
   idx=unique(col);
 end

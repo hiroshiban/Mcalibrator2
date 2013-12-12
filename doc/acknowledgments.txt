@@ -1,5 +1,5 @@
 ************************************************************
-thanks.txt
+acknowledgments.txt
   -- about dependent MATLAB tools used in Mcalibrator2
 
 Mcalibrator2 uses several MATLAB functions distributed
@@ -11,7 +11,7 @@ We also clearly denote that our Mcalibrator2 suite fulfills
 all the license requirements to use these tools.
 
 Created    : "2012-05-16 16:41:51 ban"
-Last Update: "2013-12-11 22:29:04 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-12 09:46:48 ban (ban.hiroshi@gmail.com)"
 ************************************************************
 
 * for creating GUI window

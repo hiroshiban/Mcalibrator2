@@ -22,7 +22,7 @@ function xyY=generate_random_xyY_in_RGB_for_test(phosphors,num_xyY,flares,limits
 % [example]
 % >> phosphors=[0.6544,0.3056,0.1501; 0.3224,0.6169,0.0390; 48.9632,168.9902,10.8905];
 % >> num_xyY=50;
-% >> flares=[0;0;0];
+% >> flares=[];
 % >> xyY=generate_random_xyY_for_test(phosphors,num_xyY,flares);
 %
 % [input]
@@ -39,7 +39,7 @@ function xyY=generate_random_xyY_in_RGB_for_test(phosphors,num_xyY,flares,limits
 %
 %
 % Created    : "2013-12-11 14:46:51 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 17:15:57 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-12 10:09:04 ban (ban.hiroshi@gmail.com)"
 
 % check input variables.
 if nargin<1, help(mfilename()); return; end
