@@ -39,7 +39,7 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 %
 %
 % Created    : "2013-12-11 13:15:17 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-12 12:36:32 ban (ban.hiroshi@gmail.com)"
 
 % check input variables
 if nargin<3, help(mfilename()); return; end
@@ -47,6 +47,9 @@ if nargin<3, help(mfilename()); return; end
 if size(xyY_want,1)~=3, error('xyY_want shold be [3(x,y,Y) x n] matrix. check input variable.'); end
 if size(lut,2)==1, lut=repmat(lut,1,3); end
 if size(phosphors,1)~=3 || size(phosphors,2)~=3, error('phosphors should be [rx,gx,bx;ry,gy,by;rY,gY,bY](3 x 3) matrix. check input variable.'); end
+
+% if lut is empty, generating a linear one
+if isempty(lut), lut=repmat(linspace(0.0,1.0,256),[3,1])'; end
 
 % add path to Mcalibrator2 subfunctions
 addpath(genpath(fullfile(pwd,'..','subfunctions')));
