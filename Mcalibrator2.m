@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-12 15:29:43 ban"
+  % Last Update: "2013-12-12 16:12:24 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -329,7 +329,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         colorimeterhandler=eval(sprintf('%s;',colorimeters{config.apparatus.id}{2}));
       else
         colorimeterhandler.reset_port();
-        delete colorimeterhandler;
+        if exist('colorimeterhandler','var'), delete colorimeterhandler; end
         colorimeterhandler=eval(sprintf('%s;',colorimeters{config.apparatus.id}{2}));
       end
     else
@@ -611,18 +611,18 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
 
   % save the phosphor xyY matrix and flare xyY as text files when red, green, and blue phosphor luminance values were obtained.
   if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
-    fid=fpen(fullfile(save_dir,'phosphors.txt'),'w');
+    fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
     if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
     fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
     fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
     fprintf(fid,'%.4f %.4f %.4f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
     fclose(fid);
 
-    fid=fpen(fullfile(save_dir,'flares.txt'),'w');
+    fid=fopen(fullfile(save_dir,'flares.txt'),'w');
     if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.4f\n',mean(lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)));
-    fprintf(fid,'%.4f\n',mean(lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)));
-    fprintf(fid,'%.4f\n',mean(lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)));
+    fprintf(fid,'%.4f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
+    fprintf(fid,'%.4f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
+    fprintf(fid,'%.4f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
     fclose(fid);
   end
 
