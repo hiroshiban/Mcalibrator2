@@ -22,7 +22,7 @@ function calculator_auto_estimation_hybrid(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:41:58 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:41:58 ban"
 
 global config;
 global colorimeterhandler;

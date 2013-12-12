@@ -14,7 +14,7 @@ classdef colorcal2
   %
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-09 16:44:51 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-09 16:44:51 ban"
 
   properties (Hidden)
     portname=6; % id of USB port to communicate with ColorCal2

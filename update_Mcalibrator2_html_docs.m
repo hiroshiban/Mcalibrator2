@@ -15,7 +15,7 @@ function update_Mcalibrator2_html_docs()
 %
 %
 % Created    : "2011-11-02 11:31:48 banh"
-% Last Update: "2013-12-12 13:17:28 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-12 13:34:04 ban"
 
 % add path to m2html
 m2htmlpath=fullfile(fileparts(mfilename('fullpath')),'utils','m2html');

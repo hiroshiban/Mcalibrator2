@@ -22,7 +22,7 @@ function ApplyDisplayGammaBITS(gamma_table)
 %
 %
 % Created    : "12-08-22 02:52:30 ban"
-% Last Update: "2013-12-04 15:50:24 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-04 15:50:24 ban"
 
 % check input variable
 if nargin<1 || isempty(gamma_table), gamma_table=(repmat(linspace(0.0,1.0,256),3,1))'; end

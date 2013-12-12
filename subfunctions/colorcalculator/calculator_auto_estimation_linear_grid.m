@@ -22,7 +22,7 @@ function calculator_auto_estimation_linear_grid(hObject, eventdata, handles)
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:36:49 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:36:49 ban"
 
 global config;
 global colorimeterhandler;

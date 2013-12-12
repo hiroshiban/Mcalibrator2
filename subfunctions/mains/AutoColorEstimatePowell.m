@@ -36,7 +36,7 @@ function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphors,lut,colo
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2013-12-11 17:42:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:42:19 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); powell_estimate=[]; return; end

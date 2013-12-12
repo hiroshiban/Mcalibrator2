@@ -7,7 +7,7 @@ function strings=load_information_strings()
 %
 %
 % Created    : "2012-04-15 01:23:24 ban"
-% Last Update: "2013-12-11 22:09:28 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:09:28 ban"
 
 % string for "config" tab
 strings{1}=...

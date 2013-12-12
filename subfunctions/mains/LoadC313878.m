@@ -13,7 +13,7 @@ function c313878xyz=LoadC313878()
 %
 %
 % Created    : "2012-04-09 21:42:53 ban"
-% Last Update: "2013-12-11 17:46:16 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:46:16 ban"
 
 c313878xyz=[
 0.0014 0.0000 0.0065;

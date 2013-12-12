@@ -32,7 +32,7 @@ function nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,phosphors,lu
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2013-12-11 17:35:24 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:35:24 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); nonlinear_estimate=[]; return; end

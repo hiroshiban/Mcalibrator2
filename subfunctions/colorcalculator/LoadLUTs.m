@@ -8,7 +8,7 @@ function lut=LoadLUTs()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:20:15 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:20:15 ban"
 
 global config;
 

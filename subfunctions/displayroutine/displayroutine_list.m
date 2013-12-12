@@ -21,8 +21,8 @@ function displayroutines=displayroutine_list()
 %    For details, please see DisplayColorWindow.m
 %
 %
-% Created    : "2013-12-10 15:08:42 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 17:52:56 ban (ban.hiroshi@gmail.com)"
+% Created    : "2013-12-10 15:08:42 ban"
+% Last Update: "2013-12-11 17:52:56 ban"
 
 displayroutines{1}={'MATLAB figure','DisplayColorWindow'};
 displayroutines{2}={'Psychtoolbox','DisplayColorWindowPTB'};

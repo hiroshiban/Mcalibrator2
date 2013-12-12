@@ -31,7 +31,7 @@ classdef AddSlide2PPT
 %
 %
 % Created    : "2013-04-16 02:45:40 banh"
-% Last Update: "2013-11-22 18:22:29 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-11-22 18:22:29 ban"
 
 %layout types:
 % 1 - title

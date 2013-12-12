@@ -2,7 +2,7 @@ classdef cs100a
   % a class to manipulate MINOLTA CS-100A from MATLAB through a serial port connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-08 01:57:43 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-08 01:57:43 ban"
 
   properties (Hidden) %(SetAccess = protected)
     portname='COM1'; % id of serial port to communicate with CS-100A

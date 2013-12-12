@@ -11,7 +11,7 @@ function cseed=InitializeRandomSeed
 % cseed  : struct, the current rand settings & seed
 %
 % Created : Jan 29 2010 Hiroshi Ban
-% Last Update: "2013-11-22 23:18:35 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-11-22 23:18:35 ban"
 
 if ~exist('RandStream','file')
 

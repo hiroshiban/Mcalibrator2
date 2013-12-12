@@ -42,7 +42,7 @@ function powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,phosph
 %
 %
 % Created    : "2012-05-30 20:15:22 ban"
-% Last Update: "2013-12-11 17:41:11 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:41:11 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); powel_hybrid_estimate=[]; return; end

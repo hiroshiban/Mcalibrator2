@@ -23,7 +23,7 @@ function xyY = RGB2xyY(RGB,phosphors,flares)
 %
 %
 % Created    : "2012-04-09 20:51:42 ban"
-% Last Update: "2013-12-11 22:09:02 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:09:02 ban"
 
 % check input variables
 if nargin<2, help(mfilename()); xyY=[]; return; end

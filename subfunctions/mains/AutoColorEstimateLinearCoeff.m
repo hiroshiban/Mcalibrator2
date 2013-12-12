@@ -46,7 +46,7 @@ function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphors,l
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-11 17:38:40 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:38:40 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); lincoeff_estimate=[]; return; end

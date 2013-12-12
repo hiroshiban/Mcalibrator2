@@ -1,8 +1,8 @@
 ****************************************
 README.txt on scripting_samples
 
-Created    : "2013-12-11 09:39:51 ban (ban.hiroshi@gmail.com)"
-Last Update: "2013-12-12 11:29:20 ban (ban.hiroshi@gmail.com)"
+Created    : "2013-12-11 09:39:51 ban"
+Last Update: "2013-12-12 11:29:20 ban"
 ****************************************
 
 Almost all the display characterization steps of Mcalibrator2 are provided as individual MATLAB function forms

@@ -1,8 +1,8 @@
 **************************************************
 README.txt on colorimeter settings
 
-Created    : "2013-12-10 14:44:07 ban (ban.hiroshi@gmail.com)"
-Last Update: "2013-12-10 14:54:49 ban (ban.hiroshi@gmail.com)"
+Created    : "2013-12-10 14:44:07 ban"
+Last Update: "2013-12-10 14:54:49 ban"
 **************************************************
 
 [About general notes on colorimeter settings]

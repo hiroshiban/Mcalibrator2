@@ -16,7 +16,7 @@ function rgb=xyY2RGB(myxyY,phosphors,flares)
 %
 %
 % Created    : "2012-04-16 08:05:27 ban"
-% Last Update: "2013-12-11 22:08:31 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:08:31 ban"
 
 % check input variables
 if nargin<2, help(mfilename()); rgb=[]; return; end

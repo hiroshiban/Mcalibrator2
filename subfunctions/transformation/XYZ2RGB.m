@@ -16,7 +16,7 @@ function RGB=XYZ2RGB(XYZ,phosphorXYZ)
 %
 %
 % Created    : "2012-04-09 20:51:42 ban"
-% Last Update: "2013-12-11 22:08:13 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:08:13 ban"
 
 RGB=phosphorXYZ\XYZ;
 

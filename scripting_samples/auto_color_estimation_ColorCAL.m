@@ -38,8 +38,8 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 %              .final_LUT --- the final estimation of LUT
 %
 %
-% Created    : "2013-12-11 13:15:17 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-12 12:36:32 ban (ban.hiroshi@gmail.com)"
+% Created    : "2013-12-11 13:15:17 ban"
+% Last Update: "2013-12-12 12:36:32 ban"
 
 % check input variables
 if nargin<3, help(mfilename()); return; end

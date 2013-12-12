@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2013-12-11 17:54:41 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:54:41 ban"
 
 warning off; %#ok
 

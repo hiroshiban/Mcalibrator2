@@ -24,7 +24,7 @@ function ResetDisplayGammaBITS(luminance_ratio)
 %
 %
 % Created    : "2011-09-06 17:44:10 banh"
-% Last Update: "2013-12-04 15:53:13 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-04 15:53:13 ban"
 
 % check input variable
 if nargin<1, luminance_ratio=1.0; end

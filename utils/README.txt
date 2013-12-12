@@ -2,7 +2,7 @@
 README.txt on utility functions of Mcalibrator2
 
 Created    : "2012-04-12 11:29:15 ban"
-Last Update: "2013-12-12 11:38:08 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-12 11:38:08 ban"
 ****************************************
 
 The MATLAB packages here are used to develop Mcalibrator2 GUI window and to generate/update html-based help documents.

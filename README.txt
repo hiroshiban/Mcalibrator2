@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 11:28:24 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-12 13:34:02 ban"
 **************************************************
 
 [about]

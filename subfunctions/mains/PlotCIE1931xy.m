@@ -28,7 +28,7 @@ function PlotCIE1931xy(xy,Phospher,new_fig_flg,tri_flg,color_flg,marker_type)
 %
 %
 % Created    : "2012-04-09 21:46:42 ban"
-% Last Update: "2013-12-11 17:49:27 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:49:27 ban"
 
 % persistent variables
 persistent gen_flg;

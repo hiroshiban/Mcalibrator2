@@ -16,7 +16,7 @@ function XYZ=xyY2XYZ(xyY,flares)
 %
 %
 % Created    : "2012-04-09 20:49:52 ban"
-% Last Update: "2013-12-11 22:09:50 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 22:09:50 ban"
 
 if nargin<2, flares=[]; end
 

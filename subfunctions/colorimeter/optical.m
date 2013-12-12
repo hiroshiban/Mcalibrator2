@@ -2,7 +2,7 @@ classdef optical
   % a class to manipulate Cambridge Research Systems OptiCal from MATLAB through a serial connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-10 22:46:38 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 22:46:38 ban"
   %
   % [example]
   % >> cc=colorcal;

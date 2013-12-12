@@ -20,7 +20,7 @@ function [corr_val,flare,min_val,max_val]=ApplyFlareCorrection(input_val,display
 %
 %
 % Created    : "2012-04-09 23:39:09 ban"
-% Last Update: "2013-12-11 17:45:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:45:19 ban"
 
 % check input variable
 if nargin<1, help(mfilename()); corr_val=[]; subt_val=[]; min_val=[]; max_val=[]; return; end

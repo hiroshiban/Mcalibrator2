@@ -3,8 +3,8 @@ function [methodinfo,structs,enuminfo,ThunkLibName]=crs_colorcal_matlab
 % A MATLAB version of header file, CalibInterface.h
 % function [methodinfo,structs,enuminfo,ThunkLibName]=crs_colorcal_matlab
 %
-% Created    : "2013-12-09 16:20:35 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-11 17:51:25 ban (ban.hiroshi@gmail.com)"
+% Created    : "2013-12-09 16:20:35 ban"
+% Last Update: "2013-12-11 17:51:25 ban"
 %
 % [about]
 % CRS_COLORCAL_MATLAB creates structures to define interfaces found in 'Calibrator.dll'.

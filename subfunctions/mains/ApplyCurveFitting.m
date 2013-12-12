@@ -42,7 +42,7 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2013-12-11 17:45:02 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:45:02 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end

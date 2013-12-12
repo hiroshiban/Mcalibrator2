@@ -36,7 +36,7 @@ function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XY
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-11 17:37:19 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:37:19 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); linear_estimate=[]; return; end

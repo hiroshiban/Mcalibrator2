@@ -2,7 +2,7 @@ classdef colorcal
   % a class to manipulate Cambridge Research Systems ColorCal from MATLAB through a USB connection
   %
   % Created    : "2012-04-11 09:23:57 ban"
-  % Last Update: "2013-12-10 22:44:47 ban (ban.hiroshi@gmail.com)"
+  % Last Update: "2013-12-10 22:44:47 ban"
   %
   % [example]
   % >> cc=colorcal;

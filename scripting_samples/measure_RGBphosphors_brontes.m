@@ -51,7 +51,7 @@ function [Phosphor,white,flare,mcolors,mcolors_str]=measure_RGBphosphors_brontes
 %
 %
 % Created    : "2012-10-31 16:15:32 ban"
-% Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 16:31:07 ban"
 
 % check input variable
 if nargin<1 || isempty(out_fname), out_fname='phosphor.mat'; end

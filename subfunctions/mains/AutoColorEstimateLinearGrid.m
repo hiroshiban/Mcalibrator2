@@ -42,7 +42,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-11 17:35:56 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:35:56 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); lineargrid_estimate=[]; return; end

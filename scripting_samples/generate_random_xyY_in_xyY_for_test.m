@@ -38,8 +38,8 @@ function xyY=generate_random_xyY_in_xyY_for_test(phosphors,num_xyY,flares,limits
 % xyY       : the generated random CIE1931 xyY values. [3(xyY) x N] matrix.
 %
 %
-% Created    : "2013-12-11 14:46:51 ban (ban.hiroshi@gmail.com)"
-% Last Update: "2013-12-12 10:13:20 ban (ban.hiroshi@gmail.com)"
+% Created    : "2013-12-11 14:46:51 ban"
+% Last Update: "2013-12-12 10:13:20 ban"
 
 % check input variables.
 if nargin<1, help(mfilename()); return; end

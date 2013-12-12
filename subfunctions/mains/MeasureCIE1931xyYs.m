@@ -27,7 +27,7 @@ function [Ys,xs,ys,displayhander,colorimeterhandler]=MeasureCIE1931xyYs(displayh
 %
 %
 % Created    : "2012-04-14 23:24:35 ban"
-% Last Update: "2013-12-11 17:49:07 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:49:07 ban"
 
 % set global variables
 

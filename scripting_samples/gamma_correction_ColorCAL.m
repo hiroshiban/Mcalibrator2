@@ -47,7 +47,7 @@ function [lut,xyY]=gamma_correction_ColorCAL(mes_steps,fit_method,num_repeats)
 %
 %
 % Created    : "2012-10-31 16:15:32 ban"
-% Last Update: "2013-12-11 16:31:07 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 16:31:07 ban"
 
 % check input variables
 if nargin<1 || isempty(mes_steps), mes_steps=32; end

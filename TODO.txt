@@ -1,8 +1,8 @@
 **************************************************
 TODO.txt on Mcalibrator2
 
-Created    : "2013-12-10 16:47:36 ban (ban.hiroshi@gmail.com)"
-Last Update: "2013-12-11 22:32:13 ban (ban.hiroshi@gmail.com)"
+Created    : "2013-12-10 16:47:36 ban"
+Last Update: "2013-12-12 13:34:04 ban"
 **************************************************
 
 *DONE* 1. Add an option to select a directory to save the measurement results.

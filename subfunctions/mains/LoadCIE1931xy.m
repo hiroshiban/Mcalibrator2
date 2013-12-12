@@ -16,7 +16,7 @@ function [x,y,z,C]=LoadCIE1931xy()
 %
 %
 % Created  : "2012-04-17 07:23:31 ban"
-% Last Update: "2013-12-11 17:46:44 ban (ban.hiroshi@gmail.com)"
+% Last Update: "2013-12-11 17:46:44 ban"
 
 persistent xx;
 persistent yy;
