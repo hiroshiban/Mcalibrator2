@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-12 16:12:24 ban"
+  % Last Update: "2013-12-12 16:56:59 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -877,10 +877,10 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   % save the generaged LUT(s) for PTB3
   if lutoutbit==256
     if measure_flg(1) && measure_flg(2) && measure_flg(3)
-      gammatable=[lut{1}(2,:);lut{2}(2,:);lut{3}(2,:)]'; %#ok
+      gammatable=[lut{1}(1,:);lut{2}(1,:);lut{3}(1,:)]'; %#ok
       save(fullfile(save_dir,'gammatablePTB.mat'),'gammatable');
     elseif measure_flg(4)
-      gammatable=(lut{4}(2,:))'; %#ok
+      gammatable=(lut{4}(1,:))'; %#ok
       save(fullfile(save_dir,'gammatablePTB.mat'),'gammatable');
     end
   end
