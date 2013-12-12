@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 15:28:04 ban"
+Last Update: "2013-12-12 17:17:25 ban"
 **************************************************
 
 [about]
@@ -32,10 +32,10 @@ can help your research projects.
           but to use full functionality of the software (e.g.
           automatic non-linear RGB video input estimations),
           the toolbox is required.
-  note 2: Mcalibrator2 can not work on MATLAB R2007 or older
-          version as GUI control system Mcalibrator2 adopted is
-          quite different from the conventions of the older
-          MATLAB's one.
+  note 2: Mcalibrator2 can not be launched correctly on MATLAB
+          R2007 or an older version as GUI control system that
+          Mcalibrator2 adopted is quite different from the
+          conventions of the older MATLAB's one.
 
 
 [How to launch Mcalibrator2]
