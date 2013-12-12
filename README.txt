@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 10:47:03 ban (ban.hiroshi@gmail.com)"
+Last Update: "2013-12-12 11:28:24 ban (ban.hiroshi@gmail.com)"
 **************************************************
 
 [about]
@@ -52,10 +52,10 @@ instead of Mcalibrator2.
 [How to generate/update html-based Mcalibrator2 help files]
 
 Please run
->> update_Mcalibrator2_docs
+>> update_Mcalibrator2_html_docs
 
-Then, all the html-based help documents will be automatically generated in
-~/Mcalibrator2/doc/html
+Then, all the html-based help documents will be automatically
+generated in ~/Mcalibrator2/doc/html
 To read the help documents, please open
 ~/Mcalibrator2/doc/html/index.html
 on your browser.
