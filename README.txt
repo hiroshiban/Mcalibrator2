@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-12 17:17:25 ban"
+Last Update: "2013-12-12 17:25:09 ban"
 **************************************************
 
 [about]
@@ -10,6 +10,7 @@ Last Update: "2013-12-12 17:17:25 ban"
 Mcalibrator2 is a MATLAB-based display luminance/chromaticity
 characterization software package. For details, please read
 documents in ~/Mcalibrator2/doc directory.
+(Matlab is a registered trademark of The Mathworks Inc.)
 
 Thank you for using our software. We are happy if Mcalibrator2
 can help your research projects.
