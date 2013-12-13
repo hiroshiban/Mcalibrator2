@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-13 11:42:15 ban"
+  % Last Update: "2013-12-13 15:14:56 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1475,7 +1475,7 @@ function calculator_parameters_pushbutton_Callback(hObject, eventdata, handles)
     PlaySound(1);
     edit('getOptimizationParams.m');
   else
-    playSound(0);
+    PlaySound(0);
   end
 
 
