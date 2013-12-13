@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-13 14:52:37 ban"
+Last Update: "2013-12-13 14:55:43 ban"
 **************************************************
 
 [about]
@@ -30,9 +30,9 @@ can help your research projects.
           interface with valid drivers to control your photometers.
 
 - MATLAB R2009a or later and "optimization" and "statistics" toolboxes
-  note 1: Mcalibrator2 works even without optimization toolbox,
-          but to use full functionality of the software (e.g.
-          automatic non-linear RGB video input estimations),
+  note 1: Mcalibrator2 works even without optimization/statistics
+          toolboxes, but to use full functionality of the software
+          (e.g. automatic non-linear RGB video input estimations),
           the toolbox is required.
   note 2: Mcalibrator2 can not be launched correctly on MATLAB
           R2007 or older since the GUI control system that
