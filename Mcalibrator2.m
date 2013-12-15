@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-13 15:14:56 ban"
+  % Last Update: "2013-12-15 17:45:17 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1468,9 +1468,12 @@ function color_separate_pushbutton_Callback(hObject, eventdata, handles)
 
 function calculator_parameters_pushbutton_Callback(hObject, eventdata, handles)
 
-  ans_str=questdlg({'you are going to change the optimization parameter settings.',...
-                    'This may affect the behavior of Mcalibrator2.','Do you want to proceed?'},...
-                    'Warning: Mcalibrator2 paramter setting','Proceed','Quit','Cancel','Cancel');
+  persistent strings;
+
+  % load strings to be displayed in Information window
+  if isempty(strings), strings=load_information_strings; end
+
+  ans_str=questdlg(strings{6},'Warning: Mcalibrator2 paramter setting','Proceed','Quit','Quit');
   if strcmp(ans_str,'Proceed')
     PlaySound(1);
     edit('getOptimizationParams.m');
