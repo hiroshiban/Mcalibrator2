@@ -1,7 +1,7 @@
-function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg)
+function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg,options)
 
 % Applies curve fitting to the measured luminance data.
-% function fit=ApplyCurveFitting(lum,:method,:monotonic_flg,:lowpass_flg,flare_correction_flg,:display_flg,:save_flg)
+% function fit=ApplyCurveFitting(lum,:method,:monotonic_flg,:lowpass_flg,flare_correction_flg,:display_flg,:save_flg,:options)
 % (: is optional)
 %
 % Reads luminance values of the corresponding video input values,
@@ -36,13 +36,17 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 % flare_correction_flg : whether applying flare correction to the raw lum data, [0|1], 1 by default
 % display_flg  : whether displaying/saving gamma correction result figure, [0|1], 1 by default
 % save_flg     : whether saving gamma correction result, [0|1], 0 by default
+% options      : option parameters with 3 fields listed below
+%               .lowpass_cutoff : cutoff frequencty of the lowpass filter, 0.085 by default.
+%               .epsilon        : a cutoff value to be used in smoothing the data, 0.01 by default.
+%               .breaks         : N-breaks of the data for robust spline, 8 (= 7 pieces) by default.
 %
 % [output]
 % fit          : modeled luminance against video input values
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2013-12-11 17:45:02 ban"
+% Last Update: "2013-12-16 10:13:18 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end
@@ -52,6 +56,14 @@ if nargin<4 || isempty(lowpass_flg), lowpass_flg=0; end
 if nargin<5 || isempty(flare_correction_flg), flare_correction_flg=1; end
 if nargin<6 || isempty(display_flg), display_flg=1; end
 if nargin<7 || isempty(save_flg), save_flg=0; end
+if nargin<8 || isempty(options)
+  options.lowpass_cutoff=0.085;
+  options.epsilon=0.01;
+  options.breaks=8;
+end
+if ~ismember(options,'lowpass_cutoff'), options.lowpass_cutoff=0.085; end
+if ~ismember(options,'epsilon'), options.epsilon=0.01; end
+if ~ismember(options,'breaks'), options.breaks=8; end
 
 if ~strcmpi(method,'gog') && ~strcmpi(method,'cbs') && ~strcmpi(method,'rcbs') && ...
    ~strcmpi(method,'pow') && ~strcmpi(method,'pow2') && ~strcmpi(method,'log') && ...
@@ -94,7 +106,7 @@ end
 % apply low-pass filtering
 if lowpass_flg
   if display_flg && ~monotonic_flg, raw_lum=lum(2,:); end
-  [b,a]=butter(1,0.085,'low'); % Nyquist frequency x 0.01 = cutoff frequency 5Hz
+  [b,a]=butter(1,options.lowpass_cutoff,'low'); % Nyquist frequency x 0.01 = cutoff frequency 5Hz
   lum(2,:)=filtfilt(b,a,lum(2,:)); % filtering with zero phase lag
 end
 
@@ -115,7 +127,7 @@ if strcmpi(method,'lin')
   else
     lum_sparce=lum;
   end
-  idx=find(diff(lum_sparce(2,:))<=0.01);
+  idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
   if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
   if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
@@ -129,7 +141,7 @@ if strcmpi(method,'cbs')
   else
     lum_sparce=lum;
   end
-  idx=find(diff(lum_sparce(2,:))<=0.01);
+  idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
   if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
   if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
@@ -137,7 +149,7 @@ end
 
 if strcmpi(method,'log')
   lum_sparce=lum;
-  idx=find(diff(lum_sparce(2,:))<=0.01);
+  idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
   if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
   if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
@@ -152,8 +164,8 @@ if strcmpi(method,'gog')
 elseif strcmpi(method,'cbs')
   fit=spline(lum_sparce(1,:),lum_sparce(2,:),lum(1,:));
 elseif strcmpi(method,'rcbs')
-  % robust spline, here, 8 = breaks (7 pieces), 4 = piecewise cubic
-  params=splinefit(lum(1,:),lum(2,:),8,4,'r');
+  % robust spline, here, 4 = piecewise cubic
+  params=splinefit(lum(1,:),lum(2,:),options.breaks,4,'r');
   fit=ppval(params,lum(1,:));
 elseif strcmpi(method,'pow')
   starting=[1,1,1];

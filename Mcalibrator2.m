@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-15 17:45:17 ban"
+  % Last Update: "2013-12-16 10:25:03 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -261,7 +261,6 @@ function manageColorTab(handles,state)
   set(handles.results_RGB_edit,'Enable',state);
   set(handles.calculator_view_pushbutton,'Enable',state);
   set(handles.calculator_save_pushbutton,'Enable',state);
-  set(handles.calculator_parameters_pushbutton,'Enable',state);
 
 
 function param=setparam(handleobject)
@@ -726,17 +725,30 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
   fitting_method=tmp{id};
   fitmethod=getfitmethod(fitting_method);
 
-  monotonic_flg=1;
-  lowpass_flg=0;
   flare_correction_flg=config.flare_correction;
   display_flg=0;
   save_flg=0;
+
+  monotonic_flg=1;
+  lowpass_flg=0;
+  options.lowpass_cutoff=0.085;
+  options.epsilon=0.01;
+  options.breaks=8;
+
+  % overwrite parameters when they are set in the parameter file.
+  tmp=getGammaCorrectionParams();
+  if ismember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
+  if ismember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
+  if ismember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
+  if ismember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
+  if ismember(tmp,'breasks'), options.breaks=tmp.breaks; end
+  clear tmp;
 
   % fitting
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
     set(handles.information_text,'String',sprintf('fitting a model to the measured %s phosphor...',color_str{ii}));
-    fitlum{ii}(2,:)=ApplyCurveFitting(lum{ii}([1,4],:),fitmethod,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg);
+    fitlum{ii}(2,:)=ApplyCurveFitting(lum{ii}([1,4],:),fitmethod,monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg,options);
     set(handles.information_text,'String',sprintf('fitting a model to the measured %s phosphor...Done.',color_str{ii}));
   end
 
@@ -818,11 +830,24 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   fitting_method=tmp{id};
   fitmethod=getfitmethod(fitting_method);
 
+  flare_correction_flg=config.flare_correction;
+  display_flg=0;
+  save_flg=0;
+
   monotonic_flg=1;
   lowpass_flg=0;
-  flare_correction_flg=config.flare_correction;
-  display_flg=1;
-  save_flg=0;
+  options.lowpass_cutoff=0.085;
+  options.epsilon=0.01;
+  options.breaks=8;
+
+  % overwrite parameters when they are set in the parameter file.
+  tmp=getGammaCorrectionParams();
+  if ismember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
+  if ismember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
+  if ismember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
+  if ismember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
+  if ismember(tmp,'breasks'), options.breaks=tmp.breaks; end
+  clear tmp;
 
   % generate Color Lookup Tables
   axes(handles.lut_figure); %#ok
@@ -831,8 +856,8 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     if ~measure_flg(ii), continue; end;
 
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...',color_str{ii}));
-    lut{ii}=ApplyGammaCorrection(lum{ii}([1,4],:),fitmethod,lutoutbit,...
-                                 monotonic_flg,lowpass_flg,flare_correction_flg,display_flg,save_flg); %#ok % lum is already loaded on memory
+    lut{ii}=ApplyGammaCorrection(lum{ii}([1,4],:),fitmethod,lutoutbit,monotonic_flg,lowpass_flg,...
+                                 flare_correction_flg,display_flg,save_flg,options); %#ok % lum is already loaded on memory
     set(gcf,'Name',[get(gcf,'Name'),sprintf(' %s',color_str{ii})]);
 
     % save images as a PPT slide
@@ -1466,22 +1491,6 @@ function color_separate_pushbutton_Callback(hObject, eventdata, handles)
   PlaySound(1);
 
 
-function calculator_parameters_pushbutton_Callback(hObject, eventdata, handles)
-
-  persistent strings;
-
-  % load strings to be displayed in Information window
-  if isempty(strings), strings=load_information_strings; end
-
-  ans_str=questdlg(strings{6},'Warning: Mcalibrator2 paramter setting','Proceed','Quit','Quit');
-  if strcmp(ans_str,'Proceed')
-    PlaySound(1);
-    edit('getOptimizationParams.m');
-  else
-    PlaySound(0);
-  end
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % functions for about tab
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1489,6 +1498,27 @@ function calculator_parameters_pushbutton_Callback(hObject, eventdata, handles)
 function display_test_pushbutton_Callback(hObject, eventdata, handles)
 
   display_test();
+
+
+function parameters_pushbutton_Callback(hObject, eventdata, handles)
+
+  persistent strings;
+
+  % load strings to be displayed in Information window
+  if isempty(strings), strings=load_information_strings; end
+
+  ans_str=questdlg(strings{6},'Warning: Mcalibrator2 paramter settings','gamma-correction','auto color optimization','Cancel','Cancel');
+  if strcmp(ans_str,'gamma-correction')
+    clear getGammaCorrectionParams; % to release the cash of this function from memory.
+    edit('getGammaCorrectionParams.m');
+    PlaySound(1);
+  elseif strcmp(ans_str,'auto color optimization')
+    clear getOptimizationParams; % to release the cash of this function from memory.
+    edit('getOptimizationParams.m');
+    PlaySound(1);
+  else
+    PlaySound(0);
+  end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
