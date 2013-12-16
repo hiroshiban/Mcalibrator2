@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-15 17:48:18 ban"
+Last Update: "2013-12-16 10:46:10 ban"
 **************************************************
 
 [about]
@@ -19,7 +19,7 @@ can help your research projects.
 [System Requirements]
 
 - OS: Windows XP/VISTA/7/8 or Mac OSX
-  note 1: Windows bos is required to use some photometers with
+  note 1: Windows OS is required to use some photometers with
           Mcalibrator2 as only Windows drivers are distributed
           for them.
   note 2: On a Mac OSX box, an interface to a virtual serial
