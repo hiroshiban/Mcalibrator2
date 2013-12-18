@@ -2,7 +2,7 @@
 TODO.txt on Mcalibrator2
 
 Created    : "2013-12-10 16:47:36 ban"
-Last Update: "2013-12-13 11:45:26 ban"
+Last Update: "2013-12-18 23:12:22 ban"
 **************************************************
 
 *DONE* 1. Add an option to select a directory to save the measurement results.
@@ -28,3 +28,5 @@ Last Update: "2013-12-13 11:45:26 ban"
 7. add color unit transformation functions such as xyY2Lab, xyY2Luv etc.
 
 8. Update Mcalibrator2 PDF manuals.
+
+9. Compile *.m files using MATLAB compiler so that we can provide a standalone verion of this package.
