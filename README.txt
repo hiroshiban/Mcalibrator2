@@ -2,10 +2,10 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-18 23:37:36 ban"
+Last Update: "2013-12-18 23:43:16 ban"
 **************************************************
 
-[about]
+[About]
 
 Mcalibrator2 is a MATLAB-based display luminance/chromaticity
 characterization software package, developed especially to
