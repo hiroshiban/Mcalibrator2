@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-18 23:25:19 ban"
+Last Update: "2013-12-18 23:37:36 ban"
 **************************************************
 
 [about]
@@ -14,9 +14,10 @@ neuroscience/pscychology field. The package is focusing on
 1. providing accurate gamma-correction and 2. finding the
 best RGB video inputs to reproduce the required CIE1931 xyY
 values using goal-seeking optimization algorithms.
+(Matlab is a registered trademark of The Mathworks Inc.)
+
 For details, please read
 documents in ~/Mcalibrator2/doc directory.
-(Matlab is a registered trademark of The Mathworks Inc.)
 Also please see the link below.
 http://www.cv.jinkan.kyoto-u.ac.jp/site/mcalibrator/
 
