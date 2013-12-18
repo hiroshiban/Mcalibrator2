@@ -3,7 +3,12 @@ function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XY
 % Estimates the best RGB video input values to get the requested CIE1931 xyY, using recursive linear estimations with random sampling.
 % function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XYZ,lut,colorimeterhandler,displayhandler,options)
 %
-% Estimate [R,G,B] values to produce xyY you want to display based on least-square estimation assuming piecewise linearity
+% This function estimates [R,G,B] values to produce xyY you want to display based on least-square estimation assuming piecewise linearity.
+%
+% [note]
+% The first version of this algorithm was developed by H.Yamamoto in 2005.
+% Then, H.Ban improved the details and implemented it to Mcalibrator in 2005.
+% Finally, a further updated version was developed by H.Ban and was implemented to Mcalibrator2 in 2012.
 %
 % [input]
 % rawxyY             : raw xyY you want, [3 x n] matrix
@@ -36,7 +41,7 @@ function linear_estimate=AutoColorEstimateLinear(rawxyY,myxyY,phosphors,flare_XY
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-11 17:37:19 ban"
+% Last Update: "2013-12-18 11:21:18 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); linear_estimate=[]; return; end

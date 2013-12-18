@@ -1,10 +1,10 @@
 function [lut,xyY]=gamma_correction_ColorCAL(mes_steps,fit_method,num_repeats)
 
-% A sample to perform gamma-correction procedure from your own script/function.
+% A sample script to perform display gamma-correction by yourself without Mcalibrator2 GUI window.
 % function [lut,xyY]=gamma_correction_ColorCAL(:mes_steps,:fit_method,:num_repeats)
 % (: is optional)
 %
-% A simple script to run display gamma-correction (grayscale only) using
+% A simple script to perform display gamma-correction (grayscale only) using
 % Cambridge Research Systems ColorCAL MK2 via a USB connection.
 % When you customize the sub-routine to display color patches (DisplayColorWindow),
 % you can interact with Psychtoolbox, ViSaGe, or BITS#.
@@ -47,7 +47,7 @@ function [lut,xyY]=gamma_correction_ColorCAL(mes_steps,fit_method,num_repeats)
 %
 %
 % Created    : "2012-10-31 16:15:32 ban"
-% Last Update: "2013-12-11 16:31:07 ban"
+% Last Update: "2013-12-18 11:15:35 ban"
 
 % check input variables
 if nargin<1 || isempty(mes_steps), mes_steps=32; end
@@ -88,7 +88,7 @@ for ii=1:1:length(colors)
   xyY{ii}(1,:)=linspace(0.0,1.0,mes_steps);
 end
 
-% light measurements
+% light measurements, alternatively you can use MeasureCIE1931xyYs function implemented in Mcalibrator2.
 for ii=1:1:length(colors)
   fprintf('measuring luminance/chromaticity for %s...',colors{ii});
   tmpx=zeros(num_repeats,mes_steps); tmpy=zeros(num_repeats,mes_steps); tmpY=zeros(num_repeats,mes_steps);
@@ -126,7 +126,7 @@ savefname=fullfile(save_dir,sprintf('gamma_correction_%s.mat',datestr(now,'yymmd
 save(savefname,'colors','colormask','lut','xyY','phosphors');
 disp('done.');
 
-% remove path to Mcalibrato2 subfunctions
+% remove path to Mcalibrator2 subfunctions
 rmpath(genpath(fullfile(pwd,'..','subfunctions')));
 
 return

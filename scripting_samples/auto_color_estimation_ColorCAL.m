@@ -1,10 +1,10 @@
 function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 
-% A sample to run the recursive linear color estimation from your own script/function.
+% A sample script to run the recursive-linear automatic color estimation by yourself without Mcalibrator2 GUI window.
 % function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,:phosphors)
 % (: is optional)
 %
-% A simple script to run the recursive-linear auto color calibration procedure developed
+% A simple script to run the recursive-linear automatic color estimation procedure developed
 % by H.Ban and H.Yamamoto, using Cambridge Research Systems ColorCAL MK2 via a USB connection.
 %
 % The details of the algorithm is described in
@@ -20,12 +20,12 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 % 4. results is stored in 'auto_estimation_YYMMDD.mat' file
 %
 % [input]
-% myxyY      : xyY values we want, [3 x n] matrix
+% xyY_want   : xyY values we want, [3 x n] matrix
 % lut        : color lookup table, [n x 3(r,g,b)] matrix, set lut=[]; if you do not need to use LUTs
 % phosphors  : phosphor xyY, [rx,gx,bx;ry,gy,by;rY,gY,bY] (RGB) at max voltage level of the display
 %
 % [output]
-% stimate    : cell structure {n x 1}, holding the estimation results with the variables below
+% estimate   : cell structure {n x 1}, holding the estimation results with the variables below
 %              .method --- 'LUT' or 'RGB
 %              .wanted_xyY
 %              .measured_xyY
@@ -39,7 +39,7 @@ function estimate=auto_color_estimation_ColorCAL(xyY_want,lut,phosphors)
 %
 %
 % Created    : "2013-12-11 13:15:17 ban"
-% Last Update: "2013-12-12 12:36:32 ban"
+% Last Update: "2013-12-18 11:18:17 ban"
 
 % check input variables
 if nargin<3, help(mfilename()); return; end
@@ -95,7 +95,7 @@ savefname=fullfile(save_dir,sprintf('auto_estimation_%s.mat',datestr(now,'yymmdd
 save(savefname,'estimate');
 disp('done.');
 
-% remove path to Mcalibrato2 subfunctions
+% remove path to Mcalibrator2 subfunctions
 rmpath(genpath(fullfile(pwd,'..','subfunctions')));
 
 return

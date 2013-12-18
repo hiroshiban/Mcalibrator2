@@ -1,6 +1,6 @@
 function [Phosphor,white,flare,mcolors,mcolors_str]=measure_RGBphosphors_brontes(out_fname,integtime,nrepeat)
 
-% A sample to measure CIE1931 xyY for RGB video input values from your own script/function.
+% A sample script to measure CIE1931 xyY for RGB video input values by yourself without Mcalibrator2 GUI window.
 % function [Phosphor,white,flare,mcolors,mcolors_str]=measure_RGBphosphors_brontes(:out_fname,:integtime,:nrepeat)
 % (: is optional)
 %
@@ -51,7 +51,7 @@ function [Phosphor,white,flare,mcolors,mcolors_str]=measure_RGBphosphors_brontes
 %
 %
 % Created    : "2012-10-31 16:15:32 ban"
-% Last Update: "2013-12-11 16:31:07 ban"
+% Last Update: "2013-12-18 11:15:29 ban"
 
 % check input variable
 if nargin<1 || isempty(out_fname), out_fname='phosphor.mat'; end
@@ -118,7 +118,7 @@ fprintf('saving the results...');
 save(fullfile(save_dir,out_fname),'Phosphor','white','flare','mcolors','mcolors_str');
 disp('done.');
 
-% remove path to Mcalibrato2 subfunctions
+% remove path to Mcalibrator2 subfunctions
 rmpath(genpath(fullfile(pwd,'..','subfunctions')));
 
 return

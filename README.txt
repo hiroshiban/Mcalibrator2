@@ -2,13 +2,17 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-16 10:46:10 ban"
+Last Update: "2013-12-18 11:04:58 ban"
 **************************************************
 
 [about]
 
 Mcalibrator2 is a MATLAB-based display luminance/chromaticity
-characterization software package. For details, please read
+characterization software package. Especially, this software
+package is focusing on 1. providing accurate gamma-correction
+and 2. finding the best RGB video inputs to reproduce the
+required CIE1931 xyY values using goal-seeking optimization
+algorithms. For details, please read
 documents in ~/Mcalibrator2/doc directory.
 (Matlab is a registered trademark of The Mathworks Inc.)
 
@@ -29,7 +33,7 @@ can help your research projects.
           it would work once you can get a proper serial or usb
           interface with valid drivers to control your photometers.
 
-- MATLAB R2009a or later and "optimization" and "statistics" toolboxes
+- MATLAB R2009a or later, and "optimization" and "statistics" toolboxes
   note 1: Mcalibrator2 works even without optimization/statistics
           toolboxes, but to use full functionality of the software
           (e.g. automatic non-linear RGB video input estimations),
