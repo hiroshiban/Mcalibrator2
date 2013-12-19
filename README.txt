@@ -2,24 +2,28 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-18 23:43:16 ban"
+Last Update: "2013-12-19 09:16:34 ban"
 **************************************************
 
 [About]
 
-Mcalibrator2 is a MATLAB-based display luminance/chromaticity
-characterization software package, developed especially to
-contribute color perception/cognition research projects in
-neuroscience/pscychology field. The package is focusing on
-1. providing accurate gamma-correction and 2. finding the
-best RGB video inputs to reproduce the required CIE1931 xyY
-values using goal-seeking optimization algorithms.
+Mcalibrator2 is a MATLAB-based GUI display luminance and
+chromaticity characterization software package, developed
+to contribute to color perception and cognition research
+projects in neuroscience/pscychology fields. The package
+is especially focusing on 1. providing accurate gamma-
+correction and 2. finding the best RGB video inputs to
+produce the required CIE1931 xyY values using several
+goal-seeking optimization algorithms.
 (Matlab is a registered trademark of The Mathworks Inc.)
 
 For details, please read
 documents in ~/Mcalibrator2/doc directory.
 Also please see the link below.
 http://www.cv.jinkan.kyoto-u.ac.jp/site/mcalibrator/
+
+The details of the algorithms we developed are described below.
+http://www.journalofvision.org/content/13/6/20.long
 
 Thank you for using our software. We are happy if Mcalibrator2
 can help your research projects.
