@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2013-12-16 10:14:13 ban"
+% Last Update: "2014-01-15 18:11:13 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end
@@ -69,9 +69,9 @@ if nargin<9 || isempty(options)
   options.epsilon=0.01;
   options.breaks=8;
 end
-if ~ismember(options,'lowpass_cutoff'), options.lowpass_cutoff=0.085; end
-if ~ismember(options,'epsilon'), options.epsilon=0.01; end
-if ~ismember(options,'breaks'), options.breaks=8; end
+if ~isstructmember(options,'lowpass_cutoff'), options.lowpass_cutoff=0.085; end
+if ~isstructmember(options,'epsilon'), options.epsilon=0.01; end
+if ~isstructmember(options,'breaks'), options.breaks=8; end
 
 if ~strcmpi(method,'gog') && ~strcmpi(method,'cbs') && ~strcmpi(method,'rcbs') && ...
    ~strcmpi(method,'pow') && ~strcmpi(method,'pow2') && ~strcmpi(method,'log') && ...

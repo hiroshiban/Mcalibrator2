@@ -61,9 +61,9 @@ if nargin<8 || isempty(options)
   options.epsilon=0.01;
   options.breaks=8;
 end
-if ~ismember(options,'lowpass_cutoff'), options.lowpass_cutoff=0.085; end
-if ~ismember(options,'epsilon'), options.epsilon=0.01; end
-if ~ismember(options,'breaks'), options.breaks=8; end
+if ~isstructmember(options,'lowpass_cutoff'), options.lowpass_cutoff=0.085; end
+if ~isstructmember(options,'epsilon'), options.epsilon=0.01; end
+if ~isstructmember(options,'breaks'), options.breaks=8; end
 
 if ~strcmpi(method,'gog') && ~strcmpi(method,'cbs') && ~strcmpi(method,'rcbs') && ...
    ~strcmpi(method,'pow') && ~strcmpi(method,'pow2') && ~strcmpi(method,'log') && ...
