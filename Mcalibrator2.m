@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2013-12-16 10:25:03 ban"
+  % Last Update: "2014-01-23 15:19:45 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -737,11 +737,11 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
 
   % overwrite parameters when they are set in the parameter file.
   tmp=getGammaCorrectionParams();
-  if ismember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
-  if ismember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
-  if ismember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
-  if ismember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
-  if ismember(tmp,'breasks'), options.breaks=tmp.breaks; end
+  if isstructmember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
+  if isstructmember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
+  if isstructmember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
+  if isstructmember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
+  if isstructmember(tmp,'breasks'), options.breaks=tmp.breaks; end
   clear tmp;
 
   % fitting
@@ -831,7 +831,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   fitmethod=getfitmethod(fitting_method);
 
   flare_correction_flg=config.flare_correction;
-  display_flg=0;
+  display_flg=1;
   save_flg=0;
 
   monotonic_flg=1;
@@ -842,11 +842,11 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
 
   % overwrite parameters when they are set in the parameter file.
   tmp=getGammaCorrectionParams();
-  if ismember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
-  if ismember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
-  if ismember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
-  if ismember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
-  if ismember(tmp,'breasks'), options.breaks=tmp.breaks; end
+  if isstructmember(tmp,'monotonic_flg'), monotonic_flg=tmp.monotonic_flg; end
+  if isstructmember(tmp,'lowpass_flg'), lowpass_flg=tmp.lowpass_flg; end
+  if isstructmember(tmp,'lowpass_cutoff'), options.lowpass_cutoff=tmp.lowpass_cutoff; end
+  if isstructmember(tmp,'epsilon'), options.epsilon=tmp.epsilon; end
+  if isstructmember(tmp,'breasks'), options.breaks=tmp.breaks; end
   clear tmp;
 
   % generate Color Lookup Tables
