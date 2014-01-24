@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-01-23 15:19:45 ban"
+  % Last Update: "2014-01-24 15:27:41 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -645,12 +645,18 @@ function clear_lum_pushbutton_Callback(hObject, eventdata, handles)
 
 function measure_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure;
-  axes(handles.lum_figure); %#ok
-  c=copyobj(gca,f2);
+  f2=figure; c=gca;
+
+  % copy objects
   axes(c); %#ok
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
-  set(gcf,'Name','Mcalibrator2: measured luminance','NumberTitle','off')
+  copyobj(get(handles.lum_figure,'Children'),c);
+  title(get(get(handles.lum_figure,'Title'),'String'));
+  xlabel(get(get(handles.lum_figure,'XLabel'),'String'));
+  ylabel(get(get(handles.lum_figure,'YLabel'),'String'));
+  set(gca,'XLim',get(handles.lum_figure,'XLim'));
+  set(gca,'YLim',get(handles.lum_figure,'YLim'));
+  set(gcf,'Name','Mcalibrator2: measured luminance','NumberTitle','off');
 
   PlaySound(1);
 
@@ -960,6 +966,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
            'Color',colors{ii}); %#ok % lut is already loaded on memory
       set(gca,'XLim',[0,1]);
       set(gca,'XTick',0:0.2:1.0);
+      set(gca,'XLim',[0,1]);
       xlabel('LUT ID');
       ylabel('luminance (cd/m^2)');
       title('linearity of LUTs');
@@ -1070,24 +1077,19 @@ function clear_lut_pushbutton_Callback(hObject, eventdata, handles)
 
 function LUT_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure;
-  axes(handles.lut_figure); %#ok
-  cxlim=get(gca,'XLim');
-  cxtick=get(gca,'XTick');
-  cxticklabel=get(gca,'XTickLabel');
-  %cxlabel=get(gca,'XLabel');
+  f2=figure; c=gca;
 
-  c=copyobj(gca,f2);
+  % copy objects
   axes(c); %#ok
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
-  set(gcf,'Name','Mcalibrator2: generated LUTs','NumberTitle','off')
+  copyobj(get(handles.lut_figure,'Children'),c);
+  title(get(get(handles.lut_figure,'Title'),'String'));
+  xlabel(get(get(handles.lut_figure,'XLabel'),'String'));
+  ylabel(get(get(handles.lut_figure,'YLabel'),'String'));
+  set(gca,'XLim',get(handles.lut_figure,'XLim'));
+  set(gca,'YLim',get(handles.lut_figure,'YLim'));
+  set(gcf,'Name','Mcalibrator2: generated LUTs','NumberTitle','off');
 
-  axes(handles.lut_figure); %#ok
-  set(gca,'XLim',cxlim);
-  set(gca,'XTick',cxtick);
-  set(gca,'XTickLabel',cxticklabel);
-
-  axes(c); %#ok
   PlaySound(1);
 
 
@@ -1480,13 +1482,20 @@ function clear_color_pushbutton_Callback(hObject, eventdata, handles)
 
 function color_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure;
-  axes(handles.color_figure); %#ok
-  c=copyobj(gca,f2);
-  axes(c);
+  f2=figure; c=gca;
+
+  % copy objects
+  axes(c); %#ok
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
+  copyobj(get(handles.color_figure,'Children'),c);
+  title(get(get(handles.color_figure,'Title'),'String'));
+  xlabel(get(get(handles.color_figure,'XLabel'),'String'));
+  ylabel(get(get(handles.color_figure,'YLabel'),'String'));
+  set(gca,'XLim',get(handles.color_figure,'XLim'));
+  set(gca,'YLim',get(handles.color_figure,'YLim'));
+  set(gcf,'Name','Mcalibrator2: CIE1931 chromaticity diagram','NumberTitle','off');
   axis square;
-  set(gcf,'Name','Mcalibrator2: CIE1931 chromaticity diagram','NumberTitle','off')
+  grid on;
 
   PlaySound(1);
 
