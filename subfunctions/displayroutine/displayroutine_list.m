@@ -22,10 +22,11 @@ function displayroutines=displayroutine_list()
 %
 %
 % Created    : "2013-12-10 15:08:42 ban"
-% Last Update: "2013-12-11 17:52:56 ban"
+% Last Update: "2014-03-25 17:18:48 ban"
 
 displayroutines{1}={'MATLAB figure','DisplayColorWindow'};
 displayroutines{2}={'Psychtoolbox','DisplayColorWindowPTB'};
-displayroutines{3}={'BITS++ with Psychtoolbox','DisplayColorWindowBITS'};
+displayroutines{3}={'Psychtoolbox (10bit depth)','DisplayColorWindowPTB10Bit'};
+displayroutines{4}={'BITS++ with Psychtoolbox','DisplayColorWindowBITS'};
 
 return

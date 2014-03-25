@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-01-24 15:27:41 ban"
+  % Last Update: "2014-03-25 18:14:35 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -134,6 +134,8 @@ function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 function save_dir_edit_Callback(hObject, eventdata, handles)
 function date_edit_Callback(hObject, eventdata, handles)
 function repetition_edit_Callback(hObject, eventdata, handles)
+function range_min_edit_Callback(hObject, eventdata, handles)
+function range_max_edit_Callback(hObject, eventdata, handles)
 function red_radiobutton_Callback(hObject, eventdata, handles)
 function green_radiobutton_Callback(hObject, eventdata, handles)
 function blue_radiobutton_Callback(hObject, eventdata, handles)
@@ -209,6 +211,8 @@ function manageConfigTab(handles,state)
   set(handles.apparatus_popupmenu,'Enable',state);
   set(handles.display_routine_popupmenu,'Enable',state);
   set(handles.sampling_popupmenu,'Enable',state);
+  set(handles.range_min_edit,'Enable',state);
+  set(handles.range_max_edit,'Enable',state);
   set(handles.interval_popupmenu,'Enable',state);
   set(handles.lutoutbit_popupmenu,'Enable',state);
   set(handles.repetition_edit,'Enable',state);
@@ -305,9 +309,21 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     config.apparatus=setparam(handles.apparatus_popupmenu);
     config.display_routine=setparam(handles.display_routine_popupmenu);
     config.sampling=setparam(handles.sampling_popupmenu);
+    config.meas_range=[str2num(get(handles.range_min_edit,'String')),str2num(get(handles.range_max_edit,'String'))];
+    if config.meas_range(1)<0.0 || 1.0<config.meas_range(2) || config.meas_range(1)>config.meas_range(2)
+      PlaySound(0);
+      set(handles.information_text,'String','Measuring range should be within 0.0<=min<=max<=1.0. Check your setting.');
+      % disable some tabs
+      tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
+      manageConfigTab(handles,'on');
+      manageMeasureTab(handles,'off');
+      manageLUTTab(handles,'off');
+      manageColorTab(handles,'off');
+      return;
+    end
+
     config.interval=setparam(handles.interval_popupmenu);
     config.lutoutbit=setparam(handles.lutoutbit_popupmenu);
-
     config.repetition=setparam(handles.gathermethod_popupmenu);
     config.repetition.num=get(handles.repetition_edit,'String');
 
@@ -409,6 +425,8 @@ function load_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.apparatus_popupmenu,'Value',config.apparatus.id);
   set(handles.display_routine_popupmenu,'Value',config.display_routine.id);
   set(handles.sampling_popupmenu,'Value',config.sampling.id);
+  set(handles.range_min_edit,'String',num2str(config.meas_range(1)));
+  set(handles.range_max_edit,'String',num2str(config.meas_range(2)));
   set(handles.interval_popupmenu,'Value',config.interval.id);
   set(handles.lutoutbit_popupmenu,'Value',config.lutoutbit.id);
   set(handles.repetition_edit,'String',config.repetition.num);
@@ -549,14 +567,14 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
-  % set the sampling interval (0.0-1.0).
+  % set the sampling interval (config.meas_range(1) - config.meas_range(2)) --- (0.0-1.0) by default.
   sampnum=str2num(config.sampling.name); %#ok
   if strcmp(config.interval.name,'equally spaced')
-    samppoints=0:1/(sampnum-1):1;
+    samppoints=config.meas_range(1):1/(sampnum-1):config.meas_range(2);
   elseif strcmp(config.interval.name,'low-biased')
-    samppoints=(0:1/(sampnum-1):1).^2;
+    samppoints=(config.meas_range(1):1/(sampnum-1):config.meas_range(2)).^2;
   elseif strcmp(config.interval.name,'high-biased')
-    samppoints=sqrt(0:1/(sampnum-1):1);
+    samppoints=sqrt(config.meas_range(1):1/(sampnum-1):config.meas_range(2));
   end
 
   % constant variables to display information or plot result
