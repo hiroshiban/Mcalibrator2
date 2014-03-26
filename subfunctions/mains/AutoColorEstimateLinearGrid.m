@@ -47,7 +47,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2013-12-18 11:21:51 ban"
+% Last Update: "2014-03-26 13:11:03 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); lineargrid_estimate=[]; return; end
@@ -224,7 +224,8 @@ return
 %% subfunctions
 function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
 
-lutidx=ceil(rgb.*size(lut,1));
+%lutidx=ceil(rgb.*size(lut,1));
+lutidx=ceil((rgb-lut(1,:)).*size(lut,1));
 lutidx(lutidx<=0)=1;
 lutidx(lutidx>size(lut,1))=size(lut,1);
 for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end

@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-26 09:56:39 ban"
+  % Last Update: "2014-03-26 13:20:45 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -345,7 +345,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         colorimeterhandler=eval(sprintf('%s;',colorimeters{config.apparatus.id}{2}));
       else
         colorimeterhandler.reset_port();
-        if exist('colorimeterhandler','var'), delete colorimeterhandler; end
+        if exist('colorimeterhandler','var')==1, delete colorimeterhandler; end
         colorimeterhandler=eval(sprintf('%s;',colorimeters{config.apparatus.id}{2}));
       end
     else
@@ -570,11 +570,11 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   % set the sampling interval (config.meas_range(1) - config.meas_range(2)) --- (0.0-1.0) by default.
   sampnum=str2num(config.sampling.name); %#ok
   if strcmp(config.interval.name,'equally spaced')
-    samppoints=config.meas_range(1):1/(sampnum-1):config.meas_range(2);
+    samppoints=config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2);
   elseif strcmp(config.interval.name,'low-biased')
-    samppoints=(config.meas_range(1):1/(sampnum-1):config.meas_range(2)).^2;
+    samppoints=(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2)).^2;
   elseif strcmp(config.interval.name,'high-biased')
-    samppoints=sqrt(config.meas_range(1):1/(sampnum-1):config.meas_range(2));
+    samppoints=sqrt(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2));
   end
 
   % constant variables to display information or plot result

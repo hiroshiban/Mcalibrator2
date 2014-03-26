@@ -42,7 +42,7 @@ function powel_hybrid_estimate=AutoColorEstimatePowellHybrid(rawxyY,myxyY,phosph
 %
 %
 % Created    : "2012-05-30 20:15:22 ban"
-% Last Update: "2013-12-11 17:41:11 ban"
+% Last Update: "2014-03-26 13:11:03 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); powel_hybrid_estimate=[]; return; end
@@ -277,7 +277,8 @@ return
 % subfunction to get RGB value from LUT
 function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
 
-lutidx=ceil(rgb.*size(lut,1));
+%lutidx=ceil(rgb.*size(lut,1));
+lutidx=ceil((rgb-lut(1,:)).*size(lut,1));
 lutidx(lutidx<=0)=1;
 lutidx(lutidx>size(lut,1))=size(lut,1);
 for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end

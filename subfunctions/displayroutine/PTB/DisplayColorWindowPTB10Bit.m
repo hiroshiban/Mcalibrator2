@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB10Bit(rgb,fullscr_flg,fig_id,scr_
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2014-03-26 10:03:05 ban"
+% Last Update: "2014-03-26 15:10:50 ban"
 
 warning off; %#ok
 
@@ -138,7 +138,12 @@ try
 
   else
 
-    Screen('FillRect',ptbwindow,rgb,ptbrect);
+    %Screen('FillRect',ptbwindow,rgb,ptbrect);
+
+    % display the target color with float precision (0.0-1.0)
+    ctex=Screen('MakeTexture',ptbwindow,reshape(rgb,[1,1,3]),0,0,2);
+    Screen('DrawTexture',ptbwindow,ctex,[],ptbrect);
+    Screen('Close',ctex);
   end
 
   % hide mouse cursor

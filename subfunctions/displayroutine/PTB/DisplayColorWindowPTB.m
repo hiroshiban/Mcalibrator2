@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2014-03-26 10:02:51 ban"
+% Last Update: "2014-03-26 15:08:31 ban"
 
 warning off; %#ok
 
@@ -49,7 +49,8 @@ try
   elseif numel(rgb)==1
     rgb=repmat(rgb,1,3);
   end
-  if max(rgb)>1.0, rgb=rgb./255; end % scaling 0.0<=rgb<=1.0
+  %if max(rgb)>1.0, rgb=rgb./255; end % scaling 0.0<=rgb<=1.0
+  if max(rgb)<=1.0, rgb=floor(rgb.*255); end
 
   % adjust screen size
   if scr_num>numel(Screen('Screens'))
@@ -132,8 +133,13 @@ try
 
   else
 
+    % % set OffScreenWindow
+    % frameid=Screen('OpenOffscreenWindow',ptbwindow,rgb,ptbrect);
+    % Screen('CopyWindow',frameid,ptbwindow,ptbrect,ptbrect);
+    % Screen('Close',frameid);
+
     % display the target color with float precision (0.0-1.0)
-    ctex=Screen('MakeTexture',ptbwindow,reshape(rgb,[1,1,3]),0,0,2);
+    ctex=Screen('MakeTexture',ptbwindow,reshape(rgb,[1,1,3])); % 8-bit color texture
     Screen('DrawTexture',ptbwindow,ctex,[],ptbrect);
     Screen('Close',ctex);
   end

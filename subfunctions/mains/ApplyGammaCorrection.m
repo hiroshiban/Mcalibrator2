@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-01-15 18:11:13 ban"
+% Last Update: "2014-03-26 13:00:51 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end
@@ -91,9 +91,9 @@ end
 % initialize luminance input
 %if size(lum,1)==length(lum), lum=lum'; end % set lum to [2(graylevel,luminance) x n] matrix
 if size(lum,2)==2, lum=lum'; end % set lum to [2(graylevel,luminance) x n] matrix
-lum(1,:)=lum(1,:)./lum(1,end); % assume the last value is max. %lum(1,:)=lum(1,:)./max(lum(1,:));
+org_lum=lum; % store the original data
+lum(1,:)=(lum(1,:)-lum(1,1))./(lum(1,end)-lum(1,1)); % assume the last value is max. %lum(1,:)=lum(1,:)./max(lum(1,:));
 %lum(2,:)=100*lum(2,:); % temporal procedures, required for correct wrong luminance values
-org_lum=lum(2,:); % store the original data
 
 % applying monotonic increase filter
 if monotonic_flg
@@ -352,7 +352,7 @@ lut(1,:)=vals;
 
 % filtering generated CLUT by robust spline when it does not monotonically increase
 %if strcmpi(method,'cbs') || strcmpi(method,'poly') || strcmpi(method,'log') || strcmpi(method,'lin')
-tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=tmp;
+tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=(org_lum(1,end)-org_lum(1,1))*tmp+org_lum(1,1); %lut(1,:)=tmp;
 if find(diff(lut(1,:))<0)
   % spline smoothing
   %lut(1,:)=smoothn(lut(1,:),'robust'); % robust constrain
@@ -364,7 +364,7 @@ if find(diff(lut(1,:))<0)
     if exitflag==1 || exitflag==0, break; end
     checkmono=mc_CheckMonotoneIncrease(lut(1,:));
   end
-  tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=tmp;
+  tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=(org_lum(1,end)-org_lum(1,1))*tmp+org_lum(1,1); %lut(1,:)=tmp;
 end
 
 % put back corrected luminance to the actual values, required for correct wrong luminance values
@@ -387,19 +387,19 @@ if display_flg
 
   subplot(3,4,[1:2,5:6]); hold on;
   if monotonic_flg || lowpass_flg
-    lumline(1)=plot(lum(1,:),raw_lum,'go','LineWidth',1);
-    lumline(2)=plot(lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
-    lumline(3)=plot(lum(1,:),fit+minlum,'r-','LineWidth',2);
-    set(gca,'XLim',[0,1]);
+    lumline(1)=plot(org_lum(1,:),raw_lum,'go','LineWidth',1);
+    lumline(2)=plot(org_lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
+    lumline(3)=plot(org_lum(1,:),fit+minlum,'r-','LineWidth',2);
+    set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]);
     set(gca,'YLim',[minlum-2,maxlum+2]);
     xlabel('video input [0.0-1.0]');
     ylabel('luminance');
     legend(lumline,{'measured','filtered','fitted'},'Location','SouthEast');
     title(sprintf('gamma correction result, method: %s',method));
   else
-    lumline(1)=plot(lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
-    lumline(2)=plot(lum(1,:),fit+minlum,'r-','LineWidth',2);
-    set(gca,'XLim',[0,1]);
+    lumline(1)=plot(org_lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
+    lumline(2)=plot(org_lum(1,:),fit+minlum,'r-','LineWidth',2);
+    set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]);
     set(gca,'YLim',[minlum-2,maxlum+2]);
     xlabel('video input [0.0-1.0]');
     ylabel('luminance');
@@ -417,16 +417,16 @@ if display_flg
   title(sprintf('gamma correction result, method: %s',method));
 
   subplot(3,4,9:10); hold on;
-  %bar(lum(1,:),fit-lum(2,:),'FaceColor',[0,0,0]);
-  bar(lum(1,:),fit-org_lum+minlum,'FaceColor',[0,0,0]);
-  set(gca,'XLim',[0,1]);
+  %bar(org_lum(1,:),fit-lum(2,:),'FaceColor',[0,0,0]);
+  bar(org_lum(1,:),fit-org_lum(2,:)+minlum,'FaceColor',[0,0,0]);
+  set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]); %set(gca,'XLim',[0,1]);
   xlabel('video input [0.0-1.0]');
   ylabel('residuals');
   title('residuals');
 
   subplot(3,4,11:12); hold on;
-  plot(linspace(0,1.0,size(lut,2)),lut(2,:),'-','Color',[0,0,0]);
-  set(gca,'XLim',[0,1]);
+  plot(linspace(org_lum(1,1),org_lum(1,end),size(lut,2)),lut(2,:),'-','Color',[0,0,0]);
+  set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]); %set(gca,'XLim',[0,1]);
   xlabel('video input [0.0-1.0]');
   ylabel('luminance');
   title('RGB & Luminance');

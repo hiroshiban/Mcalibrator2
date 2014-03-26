@@ -36,7 +36,7 @@ function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphors,lut,colo
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2013-12-11 17:42:19 ban"
+% Last Update: "2014-03-26 13:11:03 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); powell_estimate=[]; return; end
@@ -156,7 +156,8 @@ return
 
 function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
 
-lutidx=ceil(rgb.*size(lut,1));
+%lutidx=ceil(rgb.*size(lut,1));
+lutidx=ceil((rgb-lut(1,:)).*size(lut,1));
 lutidx(lutidx<=0)=1;
 lutidx(lutidx>size(lut,1))=size(lut,1);
 for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end
