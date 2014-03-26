@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-25 18:14:35 ban"
+  % Last Update: "2014-03-26 09:56:39 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -980,7 +980,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
       set(handles.information_text,'String',sprintf('checking linearity of %s LUT...',color_str{ii}));
       axes(handles.lut_figure); %#ok
       hold on;
-      plot(linspace(0,1.0,size(lut{ii},2)),lut{ii}(2,:),'-','Marker','o','MarkerSize',3,'MarkerFaceColor',colors{ii},...
+      plot(linspace(config.meas_range(1),config.meas_range(2),size(lut{ii},2)),lut{ii}(2,:),'-','Marker','o','MarkerSize',3,'MarkerFaceColor',colors{ii},...
            'Color',colors{ii}); %#ok % lut is already loaded on memory
       set(gca,'XLim',[0,1]);
       set(gca,'XTick',0:0.2:1.0);
@@ -1008,7 +1008,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     for ii=1:1:length(color_str)
       if ~measure_flg(ii), continue; end;
       checklum{ii}=zeros(5,20); % 4 = measured_val, x, y, Y
-      checklum{ii}(1,:)=linspace(0,1,20);%checklumval;
+      checklum{ii}(1,:)=linspace(config.meas_range(1),config.meas_range(2),20);%checklumval;
       checklum{ii}(2,:)=checklumval;
     end
 

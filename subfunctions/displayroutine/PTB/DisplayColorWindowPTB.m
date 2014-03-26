@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2013-12-11 17:54:41 ban"
+% Last Update: "2014-03-26 10:02:51 ban"
 
 warning off; %#ok
 
@@ -49,11 +49,11 @@ try
   elseif numel(rgb)==1
     rgb=repmat(rgb,1,3);
   end
-  if max(rgb)<=1, rgb=ceil(255.*rgb); end
+  if max(rgb)>1.0, rgb=rgb./255; end % scaling 0.0<=rgb<=1.0
 
   % adjust screen size
   if scr_num>numel(Screen('Screens'))
-    disp('scr_num exceeds the actual number of screens. using the first screen...');
+    disp('scr_num exceeds the actual number of screens. using the first screen. using screen(0)...');
     scr_num=1;
   end
   scrsz=Screen(scr_num-1,'Rect');
@@ -88,9 +88,9 @@ try
 
     % open PTB window
     if is_windows
-      [ptbwindow,ptbrect]=Screen(scr_num,'OpenWindow',[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
-    else
       [ptbwindow,ptbrect]=Screen(scr_num-1,'OpenWindow',[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
+    else
+      [ptbwindow,ptbrect]=Screen(scr_num,'OpenWindow',[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
     end
     fig_id=ptbwindow;
   else
@@ -101,9 +101,6 @@ try
       error('PTB screen corresponding to fig_id is not opend.');
     end
   end
-
-  % set OpenGL blend functions
-  Screen('BlendFunction',ptbwindow,GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
   % set the PTB runnning priority to MAX
   Priority(MaxPriority(ptbwindow,'WaitBlanking'));
@@ -135,12 +132,10 @@ try
 
   else
 
-    % set OffscreenWindow
-    frameid=Screen('OpenOffscreenWindow',ptbwindow,rgb,ptbrect);
-
-    % set RGB color to PTB window
-    Screen('CopyWindow',frameid,ptbwindow,ptbrect,ptbrect);
-    Screen('Close',frameid);
+    % display the target color with float precision (0.0-1.0)
+    ctex=Screen('MakeTexture',ptbwindow,reshape(rgb,[1,1,3]),0,0,2);
+    Screen('DrawTexture',ptbwindow,ctex,[],ptbrect);
+    Screen('Close',ctex);
   end
 
   % hide mouse cursor

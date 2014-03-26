@@ -4,7 +4,7 @@ function [fig_id,success]=DisplayColorWindowPTB10Bit(rgb,fullscr_flg,fig_id,scr_
 % function [fig_id,success]=DisplayColorWindowPTB10Bit(rgb,:fullscr_flg,:fig_id,:scr_num)
 % (: is optional)
 %
-% displays a Psychtoolbox color window with specific RGB values (force 10-bit color depth precision)
+% displays a Psychtoolbox color window with specific RGB values (force to use 10-bit color depth precision)
 %
 % [input]
 % rgb         : color (RGB) to be displayed
@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB10Bit(rgb,fullscr_flg,fig_id,scr_
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2014-03-25 17:26:58 ban"
+% Last Update: "2014-03-26 10:03:05 ban"
 
 warning off; %#ok
 
@@ -49,7 +49,7 @@ try
   elseif numel(rgb)==1
     rgb=repmat(rgb,1,3);
   end
-  if max(rgb)<=1, rgb=ceil(255.*rgb); end
+  if max(rgb)>1.0, rgb=rgb./255; end % scaling 0.0<=rgb<=1.0
 
   % adjust screen size
   if scr_num>numel(Screen('Screens'))
@@ -87,15 +87,16 @@ try
     ResetDisplayGammaPTB();
 
     % force to 10-bit display output
+    AssertOpenGL();
     PsychImaging('PrepareConfiguration');
-    PsychImaging('AddTask','General','FloatingPoint32BitIfPossible'); % try to get 32 bpc fload precision ifthe hardware supports
+    PsychImaging('AddTask','General','FloatingPoint32BitIfPossible'); % try to get 32 bpc fload precision if the hardware supports
     PsychImaging('AddTask','General','EnableNative10BitFramebuffer'); % enable 10-bit color depth (generally for ATI graphic cards, but also effective for some nVidia cards)
 
     % open PTB window
     if is_windows
-      [ptbwindow,ptbrect]=PsychImaging('OpenWindow',scr_num,[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
-    else
       [ptbwindow,ptbrect]=PsychImaging('OpenWindow',scr_num-1,[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
+    else
+      [ptbwindow,ptbrect]=PsychImaging('OpenWindow',scr_num,[255,255,255],scrpos); % decrement 1 from scr_num as PTB screen ID starts from 0.
     end
     fig_id=ptbwindow;
   else
@@ -106,9 +107,6 @@ try
       error('PTB screen corresponding to fig_id is not opend.');
     end
   end
-
-  % set OpenGL blend functions
-  Screen('BlendFunction',ptbwindow,GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
   % set the PTB runnning priority to MAX
   Priority(MaxPriority(ptbwindow,'WaitBlanking'));
@@ -140,12 +138,7 @@ try
 
   else
 
-    % set OffscreenWindow
-    frameid=Screen('OpenOffscreenWindow',ptbwindow,rgb,ptbrect);
-
-    % set RGB color to PTB window
-    Screen('CopyWindow',frameid,ptbwindow,ptbrect,ptbrect);
-    Screen('Close',frameid);
+    Screen('FillRect',ptbwindow,rgb,ptbrect);
   end
 
   % hide mouse cursor
