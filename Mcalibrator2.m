@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-26 13:20:45 ban"
+  % Last Update: "2014-03-27 19:04:38 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1216,7 +1216,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
 
   else
 
-    phosphors=zeros(3,3); % phosphors = [rx,ry,rY; gx,gy,gY; bx,by,bY];
+    phosphors=zeros(3,3); % phosphors = [rx,gx,bx; ry,gy,by; rY,gY,bY];
     flares=zeros(3,3); % leaked (zero-level) light
 
     set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.',...
