@@ -35,7 +35,7 @@ function colorimeters=colorimeter_list()
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2013-12-11 17:51:05 ban"
+% Last Update: "2014-03-28 16:40:06 ban"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'KONICA-MINOLTA CS-100A','cs100a',0};
@@ -43,5 +43,6 @@ colorimeters{3}={'Admesy Brontes-LL','brontesLL',1};
 colorimeters{4}={'Cambridge Research Systems ColorCAL2 Win-USB','colorcal',1};
 colorimeters{5}={'Cambridge Research Systems ColorCAL2 (PTB, not tested)','colorcal2',1};
 colorimeters{6}={'Cambridge Research Systems OptiCal (not tested)','optical',0};
+colorimeters{7}={'International Light IL1700','il1700',0};
 
 return
