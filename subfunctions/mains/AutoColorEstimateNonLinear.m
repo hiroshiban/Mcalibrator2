@@ -32,7 +32,7 @@ function nonlinear_estimate=AutoColorEstimateNonLinear(rawxyY,myxyY,phosphors,lu
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2014-03-27 18:13:25 ban"
+% Last Update: "2014-03-28 12:50:23 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); nonlinear_estimate=[]; return; end
@@ -139,7 +139,7 @@ return
 function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
 
 %lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
+lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
 lutidx(lutidx<=0)=1;
 lutidx(lutidx>size(lut,1))=size(lut,1);
 for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end

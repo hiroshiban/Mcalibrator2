@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-27 19:04:38 ban"
+  % Last Update: "2014-03-28 15:30:48 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -374,7 +374,9 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     displayhandler=eval(sprintf('@%s;',displayroutines{config.display_routine.id}{2}));
 
     % check whether Psychtoolbox is installed
-    if strcmp(config.display_routine.name,'Psychtoolbox') || strcmp(config.display_routine.name,'BITS++ with Psychtoolbox')
+    if strcmp(config.display_routine.name,'Psychtoolbox') || ...
+       strcmp(config.display_routine.name,'BITS++ with Psychtoolbox') || ...
+       strcmp(config.display_routine.name,'Psychtoolbox (10bit depth)')
       if exist('Screen','file')~=3 % does not exist mex file named 'Screen' = Psychtoolbox is not installed
         PlaySound(0);
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
@@ -631,23 +633,42 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
     fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
     if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
-    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
-    fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
+    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
+      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
+      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
+      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
+    else
+      % create a local color transformation matrix = (local) phosphors
+      % for details, see AutoColorEstimateLinear.m function
+      msXYZ=xyY2XYZ([lum{1}(2:4,:),lum{2}(2:4,:),lum{3}(2:4,:)]);
+      sRGB=[repmat([1;0;0],1,size(lum{1},2)).*repmat(lum{1}(1,:),3,1),...
+            repmat([0;1;0],1,size(lum{2},2)).*repmat(lum{2}(1,:),3,1),...
+            repmat([0;0;1],1,size(lum{3},2)).*repmat(lum{3}(1,:),3,1)];
+      T0=(msXYZ*msXYZ')\msXYZ*sRGB';
+      phosphors0=inv(XYZ2xyY(T0)');
+      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(1,1),phosphors0(1,2),phosphors0(1,3));
+      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(2,1),phosphors0(2,2),phosphors0(2,3));
+      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(3,1),phosphors0(3,2),phosphors0(3,3));
+      clear msXYZ sRGB T0 phosphors0;
+    end
     fclose(fid);
 
-    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.6f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
-    fprintf(fid,'%.6f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
-    fprintf(fid,'%.6f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
-    fclose(fid);
+    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+      fid=fopen(fullfile(save_dir,'flare.txt'),'w');
+      if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+      fprintf(fid,'%.6f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
+      fprintf(fid,'%.6f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
+      fprintf(fid,'%.6f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
+      fclose(fid);
+    end
   % when gray-scale luminance values were obtained, generate flares.txt
   elseif sum(lum{4}(1,:))~=0 % gray-scale
-    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    fprintf(fid,'%.6f\n%.6f\n%.6f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
-    fclose(fid);
+    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+      fid=fopen(fullfile(save_dir,'flare.txt'),'w');
+      if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+      fprintf(fid,'%.6f\n%.6f\n%.6f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
+      fclose(fid);
+    end
   end
 
   PlaySound(1);
@@ -1204,15 +1225,31 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
   elseif exist('lum','var') && sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
 
     phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
-    phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
-    phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
-    phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
+    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
+      phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
+      phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
+      phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
+    else
+      % create a local color transformation matrix = (local) phosphors
+      % for details, see AutoColorEstimateLinear.m function
+      msXYZ=xyY2XYZ([lum{1}(2:4,:),lum{2}(2:4,:),lum{3}(2:4,:)]);
+      sRGB=[repmat([1;0;0],1,size(lum{1},2)).*repmat(lum{1}(1,:),3,1),...
+            repmat([0;1;0],1,size(lum{2},2)).*repmat(lum{2}(1,:),3,1),...
+            repmat([0;0;1],1,size(lum{3},2)).*repmat(lum{3}(1,:),3,1)];
+      T0=(msXYZ*msXYZ')\msXYZ*sRGB';
+      phosphors=inv(XYZ2xyY(T0)');
+      clear msXYZ sRGB T0;
+    end
 
-    flares=zeros(3,3); % zero-level light
-    flares(:,1)=[lum{1}(2,1);lum{1}(3,1);lum{1}(4,1)];
-    flares(:,2)=[lum{2}(2,1);lum{2}(3,1);lum{2}(4,1)];
-    flares(:,3)=[lum{3}(2,1);lum{3}(3,1);lum{3}(4,1)];
-    flares=mean(flares,2);
+    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+      flares=zeros(3,3); % zero-level light
+      flares(:,1)=[lum{1}(2,1);lum{1}(3,1);lum{1}(4,1)];
+      flares(:,2)=[lum{2}(2,1);lum{2}(3,1);lum{2}(4,1)];
+      flares(:,3)=[lum{3}(2,1);lum{3}(3,1);lum{3}(4,1)];
+      flares=mean(flares,2);
+    else
+      flares=[]; % empty if partial measurements are done.
+    end
 
   else
 

@@ -14,7 +14,7 @@ classdef brontesLL
   %
   %
   % Created    : "2012-10-29 05:28:07 ban"
-  % Last Update: "2012-11-06 04:11:08 ban"
+  % Last Update: "2014-03-28 12:51:39 ban"
 
   properties (Hidden) %(SetAccess = protected);
     % id of USB port to communicate with Brontes-LL. This is a dummy variable to match with the other function
@@ -122,7 +122,7 @@ classdef brontesLL
     function [qq,Y,x,y,obj]=measure(obj,integtime)
 
       if ~obj.init_flg, disp('initialization has not completed. open port and initialize the apparatus first.'); return; end
-      if nargin<2 || isempty(integtime), integtime=20000; end
+      if nargin<2 || isempty(integtime), integtime=20000*2; end
       integtime=min(integtime,500000);
       integtime=max(5000,integtime);
 

@@ -46,7 +46,7 @@ function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphors,l
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2014-03-27 18:13:25 ban"
+% Last Update: "2014-03-28 12:50:32 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); lincoeff_estimate=[]; return; end
@@ -192,7 +192,7 @@ return
 function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
 
 %lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
+lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
 lutidx(lutidx<=0)=1;
 lutidx(lutidx>size(lut,1))=size(lut,1);
 for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end

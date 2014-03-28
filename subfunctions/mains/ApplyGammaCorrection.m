@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-03-26 13:00:51 ban"
+% Last Update: "2014-03-28 15:44:57 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end
@@ -92,7 +92,9 @@ end
 %if size(lum,1)==length(lum), lum=lum'; end % set lum to [2(graylevel,luminance) x n] matrix
 if size(lum,2)==2, lum=lum'; end % set lum to [2(graylevel,luminance) x n] matrix
 org_lum=lum; % store the original data
-lum(1,:)=(lum(1,:)-lum(1,1))./(lum(1,end)-lum(1,1)); % assume the last value is max. %lum(1,:)=lum(1,:)./max(lum(1,:));
+
+% adjusting video input value range
+%lum(1,:)=(lum(1,:)-lum(1,1))./(lum(1,end)-lum(1,1)); % assume the last value is max. %lum(1,:)=lum(1,:)./max(lum(1,:));
 %lum(2,:)=100*lum(2,:); % temporal procedures, required for correct wrong luminance values
 
 % applying monotonic increase filter
