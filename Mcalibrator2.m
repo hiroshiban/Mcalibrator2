@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-28 15:30:48 ban"
+  % Last Update: "2014-03-30 13:59:56 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -634,9 +634,9 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
     if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
     if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
-      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
-      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
-      fprintf(fid,'%.6f %.6f %.6f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
+      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
+      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
+      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
     else
       % create a local color transformation matrix = (local) phosphors
       % for details, see AutoColorEstimateLinear.m function
@@ -646,9 +646,9 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
             repmat([0;0;1],1,size(lum{3},2)).*repmat(lum{3}(1,:),3,1)];
       T0=(msXYZ*msXYZ')\msXYZ*sRGB';
       phosphors0=inv(XYZ2xyY(T0)');
-      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(1,1),phosphors0(1,2),phosphors0(1,3));
-      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(2,1),phosphors0(2,2),phosphors0(2,3));
-      fprintf(fid,'%.6f %.6f %.6f\n',phosphors0(3,1),phosphors0(3,2),phosphors0(3,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(1,1),phosphors0(1,2),phosphors0(1,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(2,1),phosphors0(2,2),phosphors0(2,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(3,1),phosphors0(3,2),phosphors0(3,3));
       clear msXYZ sRGB T0 phosphors0;
     end
     fclose(fid);
@@ -656,9 +656,9 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
       fid=fopen(fullfile(save_dir,'flare.txt'),'w');
       if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-      fprintf(fid,'%.6f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
-      fprintf(fid,'%.6f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
-      fprintf(fid,'%.6f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
+      fprintf(fid,'%.8f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
+      fprintf(fid,'%.8f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
+      fprintf(fid,'%.8f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
       fclose(fid);
     end
   % when gray-scale luminance values were obtained, generate flares.txt
@@ -666,7 +666,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
       fid=fopen(fullfile(save_dir,'flare.txt'),'w');
       if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-      fprintf(fid,'%.6f\n%.6f\n%.6f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
+      fprintf(fid,'%.8f\n%.8f\n%.8f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
       fclose(fid);
     end
   end
@@ -930,7 +930,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     % save the generated LUTs to text files
     fid=fopen(fullfile(save_dir,sprintf('%s.lut',color_str{ii})),'w');
     if fid==-1, error('can not open a %s LUT file to write.',color_str{ii}); PlaySound(0); end
-    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.6f\n',mm,lut{ii}(1,mm)); end
+    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.8\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
 
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...Done.',color_str{ii}));
@@ -947,7 +947,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   if measure_flg(1) && measure_flg(2) && measure_flg(3)
     fid=fopen(fullfile(save_dir,'rgb_gamma.lut'),'w');
     if fid==-1, error('can not open rgb_gamma.lut to write.'); PlaySound(0); end
-    for mm=1:1:size(lut{1},2), fprintf(fid,'%.6f %.6f %.6f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
+    for mm=1:1:size(lut{1},2), fprintf(fid,'%.8f %.8f %.8f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
     fclose(fid);
   end
 
@@ -1487,7 +1487,7 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
                'percentage_error_x percentage_error_y percentage_error_Y\n']);
   for nn=1:1:size(estimate.my_xyY,1)
     prc_error=(estimate.my_xyY(nn,:)-estimate.results_xyY(nn,:))./estimate.my_xyY(nn,:).*100;
-    fprintf(fid,'color_%04d %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n',...
+    fprintf(fid,'color_%04d %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f %.8f\n',...
             nn,estimate.my_xyY(nn,1),estimate.my_xyY(nn,2),estimate.my_xyY(nn,3),...
                estimate.my_RGB(nn,1),estimate.my_RGB(nn,2),estimate.my_RGB(nn,3),...
                estimate.results_xyY(nn,1),estimate.results_xyY(nn,2),estimate.results_xyY(nn,3),...
