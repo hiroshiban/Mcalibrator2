@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-03-30 13:59:56 ban"
+  % Last Update: "2014-04-10 13:38:47 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -134,6 +134,7 @@ function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 function save_dir_edit_Callback(hObject, eventdata, handles)
 function date_edit_Callback(hObject, eventdata, handles)
 function repetition_edit_Callback(hObject, eventdata, handles)
+function inc_0_1_radiobutton_Callback(hObject, eventdata, handles)
 function range_min_edit_Callback(hObject, eventdata, handles)
 function range_max_edit_Callback(hObject, eventdata, handles)
 function red_radiobutton_Callback(hObject, eventdata, handles)
@@ -211,6 +212,7 @@ function manageConfigTab(handles,state)
   set(handles.apparatus_popupmenu,'Enable',state);
   set(handles.display_routine_popupmenu,'Enable',state);
   set(handles.sampling_popupmenu,'Enable',state);
+  set(handles.inc_0_1_radiobutton,'Enable',state);
   set(handles.range_min_edit,'Enable',state);
   set(handles.range_max_edit,'Enable',state);
   set(handles.interval_popupmenu,'Enable',state);
@@ -309,6 +311,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     config.apparatus=setparam(handles.apparatus_popupmenu);
     config.display_routine=setparam(handles.display_routine_popupmenu);
     config.sampling=setparam(handles.sampling_popupmenu);
+    config.inc_0_1=get(handles.inc_0_1_radiobutton,'Value');
     config.meas_range=[str2num(get(handles.range_min_edit,'String')),str2num(get(handles.range_max_edit,'String'))];
     if config.meas_range(1)<0.0 || 1.0<config.meas_range(2) || config.meas_range(1)>config.meas_range(2)
       PlaySound(0);
@@ -421,12 +424,14 @@ function load_pushbutton_Callback(hObject, eventdata, handles)
   global config;
 
   [filename,filepath]=uigetfile({'config_*.mat','config file (config_*.mat)';'*.*','All Files (*.*)'},'select a config file');
+  if ~filename, PlaySound(0); return; end
   load(fullfile(filepath,filename));
   set(handles.save_dir_edit,'String',config.save_dir);
   set(handles.date_edit,'String',datestr(now,'yymmdd'));
   set(handles.apparatus_popupmenu,'Value',config.apparatus.id);
   set(handles.display_routine_popupmenu,'Value',config.display_routine.id);
   set(handles.sampling_popupmenu,'Value',config.sampling.id);
+  set(handles.inc_0_1_radiobutton,'Value',config.inc_0_1);
   set(handles.range_min_edit,'String',num2str(config.meas_range(1)));
   set(handles.range_max_edit,'String',num2str(config.meas_range(2)));
   set(handles.interval_popupmenu,'Value',config.interval.id);
@@ -455,9 +460,10 @@ function save_pushbutton_Callback(hObject, eventdata, handles)
   config.apparatus=setparam(handles.apparatus_popupmenu);
   config.display_routine=setparam(handles.display_routine_popupmenu);
   config.sampling=setparam(handles.sampling_popupmenu);
+  config.inc_0_1=get(handles.inc_0_1_radiobutton,'value');
+  config.meas_range=[str2num(get(handles.range_min_edit,'String')),str2num(get(handles.range_max_edit,'String'))];
   config.interval=setparam(handles.interval_popupmenu);
   config.lutoutbit=setparam(handles.lutoutbit_popupmenu);
-
   config.repetition=setparam(handles.gathermethod_popupmenu);
   config.repetition.num=get(handles.repetition_edit,'String');
 
@@ -562,6 +568,8 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   global config;
   global colorimeterhandler;
   global displayhandler;
+  global phosphors;
+  global flares;
 
   set(handles.information_uipanel,'Title','information');
 
@@ -577,6 +585,16 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     samppoints=(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2)).^2;
   elseif strcmp(config.interval.name,'high-biased')
     samppoints=sqrt(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2));
+  end
+
+  % add 0/1 video input values for measuring flare/phosphor xyY
+  if config.inc_0_1
+    if config.meas_range(1)~=0
+      samppoints=[0.0,samppoints];
+    end
+    if config.meas_range(2)~=1
+      samppoints=[samppoints,1.0];
+    end
   end
 
   % constant variables to display information or plot result
@@ -613,6 +631,65 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   end
   displayhandler(-999,1,fig_id);
 
+  % save the phosphor xyY matrix and flare xyY as text files when red, green, and blue phosphor luminance values were obtained.
+  if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
+    fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
+    if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
+    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
+      phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
+      phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
+      phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
+      phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
+    else
+      fprintf(fid,'!!NOTICE!!\npartial measurements are under going.\nphosphor xyY will be obtained later.\n');
+    end
+    fclose(fid);
+
+    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
+    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+      flares=[mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]);
+              mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]);
+              mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)])]; % flares = [gx;gy;gY];
+      fprintf(fid,'%.8f\n',flares(1));
+      fprintf(fid,'%.8f\n',flares(2));
+      fprintf(fid,'%.8f\n',flares(3));
+    else
+      fprintf(fid,'!!NOTICE!!\npartial measurements are under going.\nflare xyY will be obtained later.\n');
+    end
+    fclose(fid);
+  % when gray-scale luminance values were obtained, generate flares.txt
+  elseif sum(lum{4}(1,:))~=0 % gray-scale
+    fid=fopen(fullfile(save_dir,'flare.txt'),'w');
+    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+      flares=[lum{4}(2,1),lum{4}(3,1),lum{4}(4,1)];
+      fprintf(fid,'%.8f\n%.8f\n%.8f\n',flares(1),flares(2),flares(3));
+    else
+      fprintf(fid,'!!NOTICE!!\npartial measurements are under going.\nflare xyY will be obtained later.\n');
+    end
+    fclose(fid);
+  end
+
+  % remove xyY for 0/1 video input values used in measuring flare/phosphor xyY
+  if config.inc_0_1
+    if config.meas_range(1)~=0
+      for ii=1:1:length(color_str)
+        if ~measure_flg(ii), continue; end;
+        lum{ii}=lum{ii}(:,2:end);
+      end
+    end
+    if config.meas_range(2)~=1
+      for ii=1:1:length(color_str)
+        if ~measure_flg(ii), continue; end;
+        lum{ii}=lum{ii}(:,1:end-1);
+      end
+    end
+  end
+
   % plotting
   axes(handles.lum_figure); %#ok
   hold on;
@@ -628,48 +705,8 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
 
   % save the results
   save(save_fname,'-append','lum');
-
-  % save the phosphor xyY matrix and flare xyY as text files when red, green, and blue phosphor luminance values were obtained.
-  if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
-    fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
-    if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
-    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
-      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(2,end),lum{2}(2,end),lum{3}(2,end));
-      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(3,end),lum{2}(3,end),lum{3}(3,end));
-      fprintf(fid,'%.8f %.8f %.8f\n',lum{1}(4,end),lum{2}(4,end),lum{3}(4,end));
-    else
-      % create a local color transformation matrix = (local) phosphors
-      % for details, see AutoColorEstimateLinear.m function
-      msXYZ=xyY2XYZ([lum{1}(2:4,:),lum{2}(2:4,:),lum{3}(2:4,:)]);
-      sRGB=[repmat([1;0;0],1,size(lum{1},2)).*repmat(lum{1}(1,:),3,1),...
-            repmat([0;1;0],1,size(lum{2},2)).*repmat(lum{2}(1,:),3,1),...
-            repmat([0;0;1],1,size(lum{3},2)).*repmat(lum{3}(1,:),3,1)];
-      T0=(msXYZ*msXYZ')\msXYZ*sRGB';
-      phosphors0=inv(XYZ2xyY(T0)');
-      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(1,1),phosphors0(1,2),phosphors0(1,3));
-      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(2,1),phosphors0(2,2),phosphors0(2,3));
-      fprintf(fid,'%.8f %.8f %.8f\n',phosphors0(3,1),phosphors0(3,2),phosphors0(3,3));
-      clear msXYZ sRGB T0 phosphors0;
-    end
-    fclose(fid);
-
-    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
-      fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-      if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-      fprintf(fid,'%.8f\n',mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]));
-      fprintf(fid,'%.8f\n',mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]));
-      fprintf(fid,'%.8f\n',mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)]));
-      fclose(fid);
-    end
-  % when gray-scale luminance values were obtained, generate flares.txt
-  elseif sum(lum{4}(1,:))~=0 % gray-scale
-    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
-      fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-      if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-      fprintf(fid,'%.8f\n%.8f\n%.8f\n',lum{4}(2,1),lum{4}(3,1),lum{4}(4,1));
-      fclose(fid);
-    end
-  end
+  if ~isempty('phosphors'), save(save_fname,'-append','phosphors'); end
+  if ~isempty('flares'), save(save_fname,'-append','flares'); end
 
   PlaySound(1);
 
@@ -1218,39 +1255,68 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
 
   % get/set phosphor CIE1931 xyY
   load(save_fname); % load measured luminance data
-  if ( ~isempty(phosphors) && ~isempty(flares) ) || sum(phosphors(:))~=0
+
+  % when phosphors and flares are already obtained.
+  if ~isempty(phosphors) && ~isempty(flares)
 
     % empty, use already acquired phosphors and flares values
 
+  % when RGB measurements were done but they were conducted in partial RGB video input space, create a local phosphor matrix
   elseif exist('lum','var') && sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
 
-    phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
-    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
-      phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
-      phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
-      phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
-    else
-      % create a local color transformation matrix = (local) phosphors
-      % for details, see AutoColorEstimateLinear.m function
-      msXYZ=xyY2XYZ([lum{1}(2:4,:),lum{2}(2:4,:),lum{3}(2:4,:)]);
-      sRGB=[repmat([1;0;0],1,size(lum{1},2)).*repmat(lum{1}(1,:),3,1),...
-            repmat([0;1;0],1,size(lum{2},2)).*repmat(lum{2}(1,:),3,1),...
-            repmat([0;0;1],1,size(lum{3},2)).*repmat(lum{3}(1,:),3,1)];
-      T0=(msXYZ*msXYZ')\msXYZ*sRGB';
-      phosphors=inv(XYZ2xyY(T0)');
-      clear msXYZ sRGB T0;
+    set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.',...
+        'starting to measure CIE1931 xyY for RGB phosphors in a local space....'});
+
+    % initialize color window
+    scr_num=str2num(get(handles.scr_num_edit,'String')); %#ok
+    fig_id=displayhandler([255,255,255],1,[],scr_num); pause(0.2);
+
+    % create a local color transformation matrix = (local) phosphor xyY matrix
+    % for details, see AutoColorEstimateLinear.m function
+    sRGB=unifrnd(config.meas_range(1),config.meas_range(2),3,18); % get random video input values in a local space
+    
+    % set RGB or LUT values
+    mRGB=sRGB;
+    if get(handles.use_LUT_radiobutton,'Value')
+      lut=LoadLUTs();
+      if isempty(lut), set(handles.information_text,'String','can not load RGB LUTs. Generate them first.'); PlaySound(0); return; end
+
+      % get lut ID corresponding to the target rgb
+      lutdata=getLUTidx(lut,sRGB);
+      for nn=1:1:size(lutdata,1), mRGB(:,nn)=[lut(lutdata(nn,1),1);lut(lutdata(nn,2),2);lut(lutdata(nn,3),3)]; end
+      clear lut lutdata;
     end
 
-    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+    % measure CIE 1931 xyY values in a local space
+    msxyY=zeros(3,size(mRGB,2));
+    set(handles.information_text,'String','Measuring CIE 1931 xyY in a local space...');
+    for nn=1:1:size(sRGB,2)
+      [msxyY(3,ii),msxyY(1,ii),msxyY(2,ii),displayhandler,colorimeterhandler]=...
+          MeasureCIE1931xyY(displayhandler,colorimeterhandler,mRGB(:,nn),1,fig_id);
+    end
+    set(handles.information_text,'String','Measuring CIE 1931 xyY in a local space...Done');
+    msXYZ=xyY2XYZ(msxyY);
+    T0=(msXYZ*msXYZ')\msXYZ*sRGB';
+    T0=T0';
+    phosphors=XYZ2xyY(inv(T0));
+    clear msXYZ msxyY sRGB mRGB T0;
+
+    % measure leaked light (zero-level) luminance
+    if config.flare_correction
       flares=zeros(3,3); % zero-level light
-      flares(:,1)=[lum{1}(2,1);lum{1}(3,1);lum{1}(4,1)];
-      flares(:,2)=[lum{2}(2,1);lum{2}(3,1);lum{2}(4,1)];
-      flares(:,3)=[lum{3}(2,1);lum{3}(3,1);lum{3}(4,1)];
+      set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...');
+      for ii=1:1:3
+        [flares(3,ii),flares(1,ii),flares(2,ii),displayhandler,colorimeterhandler]=...
+            MeasureCIE1931xyY(displayhandler,colorimeterhandler,[0,0,0],1,fig_id);
+      end
+      set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
       flares=mean(flares,2);
+      displayhandler(-999,1,fig_id);
     else
       flares=[]; % empty if partial measurements are done.
     end
 
+  % when nothing has been measured, measure phosphors and get a global transformation matrix
   else
 
     phosphors=zeros(3,3); % phosphors = [rx,gx,bx; ry,gy,by; rY,gY,bY];
@@ -1274,12 +1340,12 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
     end
 
     % measure leaked light (zero-level) luminance
+    set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...');
     for ii=1:1:3
-      set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...');
       [flares(3,ii),flares(1,ii),flares(2,ii),displayhandler,colorimeterhandler]=...
           MeasureCIE1931xyY(displayhandler,colorimeterhandler,[0,0,0],1,fig_id);
-      set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
     end
+    set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
     flares=mean(flares,2);
     displayhandler(-999,1,fig_id);
 
@@ -1361,6 +1427,7 @@ function load_text_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_uipanel,'Title','information');
 
   [filename,filepath]=uigetfile({'*.txt','xyY file (*.txt)';'*.*','All Files (*.*)'},'select a text file (x1,y1,Y1;(enter)x2,y2,Y2;(enter)x3,y3,...)');
+  if ~filename, PlaySound(0); return; end
   xyYdata=load(fullfile(filepath,filename));
   if size(xyYdata,2)~=3
     set(handles.information_text,'String',{'text file format error','xyY text file should be organized as x1,y1,Y1;[ENTER]y1,y2,Y2;[ENTER]x3,y3,Y3;. check the file again'});
