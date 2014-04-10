@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-03-28 15:44:57 ban"
+% Last Update: "2014-04-10 16:00:55 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end
@@ -148,8 +148,8 @@ if strcmpi(method,'lin')
   end
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 if strcmpi(method,'cbs')
@@ -162,16 +162,16 @@ if strcmpi(method,'cbs')
   end
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 if strcmpi(method,'log')
   lum_sparce=lum;
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 % fitting the model
@@ -354,7 +354,7 @@ lut(1,:)=vals;
 
 % filtering generated CLUT by robust spline when it does not monotonically increase
 %if strcmpi(method,'cbs') || strcmpi(method,'poly') || strcmpi(method,'log') || strcmpi(method,'lin')
-tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=(org_lum(1,end)-org_lum(1,1))*tmp+org_lum(1,1); %lut(1,:)=tmp;
+tmp=lut(1,:); tmp(tmp<org_lum(1,1))=org_lum(1,1); tmp(tmp>org_lum(1,end))=org_lum(1,end); lut(1,:)=tmp;
 if find(diff(lut(1,:))<0)
   % spline smoothing
   %lut(1,:)=smoothn(lut(1,:),'robust'); % robust constrain
@@ -366,7 +366,7 @@ if find(diff(lut(1,:))<0)
     if exitflag==1 || exitflag==0, break; end
     checkmono=mc_CheckMonotoneIncrease(lut(1,:));
   end
-  tmp=lut(1,:); tmp(tmp<0)=0; lut(1,:)=(org_lum(1,end)-org_lum(1,1))*tmp+org_lum(1,1); %lut(1,:)=tmp;
+  tmp=lut(1,:); tmp(tmp<org_lum(1,1))=org_lum(1,1); tmp(tmp>org_lum(1,end))=org_lum(1,end); lut(1,:)=tmp;
 end
 
 % put back corrected luminance to the actual values, required for correct wrong luminance values

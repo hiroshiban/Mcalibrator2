@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-10 13:38:47 ban"
+  % Last Update: "2014-04-10 14:56:21 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -967,7 +967,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     % save the generated LUTs to text files
     fid=fopen(fullfile(save_dir,sprintf('%s.lut',color_str{ii})),'w');
     if fid==-1, error('can not open a %s LUT file to write.',color_str{ii}); PlaySound(0); end
-    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.8\n',mm,lut{ii}(1,mm)); end
+    for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.8f\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
 
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...Done.',color_str{ii}));

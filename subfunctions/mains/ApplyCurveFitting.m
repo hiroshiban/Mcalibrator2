@@ -46,7 +46,7 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-03-28 15:44:54 ban"
+% Last Update: "2014-04-10 15:12:29 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end
@@ -131,8 +131,8 @@ if strcmpi(method,'lin')
   end
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 if strcmpi(method,'cbs')
@@ -145,16 +145,16 @@ if strcmpi(method,'cbs')
   end
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 if strcmpi(method,'log')
   lum_sparce=lum;
   idx=find(diff(lum_sparce(2,:))<=options.epsilon);
   lum_sparce(:,idx+1)=[];
-  if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
-  if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
+  %if lum_sparce(1,end)~=1, lum_sparce=[lum_sparce,lum(:,end)]; end
+  %if lum_sparce(1,1)~=0, lum_sparce=[lum(:,1),lum_sparce]; end
 end
 
 % fitting the model
