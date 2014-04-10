@@ -19,7 +19,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2013-12-11 17:54:46 ban"
+% Last Update: "2014-04-10 16:22:21 ban"
 
 % persistent/global variable
 persistent hpush;
@@ -51,9 +51,9 @@ try
     disp('scr_num exceeds the actual number of screens. using the first screen...');
     scr_num=1;
   end
-  offset=scrsz(1,3)-scrsz(scr_num,3);
   scrsz=scrsz(scr_num,:);
-  scrsz=[scrsz(1),scrsz(2)-offset,scrsz(3)-scrsz(1)+1,scrsz(4)];
+  scrsz(3)=scrsz(3)-scrsz(1)+1; % horizontal display offset
+  scrsz(4)=scrsz(4)-scrsz(2)+1; % vertical display offset
   if ~fullscr_flg
     scrpos=[scrsz(3)/4,scrsz(4)/4-offset,2*scrsz(3)/4,2*scrsz(4)/4];
   else

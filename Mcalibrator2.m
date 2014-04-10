@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-10 14:56:21 ban"
+  % Last Update: "2014-04-10 18:19:28 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1273,7 +1273,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
 
     % create a local color transformation matrix = (local) phosphor xyY matrix
     % for details, see AutoColorEstimateLinear.m function
-    sRGB=unifrnd(config.meas_range(1),config.meas_range(2),3,18); % get random video input values in a local space
+    sRGB=unifrnd(config.meas_range(1),config.meas_range(2),3,36); % get random video input values in a local space
     
     % set RGB or LUT values
     mRGB=sRGB;
@@ -1290,9 +1290,9 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
     % measure CIE 1931 xyY values in a local space
     msxyY=zeros(3,size(mRGB,2));
     set(handles.information_text,'String','Measuring CIE 1931 xyY in a local space...');
-    for nn=1:1:size(sRGB,2)
+    for ii=1:1:size(sRGB,2)
       [msxyY(3,ii),msxyY(1,ii),msxyY(2,ii),displayhandler,colorimeterhandler]=...
-          MeasureCIE1931xyY(displayhandler,colorimeterhandler,mRGB(:,nn),1,fig_id);
+          MeasureCIE1931xyY(displayhandler,colorimeterhandler,mRGB(:,ii),1,fig_id);
     end
     set(handles.information_text,'String','Measuring CIE 1931 xyY in a local space...Done');
     msXYZ=xyY2XYZ(msxyY);
@@ -1311,10 +1311,10 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
       end
       set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
       flares=mean(flares,2);
-      displayhandler(-999,1,fig_id);
     else
       flares=[]; % empty if partial measurements are done.
     end
+    displayhandler(-999,1,fig_id);
 
   % when nothing has been measured, measure phosphors and get a global transformation matrix
   else
