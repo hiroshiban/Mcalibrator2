@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-10 18:19:28 ban"
+  % Last Update: "2014-04-15 16:54:22 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -134,7 +134,7 @@ function varargout = Mcalibrator2_DeleteFcn(hObject, eventdata, handles)
 function save_dir_edit_Callback(hObject, eventdata, handles)
 function date_edit_Callback(hObject, eventdata, handles)
 function repetition_edit_Callback(hObject, eventdata, handles)
-function inc_0_1_radiobutton_Callback(hObject, eventdata, handles)
+function use_localM_radiobutton_Callback(hObject, eventdata, handles)
 function range_min_edit_Callback(hObject, eventdata, handles)
 function range_max_edit_Callback(hObject, eventdata, handles)
 function red_radiobutton_Callback(hObject, eventdata, handles)
@@ -212,7 +212,7 @@ function manageConfigTab(handles,state)
   set(handles.apparatus_popupmenu,'Enable',state);
   set(handles.display_routine_popupmenu,'Enable',state);
   set(handles.sampling_popupmenu,'Enable',state);
-  set(handles.inc_0_1_radiobutton,'Enable',state);
+  set(handles.use_localM_radiobutton,'Enable',state);
   set(handles.range_min_edit,'Enable',state);
   set(handles.range_max_edit,'Enable',state);
   set(handles.interval_popupmenu,'Enable',state);
@@ -311,9 +311,14 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     config.apparatus=setparam(handles.apparatus_popupmenu);
     config.display_routine=setparam(handles.display_routine_popupmenu);
     config.sampling=setparam(handles.sampling_popupmenu);
-    config.inc_0_1=get(handles.inc_0_1_radiobutton,'Value');
-    config.meas_range=[str2num(get(handles.range_min_edit,'String')),str2num(get(handles.range_max_edit,'String'))];
-    if config.meas_range(1)<0.0 || 1.0<config.meas_range(2) || config.meas_range(1)>config.meas_range(2)
+    config.use_localM=get(handles.use_localM_radiobutton,'Value');
+
+    % get measurement ranges
+    tmp_min=str2num(get(handles.range_min_edit,'String'));
+    if size(tmp_min,1)==1, tmp_min=tmp_min'; end
+    tmp_max=str2num(get(handles.range_max_edit,'String'));
+    if size(tmp_max,1)==1, tmp_max=tmp_max'; end
+    if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0)) || ~isempty(find(1.0<tmp_max)) || ~isempty(find(tmp_min(:)>tmp_max(:)))
       PlaySound(0);
       set(handles.information_text,'String','Measuring range should be within 0.0<=min<=max<=1.0. Check your setting.');
       % disable some tabs
@@ -322,8 +327,14 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
       manageMeasureTab(handles,'off');
       manageLUTTab(handles,'off');
       manageColorTab(handles,'off');
-      return;
+      set(handles.config_ok_togglebutton,'Value',0);
+      return
     end
+    if numel(tmp_min)<7 % 7 = red, green, blue, gray, magenda, yellow, cyan
+      tmp_min(end:7)=tmp_min(end); if size(tmp_min,1)==1, tmp_min=tmp_min'; end
+      tmp_max(end:7)=tmp_max(end); if size(tmp_max,1)==1, tmp_max=tmp_max'; end
+    end
+    config.meas_range=[tmp_min,tmp_max];
 
     config.interval=setparam(handles.interval_popupmenu);
     config.lutoutbit=setparam(handles.lutoutbit_popupmenu);
@@ -369,6 +380,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     else
       set(handles.information_text,'String',...
           'Currently, only [0(SERIAL)|1(USB)] can be accepted as the third variable of colorimeter_list. Check the list file.');
+      set(handles.config_ok_togglebutton,'Value',0);
       return
     end
 
@@ -390,6 +402,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         manageMeasureTab(handles,'off');
         manageLUTTab(handles,'off');
         manageColorTab(handles,'off');
+        set(handles.config_ok_togglebutton,'Value',0);
 
         return;
       end
@@ -431,9 +444,25 @@ function load_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.apparatus_popupmenu,'Value',config.apparatus.id);
   set(handles.display_routine_popupmenu,'Value',config.display_routine.id);
   set(handles.sampling_popupmenu,'Value',config.sampling.id);
-  set(handles.inc_0_1_radiobutton,'Value',config.inc_0_1);
-  set(handles.range_min_edit,'String',num2str(config.meas_range(1)));
-  set(handles.range_max_edit,'String',num2str(config.meas_range(2)));
+  set(handles.use_localM_radiobutton,'Value',config.use_localM);
+  if unique(config.meas_range(:,1))==1
+    set(handles.range_min_edit,'String',num2str(config.meas_range(1,1)));
+  else
+    tmp_min=num2str(config.meas_range(:,1));
+    min_str=deblank(tmp_min(1,:));
+    for ii=2:1:size(tmp_min,1), min_str=strcat(min_str,',',deblank(tmp_min(ii,:))); end
+    set(handles.range_min_edit,'String',min_str);
+    clear tmp_min min_str;
+  end
+  if unique(config.meas_range(:,2))==1
+    set(handles.range_max_edit,'String',num2str(config.meas_range(1,2)));
+  else
+    tmp_max=num2str(config.meas_range(:,2));
+    max_str=deblank(tmp_max(1,:));
+    for ii=2:1:size(tmp_max,1), max_str=strcat(max_str,',',deblank(tmp_max(ii,:))); end
+    set(handles.range_max_edit,'String',max_str);
+    clear tmp_max max_str;
+  end
   set(handles.interval_popupmenu,'Value',config.interval.id);
   set(handles.lutoutbit_popupmenu,'Value',config.lutoutbit.id);
   set(handles.repetition_edit,'String',config.repetition.num);
@@ -460,8 +489,23 @@ function save_pushbutton_Callback(hObject, eventdata, handles)
   config.apparatus=setparam(handles.apparatus_popupmenu);
   config.display_routine=setparam(handles.display_routine_popupmenu);
   config.sampling=setparam(handles.sampling_popupmenu);
-  config.inc_0_1=get(handles.inc_0_1_radiobutton,'value');
-  config.meas_range=[str2num(get(handles.range_min_edit,'String')),str2num(get(handles.range_max_edit,'String'))];
+  config.use_localM=get(handles.use_localM_radiobutton,'value');
+
+  tmp_min=str2num(get(handles.range_min_edit,'String'));
+  if size(tmp_min,1)==1, tmp_min=tmp_min'; end
+  tmp_max=str2num(get(handles.range_max_edit,'String'));
+  if size(tmp_max,1)==1, tmp_max=tmp_max'; end
+  if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0)) || ~isempty(find(1.0<tmp_max)) || ~isempty(find(tmp_min(:)>tmp_max(:)))
+    PlaySound(0);
+    set(handles.information_text,'String','Measuring range should be within 0.0<=min<=max<=1.0. Check your setting.');
+    return
+  end
+  if numel(tmp_min)<7 % 7 = red, green, blue, gray, magenda, yellow, cyan
+    tmp_min(end:7)=tmp_min(end); if size(tmp_min,1)==1, tmp_min=tmp_min'; end
+    tmp_max(end:7)=tmp_max(end); if size(tmp_max,1)==1, tmp_max=tmp_max'; end
+  end
+  config.meas_range=[tmp_min,tmp_max];
+
   config.interval=setparam(handles.interval_popupmenu);
   config.lutoutbit=setparam(handles.lutoutbit_popupmenu);
   config.repetition=setparam(handles.gathermethod_popupmenu);
@@ -577,26 +621,6 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   save_dir=fullfile(config.save_dir,config.date);
   save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
 
-  % set the sampling interval (config.meas_range(1) - config.meas_range(2)) --- (0.0-1.0) by default.
-  sampnum=str2num(config.sampling.name); %#ok
-  if strcmp(config.interval.name,'equally spaced')
-    samppoints=config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2);
-  elseif strcmp(config.interval.name,'low-biased')
-    samppoints=(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2)).^2;
-  elseif strcmp(config.interval.name,'high-biased')
-    samppoints=sqrt(config.meas_range(1):diff(config.meas_range)/(sampnum-1):config.meas_range(2));
-  end
-
-  % add 0/1 video input values for measuring flare/phosphor xyY
-  if config.inc_0_1
-    if config.meas_range(1)~=0
-      samppoints=[0.0,samppoints];
-    end
-    if config.meas_range(2)~=1
-      samppoints=[samppoints,1.0];
-    end
-  end
-
   % constant variables to display information or plot result
   color_str={'red','green','blue','gray','magenda','yellow','cyan'};
   colors={[1,0,0],[0,1,0],[0,0,1],[0.3,0.3,0.3],[1,0,1],[1,1,0],[0,1,1]};
@@ -605,18 +629,39 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   color_msk={[1,0,0],[0,1,0],[0,0,1],[1,1,1],[1,0,1],[1,1,0],[0,1,1]};
   measure_flg=[config.usered,config.usegreen,config.useblue,config.usegray,config.usemagenda,config.useyellow,config.usecyan];
 
+  % set the sampling interval (config.meas_range(xx,1) - config.meas_range(xx,2)) --- (0.0-1.0) by default.
+  sampnum=str2num(config.sampling.name); %#ok
   mRGBs=cell(length(color_str),1);
+  lum=cell(length(color_str),1);
   for ii=1:1:length(color_str)
     if ~measure_flg(ii)
       mRGBs{ii}=NaN;
+      lum{ii}=zeros(4,sampnum); % 4 = sampling-point, x, y, Y
     else
+      if strcmp(config.interval.name,'equally spaced')
+        samppoints=config.meas_range(ii,1):diff(config.meas_range(ii,:))/(sampnum-1):config.meas_range(ii,2);
+      elseif strcmp(config.interval.name,'low-biased')
+        samppoints=(config.meas_range(ii,1):diff(config.meas_range(ii,:))/(sampnum-1):config.meas_range(ii,2)).^2;
+      elseif strcmp(config.interval.name,'high-biased')
+        samppoints=sqrt(config.meas_range(ii,1):diff(config.meas_range(ii,:))/(sampnum-1):config.meas_range(ii,2));
+      end
+
+      % add 0/1 video input values for measuring flare/phosphor xyY
+      if ~config.use_localM
+        if config.meas_range(ii,1)~=0
+          samppoints=[0.0,samppoints];
+        end
+        if config.meas_range(ii,2)~=1
+          samppoints=[samppoints,1.0];
+        end
+      end
+
+      % set RGB video input values
       mRGBs{ii}=repmat(samppoints,3,1).*repmat((color_msk{ii})',1,numel(samppoints));
+      lum{ii}=zeros(4,numel(samppoints)); % 4 = sampling-point, x, y, Y
+      lum{ii}(1,:)=samppoints;
     end
   end
-
-  % colors to be used
-  lum=cell(length(color_str),1);
-  for ii=1:1:length(color_str), lum{ii}=zeros(4,numel(samppoints)); end % 4 = sampling-point, x, y, Y
 
   % initialize color window
   scr_num=str2num(get(handles.scr_num_edit,'String')); %#ok
@@ -627,7 +672,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     MeasureCIE1931xyYs(displayhandler,colorimeterhandler,mRGBs,1,fig_id,str2num(config.repetition.num),config.repetition.name); %#ok
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
-    lum{ii}(1,:)=samppoints; lum{ii}(4,:)=Ys{ii}; lum{ii}(2,:)=xs{ii}; lum{ii}(3,:)=ys{ii};
+    lum{ii}(4,:)=Ys{ii}; lum{ii}(2,:)=xs{ii}; lum{ii}(3,:)=ys{ii};
   end
   displayhandler(-999,1,fig_id);
 
@@ -635,7 +680,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
     fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
     if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
-    if lum{1}(1,end)==1.0 % when the luminance values for the maximum video inputs were measured
+    if lum{1}(1,end)==1.0 && ~config.use_localM % when the luminance values for the maximum video inputs were measured
       phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
       phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
       phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
@@ -650,7 +695,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
 
     fid=fopen(fullfile(save_dir,'flare.txt'),'w');
     if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+    if lum{1}(1,1)==0.0 && ~config.use_localM % when the luminance values for the minimum (flare) video inputs were measured
       flares=[mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]);
               mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]);
               mean([lum{1}(4,1),lum{2}(4,1),lum{3}(4,1)])]; % flares = [gx;gy;gY];
@@ -665,7 +710,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   elseif sum(lum{4}(1,:))~=0 % gray-scale
     fid=fopen(fullfile(save_dir,'flare.txt'),'w');
     if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
-    if lum{1}(1,1)==0.0 % when the luminance values for the minimum (flare) video inputs were measured
+    if lum{1}(1,1)==0.0 && ~config.use_localM % when the luminance values for the minimum (flare) video inputs were measured
       flares=[lum{4}(2,1),lum{4}(3,1),lum{4}(4,1)];
       fprintf(fid,'%.8f\n%.8f\n%.8f\n',flares(1),flares(2),flares(3));
     else
@@ -675,18 +720,10 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   end
 
   % remove xyY for 0/1 video input values used in measuring flare/phosphor xyY
-  if config.inc_0_1
-    if config.meas_range(1)~=0
-      for ii=1:1:length(color_str)
-        if ~measure_flg(ii), continue; end;
-        lum{ii}=lum{ii}(:,2:end);
-      end
-    end
-    if config.meas_range(2)~=1
-      for ii=1:1:length(color_str)
-        if ~measure_flg(ii), continue; end;
-        lum{ii}=lum{ii}(:,1:end-1);
-      end
+  for ii=1:1:length(color_str)
+    if measure_flg(ii) && ~config.use_localM
+      if config.meas_range(ii,1)~=0, lum{ii}=lum{ii}(:,2:end); end
+      if config.meas_range(ii,2)~=1, lum{ii}=lum{ii}(:,1:end-1); end
     end
   end
 
@@ -975,7 +1012,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   hold off;
 
   % save the generated PPT slides
-  if windows_flg, ppt.saveAs(fullfile(save_dir,'display_calibration_result.ppt')); end
+  if windows_flg, ppt.saveAs(fullfile(save_dir,'display_calibration_result.ppt')); ppt.close(0); end
 
   % save the results
   save(save_fname,'-append','fitting_method','lut');
@@ -1038,7 +1075,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
       set(handles.information_text,'String',sprintf('checking linearity of %s LUT...',color_str{ii}));
       axes(handles.lut_figure); %#ok
       hold on;
-      plot(linspace(config.meas_range(1),config.meas_range(2),size(lut{ii},2)),lut{ii}(2,:),'-','Marker','o','MarkerSize',3,'MarkerFaceColor',colors{ii},...
+      plot(linspace(config.meas_range(ii,1),config.meas_range(ii,2),size(lut{ii},2)),lut{ii}(2,:),'-','Marker','o','MarkerSize',3,'MarkerFaceColor',colors{ii},...
            'Color',colors{ii}); %#ok % lut is already loaded on memory
       set(gca,'XLim',[0,1]);
       set(gca,'XTick',0:0.2:1.0);
@@ -1056,9 +1093,10 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     InitializeRandomSeed();
 
     % get/set 20 points for re-measure the luminance
+    checklumval=cell(length(color_str),1);
     for ii=1:1:length(color_str)
       if ~measure_flg(ii), continue; end;
-      checklumval=lut{ii}(1,floor(linspace(1,str2num(config.lutoutbit.name),20))); %#ok
+      checklumval{ii}=lut{ii}(1,floor(linspace(1,str2num(config.lutoutbit.name),20)),1); %#ok
     end
 
     % set luminance values
@@ -1066,8 +1104,8 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     for ii=1:1:length(color_str)
       if ~measure_flg(ii), continue; end;
       checklum{ii}=zeros(5,20); % 4 = measured_val, x, y, Y
-      checklum{ii}(1,:)=linspace(config.meas_range(1),config.meas_range(2),20);%checklumval;
-      checklum{ii}(2,:)=checklumval;
+      checklum{ii}(1,:)=linspace(config.meas_range(ii,1),config.meas_range(ii,2),20);%checklumval;
+      checklum{ii}(2,:)=checklumval{ii};
     end
 
     % initialize color window
@@ -1079,10 +1117,10 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
       if ~measure_flg(ii), continue; end;
 
       set(handles.information_text,'String',sprintf('Measuring CIE 1931 xyY of %s...',color_str{ii}));
-      mesorder=shuffle(1:1:numel(checklumval));%1:1:numel(checklumval)
+      mesorder=shuffle(1:1:numel(checklumval{ii}));%1:1:numel(checklumval)
       for mm=mesorder
         [checklum{ii}(5,mm),checklum{ii}(3,mm),checklum{ii}(4,mm),displayhandler,colorimeterhandler]=...
-          MeasureCIE1931xyY(displayhandler,colorimeterhandler,repmat(checklumval(mm),1,3).*color_msk{ii},1,fig_id);
+          MeasureCIE1931xyY(displayhandler,colorimeterhandler,repmat(checklumval{ii}(mm),1,3).*color_msk{ii},1,fig_id);
       end
       set(handles.information_text,'String',sprintf('Measuring CIE 1931 xyY of %s...Done',color_str{ii}));
       hold off;
@@ -1262,7 +1300,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
     % empty, use already acquired phosphors and flares values
 
   % when RGB measurements were done but they were conducted in partial RGB video input space, create a local phosphor matrix
-  elseif exist('lum','var') && sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
+  elseif config.use_localM && exist('lum','var') && sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
 
     set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.',...
         'starting to measure CIE1931 xyY for RGB phosphors in a local space....'});
@@ -1273,8 +1311,12 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
 
     % create a local color transformation matrix = (local) phosphor xyY matrix
     % for details, see AutoColorEstimateLinear.m function
-    sRGB=unifrnd(config.meas_range(1),config.meas_range(2),3,36); % get random video input values in a local space
-    
+
+    % get random video input values in a local space
+    sRGB=[unifrnd(config.meas_range(1,1),config.meas_range(1,2),1,18);
+          unifrnd(config.meas_range(2,1),config.meas_range(2,2),1,18);
+          unifrnd(config.meas_range(3,1),config.meas_range(3,2),1,18)];
+
     % set RGB or LUT values
     mRGB=sRGB;
     if get(handles.use_LUT_radiobutton,'Value')
@@ -1282,9 +1324,8 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
       if isempty(lut), set(handles.information_text,'String','can not load RGB LUTs. Generate them first.'); PlaySound(0); return; end
 
       % get lut ID corresponding to the target rgb
-      lutdata=getLUTidx(lut,sRGB);
-      for nn=1:1:size(lutdata,1), mRGB(:,nn)=[lut(lutdata(nn,1),1);lut(lutdata(nn,2),2);lut(lutdata(nn,3),3)]; end
-      clear lut lutdata;
+      [dummy,mRGB]=getLUTidx(lut,sRGB);
+      clear lut;
     end
 
     % measure CIE 1931 xyY values in a local space
@@ -1404,6 +1445,7 @@ function xyY_RGB_convert_pushbutton_Callback(hObject, eventdata, handles)
         str_lut=[str_lut,num2str(lutdata(ii,1)),',',num2str(lutdata(ii,2)),',',num2str(lutdata(ii,3)),';']; %#ok
       end
       set(handles.RGB_edit,'String',str_lut);
+      clear lut;
     else
       % set rgb values to RGB_edit
       str_rgb=[];
@@ -1419,6 +1461,7 @@ function xyY_RGB_convert_pushbutton_Callback(hObject, eventdata, handles)
   else
     set(handles.information_text,'String','xyY values were converted to LUT IDs.');
   end
+
   PlaySound(1);
 
 

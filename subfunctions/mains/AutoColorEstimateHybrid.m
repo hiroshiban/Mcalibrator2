@@ -41,7 +41,7 @@ function hybrid_estimate=AutoColorEstimateHybrid(rawxyY,myxyY,phosphors,flare_XY
 %
 %
 % Created    : "2012-05-30 20:15:22 ban"
-% Last Update: "2014-03-28 12:50:40 ban"
+% Last Update: "2014-04-14 09:56:03 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); hybrid_estimate=[]; return; end
@@ -101,7 +101,7 @@ for mm=1:1:size(myxyY,2)
 
     % the first estimation of RGB values
     RGB0=T0*xyY2XYZ(myxyY(:,mm)); RGB0(RGB0<0)=0; RGB0(RGB0>1)=1;
-    if ~isempty(lut), RGB0=getRGBfromLUT(lut,RGB0); end
+    if ~isempty(lut), [dummy,RGB0]=getLUTidx(lut,RGB0); end
 
     % Measuring CIE1931 xyY
     [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -124,7 +124,7 @@ for mm=1:1:size(myxyY,2)
       tmp=T0*sXYZ(:,rr); tmp(tmp<0)=0; tmp(tmp>1)=1;
       sRGB(:,rr)=tmp;
       if ~isempty(lut)
-        RGB1=getRGBfromLUT(lut,sRGB(:,rr));
+        [dummy,RGB1]=getLUTidx(lut,sRGB(:,rr));
       else
         RGB1=sRGB(:,rr);
       end
@@ -149,7 +149,7 @@ for mm=1:1:size(myxyY,2)
 
     % generate local phosphor RGB
     RGB2=T1*xyY2XYZ(myxyY(:,mm)); RGB2(RGB2<0)=0; RGB2(RGB2>1)=1;
-    if ~isempty(lut), RGB2=getRGBfromLUT(lut,RGB2); end
+    if ~isempty(lut), [dummy,RGB2]=getLUTidx(lut,RGB2); end
 
     % Measuring CIE1931 xyY
     [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -188,7 +188,7 @@ for mm=1:1:size(myxyY,2)
 
   % Measuring & optimizing CIE1931 xyY
   RGB=fminsearchOS(@estimate_xyY,RGB0,options.nonlin,rawxyY(:,mm),displayhandler,colorimeterhandler,lut,fig_id);
-  if ~isempty(lut), RGB=getRGBfromLUT(lut,RGB); end
+  if ~isempty(lut), [dummy,RGB]=getLUTidx(lut,RGB); end
 
   % check the accuracy of xyY for the optimized RGB values
   [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -237,7 +237,7 @@ function sse=estimate_xyY(params,wanted_xyY,displayhandler,colorimeterhandler,lu
 % set variable
 RGB=params;
 RGB(RGB>1)=1.0; RGB(RGB<0)=0.0;
-if ~isempty(lut), RGB=getRGBfromLUT(lut,RGB); end
+if ~isempty(lut), [dummy,RGB]=getLUTidx(lut,RGB); end
 
 % measure CIE1931 xyY
 [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -253,17 +253,5 @@ cxyY=[xx;yy;YY];
 %sse=eXYZ'*eXYZ;
 exyY=(cxyY-wanted_xyY)./wanted_xyY.*100;
 sse=sqrt(exyY'*exyY);
-
-return
-
-
-% subfunction to get RGB value from LUT
-function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
-
-%lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
-lutidx(lutidx<=0)=1;
-lutidx(lutidx>size(lut,1))=size(lut,1);
-for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end
 
 return

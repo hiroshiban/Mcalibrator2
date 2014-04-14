@@ -46,7 +46,7 @@ function lincoeff_estimate=AutoColorEstimateLinearCoeff(rawxyY,myxyY,phosphors,l
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2014-03-28 12:50:32 ban"
+% Last Update: "2014-04-14 09:58:21 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); lincoeff_estimate=[]; return; end
@@ -84,7 +84,7 @@ for mm=1:1:size(myxyY,2)
 
   % the first estimation of RGB values
   RGB0=T0*xyY2XYZ(myxyY(:,mm)); RGB0(RGB0<0)=0; RGB0(RGB0>1)=1;
-  if ~isempty(lut), RGB=getRGBfromLUT(lut,RGB0); end
+  if ~isempty(lut), [dummy,RGB]=getLUTidx(lut,RGB0); end
 
   % Measuring CIE1931 xyY
   [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -103,7 +103,7 @@ for mm=1:1:size(myxyY,2)
   RGB=RGB0;
   deltaRGB=eRGB.*(CC)';
   if ~isempty(lut)
-    [dummy,lutidx]=getRGBfromLUT(lut,RGB);
+    lutidx=getLUTidx(lut,RGB);
     deltalutidx=sign(eRGB).*(ceil(abs(deltaRGB)*size(lut,1)));
     newlutidx=lutidx-deltalutidx;
     newlutidx(newlutidx<=0)=1;
@@ -160,7 +160,7 @@ function sse=estimate_CC(params,wanted_xyY,RGB0,eRGB,displayhandler,colorimeterh
 RGB=RGB0;
 deltaRGB=eRGB.*(params)';
 if ~isempty(lut)
-  [dummy,lutidx]=getRGBfromLUT(lut,RGB);
+  lutidx=getLUTidx(lut,RGB);
   deltalutidx=sign(eRGB).*(ceil(abs(deltaRGB)*size(lut,1)));
   newlutidx=lutidx-deltalutidx;
   newlutidx(newlutidx<=0)=1;
@@ -185,16 +185,5 @@ cxyY=[xx;yy;YY];
 %sse=eXYZ'*eXYZ;
 exyY=(cxyY-wanted_xyY)./wanted_xyY.*100;
 sse=sqrt(exyY'*exyY);
-
-return
-
-%% subfunctions
-function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
-
-%lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
-lutidx(lutidx<=0)=1;
-lutidx(lutidx>size(lut,1))=size(lut,1);
-for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end
 
 return

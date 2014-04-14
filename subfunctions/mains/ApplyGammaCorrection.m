@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-04-10 16:00:55 ban"
+% Last Update: "2014-04-14 09:22:48 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end

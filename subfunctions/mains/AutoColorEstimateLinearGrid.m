@@ -47,7 +47,7 @@ function lineargrid_estimate=AutoColorEstimateLinearGrid(rawxyY,myxyY,phosphors,
 %
 %
 % Created    : "2012-04-12 10:08:56 ban"
-% Last Update: "2014-03-28 12:50:27 ban"
+% Last Update: "2014-04-14 10:00:06 ban"
 
 % check input variables
 if nargin<7, help(mfilename()); lineargrid_estimate=[]; return; end
@@ -98,7 +98,7 @@ for mm=1:1:size(myxyY,2)
 
     % the first estimation of RGB values
     RGB0=T0*xyY2XYZ(myxyY(:,mm)); RGB0(RGB0<0)=0; RGB0(RGB0>1)=1;
-    if ~isempty(lut), RGB0=getRGBfromLUT(lut,RGB0); end
+    if ~isempty(lut), [dummy,RGB0]=getLUTidx(lut,RGB0); end
 
     % Measuring CIE1931 xyY
     [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -145,7 +145,7 @@ for mm=1:1:size(myxyY,2)
       tmp=T0*sXYZ(:,rr); tmp(tmp<0)=0; tmp(tmp>1)=1;
       sRGB(:,rr)=tmp;
       if ~isempty(lut)
-        RGB1=getRGBfromLUT(lut,sRGB(:,rr));
+        [dummy,RGB1]=getLUTidx(lut,sRGB(:,rr));
       else
         RGB1=sRGB(:,rr);
       end
@@ -170,7 +170,7 @@ for mm=1:1:size(myxyY,2)
 
     % generate local phosphor RGB
     RGB2=T1*xyY2XYZ(myxyY(:,mm)); RGB2(RGB2<0)=0; RGB2(RGB2>1)=1;
-    if ~isempty(lut), RGB2=getRGBfromLUT(lut,RGB2); end
+    if ~isempty(lut), [dummy,RGB2]=getLUTidx(lut,RGB2); end
 
     % Measuring CIE1931 xyY
     [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -217,17 +217,5 @@ for mm=1:1:size(myxyY,2)
 end % for mm=1:1:size(myxyY,1)
 
 displayhandler(-999,1,fig_id);
-
-return
-
-
-%% subfunctions
-function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
-
-%lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
-lutidx(lutidx<=0)=1;
-lutidx(lutidx>size(lut,1))=size(lut,1);
-for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end
 
 return

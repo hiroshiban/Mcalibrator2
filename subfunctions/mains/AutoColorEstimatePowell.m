@@ -36,7 +36,7 @@ function powell_estimate=AutoColorEstimatePowell(rawxyY,myxyY,phosphors,lut,colo
 %
 %
 % Created    : "2012-04-15 12:20:15 ban"
-% Last Update: "2014-03-28 12:50:47 ban"
+% Last Update: "2014-04-14 09:53:48 ban"
 
 %% check input variables
 if nargin<6, help(mfilename()); powell_estimate=[]; return; end
@@ -85,7 +85,7 @@ for mm=1:1:size(myxyY,2)
 
   % Measuring & optimizing CIE1931 xyY
   RGB=fminpowell(@estimate_xyY,RGB0,options,constrains,rawxyY(:,mm),displayhandler,colorimeterhandler,lut,fig_id);
-  if ~isempty(lut), RGB=getRGBfromLUT(lut,RGB); end
+  if ~isempty(lut), [dummy,RGB]=getLUTidx(lut,RGB); end
   
   % check the accuracy of xyY for the optimized RGB values
   [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -134,7 +134,7 @@ function sse=estimate_xyY(params,wanted_xyY,displayhandler,colorimeterhandler,lu
 % set variable
 RGB=params;
 RGB(RGB>1)=1.0; RGB(RGB<0)=0.0;
-if ~isempty(lut), RGB=getRGBfromLUT(lut,RGB); end
+if ~isempty(lut), [dummy,RGB]=getLUTidx(lut,RGB); end
 
 % measure CIE1931 xyY
 [YY,xx,yy,displayhandler,colorimeterhandler]=...
@@ -150,16 +150,5 @@ cxyY=[xx;yy;YY];
 %sse=eXYZ'*eXYZ;
 exyY=(cxyY-wanted_xyY)./wanted_xyY.*100;
 sse=sqrt(exyY'*exyY);
-
-return
-
-
-function [rgb,lutidx]=getRGBfromLUT(lut,rgb)
-
-%lutidx=ceil(rgb.*size(lut,1));
-lutidx=ceil((rgb'-lut(1,:))./(lut(end,:)-lut(1,:)).*size(lut,1));
-lutidx(lutidx<=0)=1;
-lutidx(lutidx>size(lut,1))=size(lut,1);
-for nn=1:1:3, rgb(nn)=lut(lutidx(nn),nn); end
 
 return

@@ -8,23 +8,23 @@ function lut=LoadLUTs()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2013-12-11 17:20:15 ban"
+% Last Update: "2014-04-14 13:29:16 ban"
 
 global config;
 
+% load the measured LUTs
 save_dir=fullfile(config.save_dir,config.date);
-color_str={'red','green','blue'};
-lut=zeros(str2num(config.lutoutbit.name),3); %#ok
+save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
+tmp=load(save_fname,'lut'); % load measured luminance data
+tmp=tmp.lut;
 
-for ii=1:1:length(color_str)
-  try
-    tmplut=load(fullfile(save_dir,sprintf('%s.lut',color_str{ii})));
-  catch %#ok
-    lut=[];
-    return
-  end
-  lut(:,ii)=tmplut(:,2);
-  clear tmplut;
+% construct CLUT for RGB phosphors
+if isempty(tmp{1}) || isempty(tmp{2}) || isempty(tmp{3}) % if RGB CLUTs are not generated
+  lut=[];
+else
+  lut=zeros(size(tmp{1},2),3,2); % row: LUT index, col: RGB, third: 1=video input, 2=luminance
+  lut(:,:,1)=[tmp{1}(1,:)',tmp{2}(1,:)',tmp{3}(1,:)']; % video input values
+  lut(:,:,2)=[tmp{1}(2,:)',tmp{2}(2,:)',tmp{3}(2,:)']; % the corresponding (linearlized) luminance values
 end
 
 return
