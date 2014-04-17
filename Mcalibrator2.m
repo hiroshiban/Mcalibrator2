@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-15 16:54:22 ban"
+  % Last Update: "2014-04-17 13:50:28 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -1252,12 +1252,12 @@ function use_LUT_radiobutton_Callback(hObject, eventdata, handles)
     set(handles.use_RGB_radiobutton,'Value',0);
     set(handles.use_LUT_radiobutton,'Value',1);
     set(handles.RGB_text,'String','LUT');
-    set(handles.measured_RGB_text,'String','LUT')
+    set(handles.measured_RGB_text,'String','LUT');
   else
     set(handles.use_RGB_radiobutton,'Value',1);
     set(handles.use_LUT_radiobutton,'Value',0);
     set(handles.RGB_text,'String','R,G,B');
-    set(handles.measured_RGB_text,'String','R,G,B')
+    set(handles.measured_RGB_text,'String','R,G,B');
   end
 
 
@@ -1272,7 +1272,7 @@ function use_RGB_radiobutton_Callback(hObject, eventdata, handles)
     set(handles.use_RGB_radiobutton,'Value',0);
     set(handles.use_LUT_radiobutton,'Value',1);
     set(handles.RGB_text,'String','LUT');
-    set(handles.measured_RGB_text,'String','LUT')
+    set(handles.measured_RGB_text,'String','LUT');
   end
 
 
@@ -1313,9 +1313,8 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
     % for details, see AutoColorEstimateLinear.m function
 
     % get random video input values in a local space
-    sRGB=[unifrnd(config.meas_range(1,1),config.meas_range(1,2),1,18);
-          unifrnd(config.meas_range(2,1),config.meas_range(2,2),1,18);
-          unifrnd(config.meas_range(3,1),config.meas_range(3,2),1,18)];
+    sRGB=unifrnd(repmat(config.meas_range(1:3,1),1,18),repmat(config.meas_range(1:3,2),1,18));
+    %sRGB=unifrnd(0,1,3,18);
 
     % set RGB or LUT values
     mRGB=sRGB;
@@ -1328,7 +1327,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
       clear lut;
     end
 
-    % measure CIE 1931 xyY values in a local space
+    % measure CIE 1931 xyY values in a local space and estimate the transformation matrix
     msxyY=zeros(3,size(mRGB,2));
     set(handles.information_text,'String','Measuring CIE 1931 xyY in a local space...');
     for ii=1:1:size(sRGB,2)
@@ -1348,7 +1347,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
       set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...');
       for ii=1:1:3
         [flares(3,ii),flares(1,ii),flares(2,ii),displayhandler,colorimeterhandler]=...
-            MeasureCIE1931xyY(displayhandler,colorimeterhandler,[0,0,0],1,fig_id);
+            MeasureCIE1931xyY(displayhandler,colorimeterhandler,zeros(3,1),1,fig_id);
       end
       set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
       flares=mean(flares,2);
@@ -1384,7 +1383,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
     set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...');
     for ii=1:1:3
       [flares(3,ii),flares(1,ii),flares(2,ii),displayhandler,colorimeterhandler]=...
-          MeasureCIE1931xyY(displayhandler,colorimeterhandler,[0,0,0],1,fig_id);
+          MeasureCIE1931xyY(displayhandler,colorimeterhandler,zeros(3,1),1,fig_id);
     end
     set(handles.information_text,'String','Measuring CIE 1931 xyY of flare...Done');
     flares=mean(flares,2);

@@ -1,6 +1,6 @@
 function lut=LoadLUTs()
 
-% Loads Color LookUpTable into memory to handle it in Mcalibrator2.
+% Loads Color LookUpTables into memory to handle them in Mcalibrator2.
 % function lut=LoadLUTs()
 %
 % a subfunction to handle data
@@ -8,15 +8,18 @@ function lut=LoadLUTs()
 %
 %
 % Created    : "2012-05-29 04:09:02 ban"
-% Last Update: "2014-04-14 13:29:16 ban"
+% Last Update: "2014-04-16 09:58:36 ban"
 
 global config;
 
 % load the measured LUTs
 save_dir=fullfile(config.save_dir,config.date);
 save_fname=fullfile(save_dir,sprintf('mcalibrator2_results_%s.mat',config.date));
-tmp=load(save_fname,'lut'); % load measured luminance data
-tmp=tmp.lut;
+try
+  tmp=load(save_fname,'lut'); tmp=tmp.lut;
+catch
+  tmp=cell(3,1);
+end
 
 % construct CLUT for RGB phosphors
 if isempty(tmp{1}) || isempty(tmp{2}) || isempty(tmp{3}) % if RGB CLUTs are not generated
