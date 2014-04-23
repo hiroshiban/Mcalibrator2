@@ -46,7 +46,7 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-04-10 15:12:29 ban"
+% Last Update: "2014-04-23 16:01:12 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end
@@ -325,11 +325,12 @@ try
 catch
 %else
 
+  max_repeat=100;
   [m,n] = size(input);
   output = input;
   checkmono = 0;
   repetition = 1;
-  while checkmono==0 && repetition<=100
+  while checkmono==0 && repetition<=max_repeat
     for mm=1:1:m
       for nn=1:1:n-1
         if output(mm,nn)>output(mm,nn+1)
@@ -341,7 +342,7 @@ catch
         end
       end
     end
-    
+
     % check the last & last-1 values, June 14 2008 by H.Ban
     for mm=1:1:m
       if output(m,end)<output(m,end-1)
@@ -349,9 +350,10 @@ catch
       end
     end
     checkmono = mc_CheckMonotoneIncrease(output);
+    disp('repetition: %03d/%03d',repetition,max_repeat);
     repetition=repetition+1;
   end
-  
+
   if repetition>100
     exitflag=0;
   else

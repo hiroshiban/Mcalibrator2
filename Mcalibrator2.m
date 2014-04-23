@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-17 13:50:28 ban"
+  % Last Update: "2014-04-23 15:31:34 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -686,8 +686,8 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
       phosphors(:,2)=[lum{2}(2,end);lum{2}(3,end);lum{2}(4,end)];
       phosphors(:,3)=[lum{3}(2,end);lum{3}(3,end);lum{3}(4,end)];
       fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
-      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
-      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(1,1),phosphors(1,2),phosphors(1,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(2,1),phosphors(2,2),phosphors(2,3));
+      fprintf(fid,'%.8f %.8f %.8f\n',phosphors(3,1),phosphors(3,2),phosphors(3,3));
     else
       fprintf(fid,'!!NOTICE!!\npartial measurements are under going.\nphosphor xyY will be obtained later.\n');
     end
