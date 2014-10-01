@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-04-23 15:31:34 ban"
+  % Last Update: "2014-10-01 12:17:51 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -94,7 +94,7 @@ function Mcalibrator2_OpeningFcn(hObject, eventdata, handles, varargin)
   set(handles.information_text,'FontAngle','normal','FontName','Tahoma','FontSize',10.0,'FontUnits','pixels','String',[{'This is Mcalibrator2 config panel.',''},strings{1}]);
 
   % disable some tabs when opening Mcalibrator2
-  tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(hObject,'McalibratorTab',2:4,'off'); end; clear tver;
+  tver=version('-release'); if str2double(tver(1:4))<2012, tabselectionfcn(hObject,'McalibratorTab',2:4,'off'); end; clear tver;
   tabhandle=hObject;
 
 
@@ -279,8 +279,6 @@ function param=setparam(handleobject)
 
 function select_dir_pushbutton_Callback(hObject, eventdata, handles)
 
-  global config;
-
   dir_name=uigetdir(fileparts(mfilename('fullpath')));
   if dir_name~=0
     set(handles.save_dir_edit,'String',dir_name);
@@ -297,7 +295,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   if get(handles.config_ok_togglebutton,'Value')
 
     % enable some tabs
-    tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on'); end; clear tver;
+    tver=version('-release'); if str2double(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'on'); end; clear tver;
     manageConfigTab(handles,'off');
     manageMeasureTab(handles,'on');
     manageLUTTab(handles,'on');
@@ -314,15 +312,15 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
     config.use_localM=get(handles.use_localM_radiobutton,'Value');
 
     % get measurement ranges
-    tmp_min=str2num(get(handles.range_min_edit,'String'));
+    tmp_min=str2double(get(handles.range_min_edit,'String'));
     if size(tmp_min,1)==1, tmp_min=tmp_min'; end
-    tmp_max=str2num(get(handles.range_max_edit,'String'));
+    tmp_max=str2double(get(handles.range_max_edit,'String'));
     if size(tmp_max,1)==1, tmp_max=tmp_max'; end
-    if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0)) || ~isempty(find(1.0<tmp_max)) || ~isempty(find(tmp_min(:)>tmp_max(:)))
+    if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0,1)) || ~isempty(find(1.0<tmp_max,1)) || ~isempty(find(tmp_min(:)>tmp_max(:),1))
       PlaySound(0);
       set(handles.information_text,'String','Measuring range should be within 0.0<=min<=max<=1.0. Check your setting.');
       % disable some tabs
-      tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
+      tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver; %#ok
       manageConfigTab(handles,'on');
       manageMeasureTab(handles,'off');
       manageLUTTab(handles,'off');
@@ -397,7 +395,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
         set(handles.information_text,'String','Psychtoolbox is not installed on this computer. Install it first.');
 
         % disable some tabs
-        tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
+        tver=version('-release'); if str2double(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
         manageConfigTab(handles,'on');
         manageMeasureTab(handles,'off');
         manageLUTTab(handles,'off');
@@ -423,7 +421,7 @@ function config_ok_togglebutton_Callback(hObject, eventdata, handles)
   else
 
     % disable some tabs
-    tver=version('-release'); if str2num(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
+    tver=version('-release'); if str2double(tver(1:4))<2012, tabselectionfcn(tabhandle,'McalibratorTab',2:4,'off'); end; clear tver;
     manageConfigTab(handles,'on');
     manageMeasureTab(handles,'off');
     manageLUTTab(handles,'off');
@@ -491,11 +489,11 @@ function save_pushbutton_Callback(hObject, eventdata, handles)
   config.sampling=setparam(handles.sampling_popupmenu);
   config.use_localM=get(handles.use_localM_radiobutton,'value');
 
-  tmp_min=str2num(get(handles.range_min_edit,'String'));
+  tmp_min=str2double(get(handles.range_min_edit,'String'));
   if size(tmp_min,1)==1, tmp_min=tmp_min'; end
-  tmp_max=str2num(get(handles.range_max_edit,'String'));
+  tmp_max=str2double(get(handles.range_max_edit,'String'));
   if size(tmp_max,1)==1, tmp_max=tmp_max'; end
-  if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0)) || ~isempty(find(1.0<tmp_max)) || ~isempty(find(tmp_min(:)>tmp_max(:)))
+  if numel(tmp_min)~=numel(tmp_max) || ~isempty(find(tmp_min<0.0,1)) || ~isempty(find(1.0<tmp_max,1)) || ~isempty(find(tmp_min(:)>tmp_max(:),1))
     PlaySound(0);
     set(handles.information_text,'String','Measuring range should be within 0.0<=min<=max<=1.0. Check your setting.');
     return
@@ -649,10 +647,10 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
       % add 0/1 video input values for measuring flare/phosphor xyY
       if ~config.use_localM
         if config.meas_range(ii,1)~=0
-          samppoints=[0.0,samppoints];
+          samppoints=[0.0,samppoints]; %#ok
         end
         if config.meas_range(ii,2)~=1
-          samppoints=[samppoints,1.0];
+          samppoints=[samppoints,1.0]; %#ok
         end
       end
 
@@ -677,9 +675,9 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   displayhandler(-999,1,fig_id);
 
   % save the phosphor xyY matrix and flare xyY as text files when red, green, and blue phosphor luminance values were obtained.
-  if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0 %#ok
+  if sum(lum{1}(1,:))~=0 && sum(lum{2}(1,:))~=0 && sum(lum{3}(1,:))~=0
     fid=fopen(fullfile(save_dir,'phosphors.txt'),'w');
-    if fid==-1, error('can not open phoshors.txt to write.'); PlaySound(0); end
+    if fid==-1, PlaySound(0); error('can not open phoshors.txt to write.'); end
     if lum{1}(1,end)==1.0 && ~config.use_localM % when the luminance values for the maximum video inputs were measured
       phosphors=zeros(3,3); % phosphors = [rx,gx,bx;ry,gy,by;rY,gY,bY];
       phosphors(:,1)=[lum{1}(2,end);lum{1}(3,end);lum{1}(4,end)];
@@ -694,7 +692,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
     fclose(fid);
 
     fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    if fid==-1, PlaySound(0); error('can not open flares.txt to write.'); end
     if lum{1}(1,1)==0.0 && ~config.use_localM % when the luminance values for the minimum (flare) video inputs were measured
       flares=[mean([lum{1}(2,1),lum{2}(2,1),lum{3}(2,1)]);
               mean([lum{1}(3,1),lum{2}(3,1),lum{3}(3,1)]);
@@ -709,7 +707,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   % when gray-scale luminance values were obtained, generate flares.txt
   elseif sum(lum{4}(1,:))~=0 % gray-scale
     fid=fopen(fullfile(save_dir,'flare.txt'),'w');
-    if fid==-1, error('can not open flares.txt to write.'); PlaySound(0); end
+    if fid==-1, PlaySound(0); error('can not open flares.txt to write.'); end
     if lum{1}(1,1)==0.0 && ~config.use_localM % when the luminance values for the minimum (flare) video inputs were measured
       flares=[lum{4}(2,1),lum{4}(3,1),lum{4}(4,1)];
       fprintf(fid,'%.8f\n%.8f\n%.8f\n',flares(1),flares(2),flares(3));
@@ -728,7 +726,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
   end
 
   % plotting
-  axes(handles.lum_figure); %#ok
+  axes(handles.lum_figure);
   hold on;
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
@@ -750,7 +748,7 @@ function measure_pushbutton_Callback(hObject, eventdata, handles)
 
 function clear_lum_pushbutton_Callback(hObject, eventdata, handles)
 
-  axes(handles.lum_figure); %#ok
+  axes(handles.lum_figure);
   cla;
 
   PlaySound(1);
@@ -758,10 +756,10 @@ function clear_lum_pushbutton_Callback(hObject, eventdata, handles)
 
 function measure_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure; c=gca;
+  figure; c=gca;
 
   % copy objects
-  axes(c); %#ok
+  axes(c);
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
   copyobj(get(handles.lum_figure,'Children'),c);
   title(get(get(handles.lum_figure,'Title'),'String'));
@@ -871,8 +869,7 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
     set(handles.information_text,'String',sprintf('fitting a model to the measured %s phosphor...Done.',color_str{ii}));
   end
 
-  axes(handles.lum_figure); %#ok
-  cla;
+  axes(handles.lum_figure); cla;
 
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
@@ -887,7 +884,7 @@ function curvefitting_pushbutton_Callback(hObject, eventdata, handles)
     title(sprintf('fitting result, method: %s',fitmethod));
   end
 
-  axes(handles.lum_figure); %#ok
+  axes(handles.lum_figure);
   hold off;
 
   % create luminance file format
@@ -915,7 +912,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   measure_flg=[config.usered,config.usegreen,config.useblue,config.usegray,config.usemagenda,config.useyellow,config.usecyan];
   color_str={'red','green','blue','gray','magenda','yellow','cyan'};
   colors={[1,0,0],[0,1,0],[0,0,1],[0.3,0.3,0.3],[1,0,1],[1,1,0],[0,1,1]};
-  lutoutbit=str2num(config.lutoutbit.name); %#ok
+  lutoutbit=str2double(config.lutoutbit.name);
   lut=cell(length(color_str),1);
   for ii=1:1:length(color_str), lut{ii}=zeros(2,lutoutbit); end
 
@@ -969,8 +966,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   clear tmp;
 
   % generate Color Lookup Tables
-  axes(handles.lut_figure); %#ok
-  cla;
+  axes(handles.lut_figure); cla;
   for ii=1:1:length(color_str)
     if ~measure_flg(ii), continue; end;
 
@@ -1003,7 +999,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
 
     % save the generated LUTs to text files
     fid=fopen(fullfile(save_dir,sprintf('%s.lut',color_str{ii})),'w');
-    if fid==-1, error('can not open a %s LUT file to write.',color_str{ii}); PlaySound(0); end
+    if fid==-1, PlaySound(0); error('can not open a %s LUT file to write.',color_str{ii}); end
     for mm=1:1:size(lut{ii},2), fprintf(fid,'% 4d %.8f\n',mm,lut{ii}(1,mm)); end
     fclose(fid);
 
@@ -1020,7 +1016,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
   % save a combined RGB LUT to a text file
   if measure_flg(1) && measure_flg(2) && measure_flg(3)
     fid=fopen(fullfile(save_dir,'rgb_gamma.lut'),'w');
-    if fid==-1, error('can not open rgb_gamma.lut to write.'); PlaySound(0); end
+    if fid==-1, PlaySound(0); error('can not open rgb_gamma.lut to write.'); end
     for mm=1:1:size(lut{1},2), fprintf(fid,'%.8f %.8f %.8f\n',lut{1}(1,mm),lut{2}(1,mm),lut{3}(1,mm)); end
     fclose(fid);
   end
@@ -1066,8 +1062,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
   % check linearity of the generated LUTs
   if get(handles.easycheck_togglebutton,'Value') % easy mode
 
-    axes(handles.lut_figure); %#ok
-    cla;
+    axes(handles.lut_figure); cla;
 
     for ii=1:1:length(color_str)
       if ~measure_flg(ii), continue; end;
@@ -1127,8 +1122,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     end
     displayhandler(-999,1,fig_id);
 
-    axes(handles.lut_figure); %#ok
-    cla;
+    axes(handles.lut_figure); cla
 
     % plotting
     rho=zeros(length(color_str),1);
@@ -1170,7 +1164,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
     end
     set(handles.information_text,'String',fit_str);
 
-    axes(handles.lut_figure); %#ok
+    axes(handles.lut_figure);
     hold off;
 
     % create luminance file format
@@ -1183,7 +1177,7 @@ function check_lut_pushbutton_Callback(hObject, eventdata, handles)
 
 function clear_lut_pushbutton_Callback(hObject, eventdata, handles)
 
-  axes(handles.lut_figure); %#ok
+  axes(handles.lut_figure);
   cla;
 
   PlaySound(1);
@@ -1191,10 +1185,10 @@ function clear_lut_pushbutton_Callback(hObject, eventdata, handles)
 
 function LUT_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure; c=gca;
+  figure; c=gca;
 
   % copy objects
-  axes(c); %#ok
+  axes(c);
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
   copyobj(get(handles.lut_figure,'Children'),c);
   title(get(get(handles.lut_figure,'Title'),'String'));
@@ -1323,7 +1317,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
       if isempty(lut), set(handles.information_text,'String','can not load RGB LUTs. Generate them first.'); PlaySound(0); return; end
 
       % get lut ID corresponding to the target rgb
-      [dummy,mRGB]=getLUTidx(lut,sRGB);
+      [dummy,mRGB]=getLUTidx(lut,sRGB); %#ok
       clear lut;
     end
 
@@ -1393,7 +1387,7 @@ function load_phosphor_pushbutton_Callback(hObject, eventdata, handles)
   set(handles.information_text,'String',{'RGB phosphor chromaticities have not been acquired yet.','starting to measure CIE1931 xyY for RGB phosphors....Done.'});
 
   % plotting phosphor CIE1931 xy
-  axes(handles.color_figure); %#ok
+  axes(handles.color_figure);
   hold off;
   PlotCIE1931xy([],phosphors,-1,1,1);
   hold off;
@@ -1585,7 +1579,7 @@ function calculator_save_pushbutton_Callback(hObject, eventdata, handles)
   end
 
   fid=fopen(fullfile(save_dir,estimate_file),'w');
-  if fid==-1, warning('can not open a file to save the estimated xyY & RGB.'); PlaySound(0); return; end %#ok
+  if fid==-1, PlaySound(0); warning('can not open a file to save the estimated xyY & RGB.'); return; end
   fprintf(fid,'***********************************************\n');
   fprintf(fid,'Mcalibrator2, chromaticity estimation results\n');
   fprintf(fid,'date: %s\n',datestr(now,'mmmm dd YYYY, HH:MM:SS'));
@@ -1625,7 +1619,7 @@ function plot_color_pushbutton_Callback(hObject, eventdata, handles)
   end
   if isempty(rawxyY), disp('WARNING: xyY values you want have not been set yet...'); end
   if isempty(mesxyY), disp('WARNING: actual xyY values have not been measured yet...'); end
-  axes(handles.color_figure); %#ok
+  axes(handles.color_figure);
   hold off;
   PlotCIE1931xy((rawxyY(:,1:2))',phosphors,-1,tri_flg,1,1);
   PlotCIE1931xy((mesxyY(:,1:2))',phosphors,0,tri_flg,1,0);
@@ -1638,7 +1632,7 @@ function plot_color_pushbutton_Callback(hObject, eventdata, handles)
 
 function clear_color_pushbutton_Callback(hObject, eventdata, handles)
 
-  axes(handles.color_figure); %#ok
+  axes(handles.color_figure);
   PlotCIE1931xy([],[],-1,0,1);
 
   PlaySound(1);
@@ -1646,10 +1640,10 @@ function clear_color_pushbutton_Callback(hObject, eventdata, handles)
 
 function color_separate_pushbutton_Callback(hObject, eventdata, handles)
 
-  f2=figure; c=gca;
+  figure; c=gca;
 
   % copy objects
-  axes(c); %#ok
+  axes(c);
   set(c,'Position',[0.13,0.11,0.7750,0.8150]);
   copyobj(get(handles.color_figure,'Children'),c);
   title(get(get(handles.color_figure,'Title'),'String'));
