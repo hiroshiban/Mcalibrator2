@@ -19,7 +19,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2014-04-10 16:21:23 ban"
+% Last Update: "2015-01-20 13:34:36 ban"
 
 % persistent/global variable
 persistent hpush;
@@ -135,7 +135,7 @@ try
 
   end
 
-  set(fig_id,'Visible','on'); % to focus on the figure window
+  set(fig_id,'Visible','on','Position',scrpos); % to focus on the figure window
   success=1;
 
 catch ME
