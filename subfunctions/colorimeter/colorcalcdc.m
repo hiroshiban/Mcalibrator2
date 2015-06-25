@@ -2,7 +2,7 @@ classdef colorcalcdc
   % a class to manipulate Cambridge Research Systems ColorCal from MATLAB through a virtual port (CDC) connection
   %
   % Created    : "2015-06-25 16:49:54 ban"
-  % Last Update: "2015-06-25 18:32:33 ban"
+  % Last Update: "2015-06-25 21:32:07 ban"
   %
   % [example]
   % >> cc=colorcal;
@@ -102,7 +102,9 @@ classdef colorcalcdc
       % "integtime" is a dummy variable to match the function format with the other device object.
       if nargin<=2 || isempty(integtime), integtime=0; end
 
-      if obj.init_flg==1
+      if obj.init_flg~=1
+        disp('generate a virtual port to communicate with ColorCal first.');
+        check=0;
         % do nothing
       else
 
@@ -204,10 +206,8 @@ classdef colorcalcdc
 
         % All values are then divided by 10000 to give actual values.
         obj.corrmatrix=obj.corrmatrix./10000;
-
-        obj.init_flg=1;
         check=0;
-      end % if obj.init_flg==1
+      end % if obj.init_flg~=1
     end
 
     % measure CIE1931 xyY of the target
