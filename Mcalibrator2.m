@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2014-10-01 12:17:51 ban"
+  % Last Update: "2015-06-30 14:05:03 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -974,6 +974,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     lut{ii}=ApplyGammaCorrection(lum{ii}([1,4],:),fitmethod,lutoutbit,monotonic_flg,lowpass_flg,...
                                  flare_correction_flg,display_flg,save_flg,options); %#ok % lum is already loaded on memory
     set(gcf,'Name',[get(gcf,'Name'),sprintf(' %s',color_str{ii})]);
+    drawnow;
 
     % save images as a PPT slide
     if windows_flg
