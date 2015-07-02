@@ -2,7 +2,7 @@ classdef colorcalcdc
   % a class to manipulate Cambridge Research Systems ColorCal from MATLAB through a virtual port (CDC) connection
   %
   % Created    : "2015-06-25 16:49:54 ban"
-  % Last Update: "2015-07-02 10:34:35 ban"
+  % Last Update: "2015-07-02 10:39:06 ban"
   %
   % [example]
   % >> cc=colorcalcdc;
