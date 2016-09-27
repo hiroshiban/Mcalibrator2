@@ -35,16 +35,17 @@ function colorimeters=colorimeter_list()
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2015-06-25 18:35:40 ban"
+% Last Update: "2016-09-27 09:57:16 ban"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'KONICA-MINOLTA CS-100A','cs100a',0};
-colorimeters{3}={'Admesy Brontes-LL','brontesLL',1};
-colorimeters{4}={'Cambridge Research Systems ColorCAL2 Win-USB','colorcal',1};
-%colorimeters{5}={'Cambridge Research Systems ColorCAL2 (PTB, not tested)','colorcal2',1};
-colorimeters{5}={'Cambridge Research Systems ColorCAL CDC (Virtual Port)','colorcalcdc',0};
-colorimeters{6}={'Cambridge Research Systems OptiCal (not tested)','optical',0};
-colorimeters{7}={'International Light IL1700','il1700',0};
-colorimeters{8}={'Dummy Colorimeter (for Debug)','dummy_colorimeter',0};
+colorimeters{3}={'KONICA-MINOLTA CS-150','cs150',1};
+colorimeters{4}={'Admesy Brontes-LL','brontesLL',1};
+colorimeters{5}={'Cambridge Research Systems ColorCAL2 Win-USB','colorcal',1};
+%colorimeters{6}={'Cambridge Research Systems ColorCAL2 (PTB, not tested)','colorcal2',1};
+colorimeters{6}={'Cambridge Research Systems ColorCAL CDC (Virtual Port)','colorcalcdc',0};
+colorimeters{7}={'Cambridge Research Systems OptiCal (not tested)','optical',0};
+colorimeters{8}={'International Light IL1700','il1700',0};
+colorimeters{9}={'Dummy Colorimeter (for Debug)','dummy_colorimeter',0};
 
 return
