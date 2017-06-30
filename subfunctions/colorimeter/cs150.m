@@ -2,11 +2,11 @@ classdef cs150
   % a class to manipulate Konica Minolta CS-150 from MATLAB through a USB port with a virtual serial connection
   % note 1: Dynammic Link Libraries (DLLs) distributed by Konica-Minolta for CS150 are required to use this class.
   %         All the DLLs should be put in fullfile(fileparts(mfilename('fullpath')),'konica_minolta_dlls').
-  % note 2: zero-calibration and chromaticity calibration should be done separately before using CS-150.
+  % note 2: Zero-calibration and chromaticity calibration should be done separately before using CS-150.
   %
   %
   % Created    : "2016-09-26 15:24:46 ban"
-  % Last Update: "2016-09-27 09:56:18 ban"
+  % Last Update: "2016-09-27 16:15:27 ban"
 
   properties (Hidden) %(SetAccess = protected)
     port_name='COM1'; % id of serial port to communicate with CS-100A
@@ -48,7 +48,7 @@ classdef cs150
           % generate the instance to communicate with Konica-Minolta CS150
           obj.sdk=Konicaminolta.LightColorMISDK.GetInstance();
         catch
-          error('Failed to add .NET assembly into MATLAB. check the input variables and library structures.');
+          error('Failed to load .NET assembly into MATLAB. check the input variables and library structures.');
         end
       end
       if nargin==1 && ~isempty(port_name)
@@ -204,12 +204,9 @@ classdef cs150
       clear device_ptr;
     end
 
-    % turn the backlight on/onff
-    function obj=set_backlight(obj,port_name,on_off,light_level)
+    % turn the backlight on/off
+    function obj=set_backlight(obj,port_name)
       if nargin>1 && ~isempty(port_name), obj.port_name=port_name; end
-      if nargin<3 || isempty(on_off)
-
-
       if ~isempty(obj.sdk)
         backlight_ptr=libpointer('strPtr',repmat(' ',[1,255]));
         ret=obj.sdk.GetBackLightOnOff(backlight_ptr,str2num(strrep(obj.port_name,'COM','')));
