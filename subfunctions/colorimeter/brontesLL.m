@@ -44,7 +44,7 @@ classdef brontesLL
   %
   %
   % Created    : "2012-10-29 05:28:07 ban"
-  % Last Update: "2017-06-30 09:54:20 ban"
+  % Last Update: "2017-06-30 10:17:52 ban"
 
   properties (Hidden) %(SetAccess = protected);
     % id of USB port to communicate with Brontes-LL. This is a dummy variable to match with the other function
@@ -208,7 +208,7 @@ classdef brontesLL
         clear data_ptr;
 
         val=sscanf(char(measured),'%f,%f,%f,%d,%d\n');
-        if val(4)==0 & val(5)==0
+        if sum(measured)~=0
           if numel(val)~=0
             Y=val(1);
             x=val(2);
@@ -223,10 +223,14 @@ classdef brontesLL
             qq=1; Y=[]; x=[]; y=[];
           end
         else
-          if val(4)==0
-            warning('the measured light is too bright'); %#ok
-          elseif val(5)==0
-            warning('the measured light is too dark'); %#ok
+          if numel(val)>4
+            if val(4)==0
+              warning('the measured light is too bright'); %#ok
+            elseif val(5)==0
+              warning('the measured light is too dark'); %#ok
+            end
+          else
+            warning('measuring failed. check the cable connection'); %#ok
           end
           qq=1; Y=[]; x=[]; y=[];
         end
