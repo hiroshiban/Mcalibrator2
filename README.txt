@@ -2,7 +2,7 @@
 README.txt on Mcalibrator2
 
 Created    : "2013-05-13 12:30:52 ban"
-Last Update: "2013-12-19 09:56:10 ban"
+Last Update: "2017-06-30 11:18:18 ban"
 **************************************************
 
 [About]
@@ -52,7 +52,7 @@ can help your research projects.
           conventions of the older MATLABs.
 
 
-[How to launch Mcalibrator2]
+[How to Launch Mcalibrator2]
 
 To launch Mcalibrator on MATLAB, please run
 >> Mcalibrator2
