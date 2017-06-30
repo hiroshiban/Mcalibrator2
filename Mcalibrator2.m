@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2015-06-30 14:05:03 ban"
+  % Last Update: "2017-06-30 11:15:50 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -973,14 +973,26 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     set(handles.information_text,'String',sprintf('Generating LUT for %s phosphor...',color_str{ii}));
     lut{ii}=ApplyGammaCorrection(lum{ii}([1,4],:),fitmethod,lutoutbit,monotonic_flg,lowpass_flg,...
                                  flare_correction_flg,display_flg,save_flg,options); %#ok % lum is already loaded on memory
-    set(gcf,'Name',[get(gcf,'Name'),sprintf(' %s',color_str{ii})]);
+
+    % get the figure id to focus on the latest gamma correction result figure in taking a snapshot.
+    % to do it, the last gamma correction plot figure id is stored in figaxis before the matlab
+    % focus is back on the main Mcalibrator2 window
+    figall=get(groot);
+    figall=figall.Children;
+    for ff=1:1:size(figall,1)
+      if ~isempty(strfind(figall(ff).Name,'Mcalibrator2 Gamma Correction Result'))
+        figure(ff-1); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
+        figaxis=gcf;
+      end
+    end
+    set(figaxis,'Name',[get(figaxis,'Name'),sprintf(' %s',color_str{ii})]);
     drawnow;
 
     % save images as a PPT slide
     if windows_flg
       tmpimgfile=fullfile(save_dir,'gamma_result.png');
-      set(gcf,'PaperPositionMode','auto');
-      print(gcf,tmpimgfile,'-dpng','-r0');
+      set(figaxis,'PaperPositionMode','auto');
+      print(figaxis,tmpimgfile,'-dpng','-r0');
       %saveas(gcf,tmpimgfile,'bmp');
       ppt=ppt.addImageSlide(color_str{ii},tmpimgfile);
       delete(tmpimgfile);
