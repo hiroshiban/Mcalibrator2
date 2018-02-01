@@ -22,7 +22,10 @@
   - [How to make Mcalibrator2 communicate with your own colorimeter(s) or photometer(s)](#CustomColorimeter)
   - [How to add your own chromaticity estimation methods to Mcalibrator2](#CustomEstimation)
 - [Automations and scripting of Mcalibrator2](#Scripting)
+- [Acknowledgments](#Acknowledgments)
+- [License](#License)
 - [Citations](#Citations)
+- [TODO](#TODO)
 
 **********
 
@@ -1275,6 +1278,78 @@ return
 
 [return to menu](#Menu)
 
+# <a name = "Acknowledgments"> **Acknowledgments** </a>
+
+Mcalibrator2 uses several MATLAB functions distributed by someones directly or modified versions of them. The details are listed as below.
+We greatly appreciate for their contributions. We also clearly denote that our Mcalibrator2 suite fulfills all the license requirements to use these tools.
+
+- ***For creating GUI window***  
+  **tabpanel**     : Elmar Tarajan  
+                 [ref] [http://www.mathworks.com/matlabcentral/fileexchange/6996-tabpanel-constructor-v2-8-2010](http://www.mathworks.com/matlabcentral/fileexchange/6996-tabpanel-constructor-v2-8-2010)
+
+- ***For creating html documents***  
+  **m2html**       : Guillaume Flandin  
+                 [ref] [http://www.artefact.tk/software/matlab/m2html/](http://www.artefact.tk/software/matlab/m2html/)
+
+- ***For transforming chromatic values across different units and spaces***  
+  *We appreciate the developer of this tool. The CIE1931 color disk on the Color Calculator tab of Mcalibrator2 was generated based on this tool.*  
+  **optprop**      : Jerker Wagberg  
+                 [ref] [http://www.mathworks.com/matlabcentral/fileexchange/13788-optprop-a-color-properties-toolbox](http://www.mathworks.com/matlabcentral/fileexchange/13788-optprop-a-color-properties-toolbox)
+
+- ***For filtering raw luminance data***  
+  **smoothn**      : Damien Garcia  
+               [ref] Garcia D, Robust smoothing of gridded data in one and higher dimensions with missing values. Computational Statistics & Data Analysis, 2010.  
+               [ref] [http://www.mathworks.com/matlabcentral/fileexchange/725-smoothn](http://www.mathworks.com/matlabcentral/fileexchange/725-smoothn)  
+  
+  **splinefit**    : Jonas Lundgren  
+               [ref] [http://www.mathworks.com/matlabcentral/fileexchange/13812-splinefit](http://www.mathworks.com/matlabcentral/fileexchange/13812-splinefit)
+
+- ***For non-linear estimation of RGB values to produce CIE1931 xyY we want***  
+  **fminsearchOS** : Olivier Salvado  
+                 [ref] Jeffrey C. Lagarias, James A. Reeds, Margaret H. Wright, Paul E. Wright, "Convergence Properties of the Nelder-Mead Simplex Method in Low Dimensions", SIAM Journal of Optimization, 9(1): p.112-147, 1998.  
+                 [ref] [http://www.mathworks.com/matlabcentral/fileexchange/5157-fminsearch-modifed-for-higher-scale-smooth-function](http://www.mathworks.com/matlabcentral/fileexchange/5157-fminsearch-modifed-for-higher-scale-smooth-function)
+
+- ***For very effective optimization/estimation of RGB values to produce CIE1931 xyY we want***  
+  **iFit toolbox** : E. Farhi et al.  
+                 [ref] [http://ifit.mccode.org/index.html](http://ifit.mccode.org/index.html)
+
+- ***For maximizing figure window using Windows API when Mcalibrator2 is running on Windows OS***
+  **WindowAPI**    : Jan Simon  
+                 [ref] [https://jp.mathworks.com/matlabcentral/fileexchange/31437-windowapi](https://jp.mathworks.com/matlabcentral/fileexchange/31437-windowapi)
+
+- ***The tool below is not included in Mcalibrator2; you need to install it separately.***  
+   *(Mcalibrator2 can communicate with Psychtoolbox if it is installed.)*
+
+   **Psychtoolbox** : The individual Psychtoolbox core developers,  
+               (c) 1996-2011, David Brainard  
+               (c) 1996-2007, Denis Pelli, Allen Ingling  
+               (c) 2005-2011, Mario Kleiner  
+               Individual major contributors:  
+               (c) 2006       Richard F. Murray  
+               (c) 2008-2011  Diederick C. Niehorster  
+               (c) 2008-2011  Tobias Wolf  
+               [ref] [http://psychtoolbox.org/HomePage](http://psychtoolbox.org/HomePage)
+
+[return to menu](#Menu)
+
+# <a name = "License"> **License** </a>
+
+Mcalibrator2 --- MATLAB software for display luminance/color characterization  
+Copyright (c) 2013, Hiroshi Ban, Kyoto University, and National Institute of Information and Communications Technology, Japan.  
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in
+      the documentation and/or other materials provided with the distribution
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+[return to menu](#Menu)
+
 # <a name = "Citations"> **Citations of Mcalibrator2** </a>
 
 If you have spaces in "References" section of your research papers, please allow us to ask you to cite the article below.
@@ -1288,5 +1363,13 @@ Journal of Vision, 13(6):20, 1-26, http://www.journalofvision.org/content/13/6/2
 **Mcalibrator: MATLAB integrated GUI software for display calibration - A proposal of a new color calibration procedure
 applicable to a wide range of display devices and evaluation of its efficiency.**  
 Japanese Journal of Psychonomic Science, 24, 149-161.
+
+[return to menu](#Menu)
+
+# <a name = "TODO"> **TODO** </a>
+
+1. Adding some more interfaces to communicate with the other colorimeters (Suppots from someones are always really welcome. Thank you).
+2. Updating Mcalibrator2 PDF manuals using the latest GUI window figures.
+3. Compiling *.m files using the MATLAB compiler so that we can provide a standalone verion of the Mcalibrator2 package.
 
 [return to menu](#Menu)
