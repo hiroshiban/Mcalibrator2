@@ -11,7 +11,7 @@ We also clearly denote that our Mcalibrator2 suite fulfills
 all the license requirements to use these tools.
 
 Created    : "2012-05-16 16:41:51 ban"
-Last Update: "2013-12-12 13:34:04 ban"
+Last Update: "2018-01-19 11:34:27 ban"
 ************************************************************
 
 * for creating GUI window
@@ -46,6 +46,9 @@ fminsearchOS : Olivier Salvado
 iFit toolbox : E. Farhi et al.
                [ref] http://ifit.mccode.org/index.html
 
+* for maximizing figure window using Windows API when Mcalibrator2 is running on Windows OS
+WindowAPI    : Jan Simon
+               [ref] https://jp.mathworks.com/matlabcentral/fileexchange/31437-windowapi
 
 * the tool below is not used directly; you need to install it separately.
 

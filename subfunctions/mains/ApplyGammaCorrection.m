@@ -179,6 +179,9 @@ if strcmpi(method,'gog')
   starting=1;
   options=optimset('Display','iter','TolX',1e-2);
   estimates=fminsearch(@mc_LumByGamma,starting,options,lum,lum(1,:),lum(2,:));
+  fprintf('******************************\n');
+  fprintf('Display Gamma: %.4f\n',estimates);
+  fprintf('******************************\n');
   fit=(lum(2,length(lum))-lum(2,1))*lum(1,:).^estimates+lum(2,1);
 elseif strcmpi(method,'cbs')
   fit=spline(lum_sparce(1,:),lum_sparce(2,:),lum(1,:));
@@ -507,7 +510,7 @@ catch
       end
     end
     checkmono = mc_CheckMonotoneIncrease(output);
-    disp('repetition: %03d/%03d',repetition,max_repeat);
+    fprintf('repetition: %03d/%03d',repetition,max_repeat);
     repetition=repetition+1;
   end
 

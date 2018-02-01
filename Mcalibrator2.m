@@ -30,7 +30,7 @@ function varargout = Mcalibrator2(varargin)
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2017-06-30 11:15:50 ban"
+  % Last Update: "2018-01-19 09:22:13 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -977,11 +977,15 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     % get the figure id to focus on the latest gamma correction result figure in taking a snapshot.
     % to do it, the last gamma correction plot figure id is stored in figaxis before the matlab
     % focus is back on the main Mcalibrator2 window
-    figall=get(groot);
+    try
+      figall=get(groot);
+    catch
+      figall=get(0); % old style to get the graphic root object;
+    end
     figall=figall.Children;
     for ff=1:1:size(figall,1)
       if ~isempty(strfind(figall(ff).Name,'Mcalibrator2 Gamma Correction Result'))
-        figure(ff-1); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
+        figure(figall(ff)); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
         figaxis=gcf;
       end
     end

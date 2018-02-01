@@ -19,7 +19,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2015-06-30 12:37:13 ban"
+% Last Update: "2018-01-19 12:22:41 ban"
 
 % persistent/global variable
 persistent hpush;
@@ -30,6 +30,11 @@ if nargin<1, help(mfilename()); fig_id=[]; success=0; return; end
 if nargin<2 || isempty(fullscr_flg), fullscr_flg=1; end
 % nargin 3, fig_id will be set later
 if nargin<4 || isempty(scr_num), scr_num=1; end
+
+% check whether WindowsAPI is available and set the path to the Windows API tool
+if ~isempty(strfind(mexext,'mexw'))
+  addpath(fullfile(fileparts(mfilename('fullpath')),'WindowAPI'));
+end
 
 try
 
@@ -52,10 +57,8 @@ try
     scr_num=1;
   end
   scrsz=scrsz(scr_num,:);
-  scrsz(3)=scrsz(3)-scrsz(1)+1; % horizontal display offset
-  scrsz(4)=scrsz(4)-scrsz(2)+1; % vertical display offset
   if ~fullscr_flg
-    scrpos=[scrsz(3)/4,scrsz(4)/4-offset,2*scrsz(3)/4,2*scrsz(4)/4];
+    scrpos=[scrsz(1)+scrsz(3)/4,scrsz(2)+scrsz(4)/4,2*scrsz(3)/4,2*scrsz(4)/4];
   else
     scrpos=scrsz;
   end
@@ -101,6 +104,7 @@ try
     set(gca,'XTickLabel',[]);
     set(gca,'YTickLabel',[]);
     %axis equal;
+    axis off;
 
     % put clear user-interface
     hpush=uicontrol(gcf,'Style','pushbutton','String','Adjust OK','Position',[20 150 100 70]);
@@ -109,6 +113,12 @@ try
     %set(hpush,'Callback','close(gcf);');
     set(hpush,'Callback','set(gcf,''Visible'',''off'')');
     uicontrol(hpush);
+
+    if fullscr_flg
+      if ~isempty(strfind(mexext,'mexw'))
+        WindowAPI(gcf,'Position','work');
+      end
+    end
 
   else % if adjust_mode
 
@@ -132,8 +142,14 @@ try
     cla;
     if ~isempty(hpush), set(gco,'Visible','off'); end
     axis off;
-    drawnow;
 
+    if fullscr_flg
+      if ~isempty(strfind(mexext,'mexw'))
+        WindowAPI(gcf,'Position','work');
+      end
+    end
+
+    drawnow;
   end
 
   set(fig_id,'Visible','on'); % to focus on the figure window
@@ -146,5 +162,9 @@ catch ME
   success=0;
 
 end % try
+
+if ~isempty(strfind(mexext,'mexw'))
+  rmpath(fullfile(fileparts(mfilename('fullpath')),'WindowAPI'));
+end
 
 return

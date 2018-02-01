@@ -4,7 +4,7 @@ Copyright (c) 2013, Hiroshi Ban, Kyoto University, and
 National Institute of Information and Communications Technology, Japan.
 
 Created    : "July 01 2012 2:26:30 ban"
-Last Update: "2013-12-12 13:34:04 ban"
+Last Update: "2018-02-01 20:20:54 ban"
 
 ==================== History ====================
 July 01 2012 Mcalibrator2 ver.1.0 released. The first stable version of Mcalibrator2.
@@ -12,3 +12,4 @@ May  31 2013 Mcalibrator2 paper by H.Ban & H.Yamamoto was published in Journal o
 June 09 2013 Mcalibrator2 ver.1.1 released. Compatible with Mac OSX10.8.3 and Windows 8 professional 64bit with MATLAB2013a
 Dec  11 2013 Mcalibrator2 ver.1.2 released. Several modifications. For details, please see .git revision log
 Dec  12 2013 Mcalibrator2 was registered to GitHub
+Feb  01 2018 Mcalibrator2 was updated so that it can work on the latest MATLAB 2017a
