@@ -55,7 +55,7 @@ We are happy if Mcalibrator2 can help your research projects.
 
 # <a name = "System"> **System requirements** </a>
 
-- **OS: Windows XP/VISTA/7/8 or Mac OSX**
+- **OS: Windows XP/VISTA/7/8/10 or Mac OSX**
   - note 1: Windows OS is required to use some photometers with Mcalibrator2 as only Windows drivers are distributed for them.
   - note 2: On a Mac OSX box, an interface to a virtual serial port is required (generally implemented by default).
   - note 3: We have not tested Mcalibrator2 on any Linux boxes. But it would work once you can get a proper serial or usb interface with a valid driver to control your photometer.
