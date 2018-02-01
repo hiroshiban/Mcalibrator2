@@ -126,7 +126,7 @@ The authors provide this software suite in the hope that it will benefit researc
 
 [return to menu](#Menu)
 
-# <a name = "Instration"> Installation </a>
+# <a name = "Instllation"> Installation </a>
 
 1.	You need to install **MATLAB** ([***The Mathworks Inc.*** ](https://www.mathworks.com/)) to use Mcalibrator2.  
     You may additionally need to install **“Optimization"** and **"Statistics"** toolboxes to use all the functions of Mcalibrator2.
@@ -1300,7 +1300,7 @@ We greatly appreciate for their contributions. We also clearly denote that our M
   **smoothn**      : Damien Garcia  
                [ref] Garcia D, Robust smoothing of gridded data in one and higher dimensions with missing values. Computational Statistics & Data Analysis, 2010.  
                [ref] [http://www.mathworks.com/matlabcentral/fileexchange/725-smoothn](http://www.mathworks.com/matlabcentral/fileexchange/725-smoothn)  
-  
+
   **splinefit**    : Jonas Lundgren  
                [ref] [http://www.mathworks.com/matlabcentral/fileexchange/13812-splinefit](http://www.mathworks.com/matlabcentral/fileexchange/13812-splinefit)
 
@@ -1359,7 +1359,8 @@ If you have no space, please cite somewhere someday next time...Thank you so muc
 **A non-device-specific approach to display characterization based on linear, nonlinear, and hybrid search algorithms.**  
 Journal of Vision, 13(6):20, 1-26, http://www.journalofvision.org/content/13/6/20, doi:10.1167/13.6.20.
 
-2. ***Ban, H., Yamamoto, H., & Ejima, Y. (2006).***  
+2. (if you have some more space...)  
+***Ban, H., Yamamoto, H., & Ejima, Y. (2006).***  
 **Mcalibrator: MATLAB integrated GUI software for display calibration - A proposal of a new color calibration procedure
 applicable to a wide range of display devices and evaluation of its efficiency.**  
 Japanese Journal of Psychonomic Science, 24, 149-161.
