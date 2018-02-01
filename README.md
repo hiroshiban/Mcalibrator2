@@ -1313,7 +1313,7 @@ We greatly appreciate for their contributions. We also clearly denote that our M
   **iFit toolbox** : E. Farhi et al.  
                  [ref] [http://ifit.mccode.org/index.html](http://ifit.mccode.org/index.html)
 
-- ***For maximizing figure window using Windows API when Mcalibrator2 is running on Windows OS***
+- ***For maximizing figure window using Windows API when Mcalibrator2 is running on Windows OS***  
   **WindowAPI**    : Jan Simon  
                  [ref] [https://jp.mathworks.com/matlabcentral/fileexchange/31437-windowapi](https://jp.mathworks.com/matlabcentral/fileexchange/31437-windowapi)
 
