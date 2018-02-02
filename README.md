@@ -2,7 +2,7 @@
 # **README on Mcalibrator2**
 
 <div>Created    : "2013-05-13 12:30:52 ban"</div>
-<div>Last Update: "2018-02-01 17:43:18 ban"</div>
+<div>Last Update: "2018-02-02 12:52:07 ban"
 
 **********
 # <a name = "Menu"> **Menu** </a>
@@ -95,15 +95,15 @@ To read the help documents, please open **~/Mcalibrator2/doc/html/index.html** o
 
 # <a name = "Purposes"> Aims and purposes </a>
 
-Display characterization is an essential part of the experimental procedures in vision science because almost all current experiments are conducted in computer-aided environments: visual stimuli are manipulated via a programming language and displayed on a computer display, and observer’s responses are acquired by pressing keys connected to a computer. To ensure that visual stimuli – their luminance, color, timing, etc. are presented precisely in such computer-based experiments, researchers need to characterize display devices accurately in advance of actual experiments.  
+Display characterization is an essential part of the experimental procedures in vision science because almost all current experiments are conducted in computer-aided environments: visual stimuli are manipulated via a programming language and displayed on a computer display, and observer's responses are acquired by pressing keys connected to a computer. To ensure that visual stimuli - their luminance, color, timing, etc. are presented precisely in such computer-based experiments, researchers need to characterize display devices accurately in advance of actual experiments.  
 
-CRT (Cathode Ray-Tube) displays are the most widely-used devices for current vision experiments, and the calibration procedures to characterize their luminance and chromaticities are well-established in the two-stage procedures: gamma-correction, followed by a linear color transformation (Berns et al., 1996; Brainard et al., 2002; Ban et al., 2006). The calibration results obtained through this standard two-step procedure has been tested (Brainard et al., 2002; Ban et al., 2006) and the quality of luminance and chromatic stimuli on CRT displays satisfy the researchers’ criterion.  
+CRT (Cathode Ray-Tube) displays are the most widely-used devices for current vision experiments, and the calibration procedures to characterize their luminance and chromaticities are well-established in the two-stage procedures: gamma-correction, followed by a linear color transformation (Berns et al., 1996; Brainard et al., 2002; Ban et al., 2006). The calibration results obtained through this standard two-step procedure has been tested (Brainard et al., 2002; Ban et al., 2006) and the quality of luminance and chromatic stimuli on CRT displays satisfy the researchers' criterion.  
 
 However, non-CRT devices such as a LCD (Liquid Crystal Display) and a DLP (Digital Light Processing) have come into the main stream recently and researchers are required to use non-CRT over CRT devices. There is no evidence that the standard display characterization method cannot be applied to these new types of devices since the current widely-used standard display calibration method is established based on the internal model of CRT devices.  
 
-We have therefore developed a non-device-specific approach to display characterization. Specifically, our new methods use model-free gamma-correction procedure combined with a linear/non-linear (Nelder-Mead Simplex, Nelder & Mead, 1965; Dennis & Woods, 1987) hybrid or line search (Powell’s method with Coggins constrain, Powell, 1964; Brent, 1973; Press et al., 2007; Farhi, 2011; Farhi et al, 2012) algorithm to get the optimal RGB video input values to produce the required luminance and chromaticities. The methods only assume 1) a monotonic increment of luminance against the increment of video input values, and 2) a piece wise linearity of the system in the initial estimation step. These new methods have a much broader range of applicability because they do not presume the internal model of the display device and can handle non-linearity of the device.  
+We have therefore developed a non-device-specific approach to display characterization. Specifically, our new methods use model-free gamma-correction procedure combined with a linear/non-linear (Nelder-Mead Simplex, Nelder & Mead, 1965; Dennis & Woods, 1987) hybrid or line search (Powell's method with Coggins constrain, Powell, 1964; Brent, 1973; Press et al., 2007; Farhi, 2011; Farhi et al, 2012) algorithm to get the optimal RGB video input values to produce the required luminance and chromaticities. The methods only assume 1) a monotonic increment of luminance against the increment of video input values, and 2) a piece wise linearity of the system in the initial estimation step. These new methods have a much broader range of applicability because they do not presume the internal model of the display device and can handle non-linearity of the device.  
 
-The whole procedures are integrated into a GUI-based display characterization software written in MATLAB (The Mathworks, Inc, USA) language and termed “Mcalibrator2” (Ban & Yamamoto, 2013). The applicability and efficiency of our software to a wide range of display devices, including LCD and DLP type of devices, were confirmed by comparing the calibration accuracies of our procedures with that of the standard two-stage method. We found that all of these new approaches improved calibration accuracies for non-CRT devices compared with the standard display characterization procedure.
+The whole procedures are integrated into a GUI-based display characterization software written in MATLAB (The Mathworks, Inc, USA) language and termed "Mcalibrator2" (Ban & Yamamoto, 2013). The applicability and efficiency of our software to a wide range of display devices, including LCD and DLP type of devices, were confirmed by comparing the calibration accuracies of our procedures with that of the standard two-stage method. We found that all of these new approaches improved calibration accuracies for non-CRT devices compared with the standard display characterization procedure.
 Mcalibrator2 has provided some additional components to communicate with any photometers that researchers are using in their daily measurements. The software has also provided simple frameworks to add alternative chromaticity optimization procedures researchers may want to use. Further, the software can automatically generate gamma-correction tables compatible with Psychtoolbox, one of the most widely used vision science tools (Brainard, 1997; Pelli, 1997). These functions will assist researchers in characterizing their display devices.  
 
 The authors provide this software suite in the hope that it will benefit researchers performing calibration of their display devices efficiently and improve accuracies of stimulus displays regardless of the display types.
@@ -133,7 +133,7 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
 # <a name = "Instllation"> Installation </a>
 
 1.	You need to install **MATLAB** ([***The Mathworks Inc.*** ](https://www.mathworks.com/)) to use Mcalibrator2.  
-    You may additionally need to install **“Optimization"** and **"Statistics"** toolboxes to use all the functions of Mcalibrator2.
+    You may additionally need to install **"Optimization"** and **"Statistics"** toolboxes to use all the functions of Mcalibrator2.
 2.	Please get the latest version of Mcalibrator2 from the link below,  
     [**Mcalibrator2 GitHub repository**](https://github.com/hiroshiban/Mcalibrator2)  
     and add the *~/Mcalibrator2* directory to your MATLAB-path. If you use a MATLAB after 2011a, you do not need to add subdirectories.  
@@ -155,19 +155,19 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
 ![Mcalibrator2 config tab](doc/imgs/01_config_tab.png)  
 **Mcalibrator2: config tab**
 
-The “config” tab above is for setting measurement/calibration parameters.  
+The "config" tab above is for setting measurement/calibration parameters.  
 
 1.  You can set all the measurement/calibration parameters in this tab.  
-    The details of the configuration parameters are described on the “Info” window.  
-    After setting all the parameters, please press “OK” button.
-    Then, all the parameters are saved and “measure”, “LUT”, “Color Calculator” tabs will be ready to be used.
-2.	If you press “Save config” button, the current parameters will be saved under ***~/Mcalibrator2/config*** directory.  
-    Yuo can load those parameters anytime with pressing “Load config” button.
+    The details of the configuration parameters are described on the "Info" window.  
+    After setting all the parameters, please press "OK" button.
+    Then, all the parameters are saved and "measure", "LUT", "Color Calculator" tabs will be ready to be used.
+2.	If you press "Save config" button, the current parameters will be saved under ***~/Mcalibrator2/config*** directory.  
+    Yuo can load those parameters anytime with pressing "Load config" button.
 3.	On the **[date]** editing window, you can set the data name as you like such as *yymmdd_1*, *yymmdd_2*, or *yymmdd_display1*, as well as *yymmdd* format.  
     When you need to calibrate a display device twice or more in a day, please change [date] names so that they are not overlapped.
 4.	When you set a previous date on the **[date]** window, and if the corresponding data directory exists in ***~/Mcalibrator2/data***, you can load those previous data on memory.  
 
-Next, you can proceed to measure RGB phosphor luminance values. Please go to “measure” tab.
+Next, you can proceed to measure RGB phosphor luminance values. Please go to "measure" tab.
 
 [return to menu](#Menu)
 
@@ -176,26 +176,26 @@ Next, you can proceed to measure RGB phosphor luminance values. Please go to “
 ![Mcalibrator2 measure tab](doc/imgs/02_measure_tab.png)  
 **Mcalibrator2: measure tab**
 
-You can set up a photometer and measure luminance values on this ***“measure”*** tab.  
+You can set up a photometer and measure luminance values on this ***"measure"*** tab.  
 
-First, please press “Adjust Colorimeter Position” button. Then, the grid window will be displayed on the screen. You can adjust and set a colorimeter focus using this window. The colorimeter position can be adjusted and validated anytime when you press the ***“Adjust Colorimeter Position”*** button. 
+First, please press "Adjust Colorimeter Position" button. Then, the grid window will be displayed on the screen. You can adjust and set a colorimeter focus using this window. The colorimeter position can be adjusted and validated anytime when you press the ***"Adjust Colorimeter Position"*** button. 
 
 ![Mcalibrator2 measurement position adjustment](doc/imgs/03_adjust_window.png)  
 **Mcalibrator2: adjustment of your colorimeter position**
 
-Next, set an ID of the serial (or USB) port to which your colorimeter is connected. On Windows, the ID will be like ***COM1***, ***COM2***, …., on Linux, it will be like ***/dev/ttyS0***, and on Mac, it will be like ***/dev/tty.KeySerial1***.  
+Next, set an ID of the serial (or USB) port to which your colorimeter is connected. On Windows, the ID will be like ***COM1***, ***COM2***, ..., on Linux, it will be like ***/dev/ttyS0***, and on Mac, it will be like ***/dev/tty.KeySerial1***.  
 (***Please note that the authors have mainly tested Mcalibrator2 on Windows PC. We have not tested the software on Mac or Linux machines. Sorry***.)  
-After setting the ID, please press ***“Create”*** button, and a serial (or USB) object to communicate with the colorimeter will be generated. Then, by pressing ***“Initialize Apparatus”*** button, the colorimeter will be initialized through the port.
+After setting the ID, please press ***"Create"*** button, and a serial (or USB) object to communicate with the colorimeter will be generated. Then, by pressing ***"Initialize Apparatus"*** button, the colorimeter will be initialized through the port.
 
-The initial setups finished now. If you press ***“Measure CIE1931 xyY”*** button, the luminance values are measured against 32 (by default) video inputs for each of the RGB phosphors.  
+The initial setups finished now. If you press ***"Measure CIE1931 xyY"*** button, the luminance values are measured against 32 (by default) video inputs for each of the RGB phosphors.  
 
 After completing the measurements, the relationship between video input and luminance output values will be plotted as below.  
 
 ![Mcalibrator2 measure tab after measurements](doc/imgs/04_measure_tab_after_measurements.png)  
 **Mcalibrator2: measure tab after measurements**
 
-The whole procedure on “measure” tab is completed now.  
-Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizing the input/output relationship. Please go to ***“LUT”*** tab.
+The whole procedure on "measure" tab is completed now.  
+Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizing the input/output relationship. Please go to ***"LUT"*** tab.
 
 [return to menu](#Menu)
 
@@ -205,20 +205,20 @@ Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizi
 **Mcalibrator2: LUT tab (performing gamma-correction and generating CLUTs)**
 
 1.	Please select a fitting model to describe the input/output relationship.  
-    - When you are using CRTs, ***“Gain-Offset-Gamma”*** (a well-known standard gamma-correction model) is recommended.
-    - When you are using a LCD or DLP, ***“cubic spline”*** or ***“robust cubic spline”*** is recommended.  
-    - If you select ***“grid search”*** , LUTs are generated by directly searching the best values,  
+    - When you are using CRTs, ***"Gain-Offset-Gamma"*** (a well-known standard gamma-correction model) is recommended.
+    - When you are using a LCD or DLP, ***"cubic spline"*** or ***"robust cubic spline"*** is recommended.  
+    - If you select ***"grid search"*** , LUTs are generated by directly searching the best values,  
       but it will only work when you measure all 256 points (when you set #LUT step to 256 on an 8-bit phosphor).
 
 ![Mcalibrator2 LUT tab model selection](doc/imgs/05_LUT_tab_model_selection.png)  
 **Mcalibrator2: Selecting a model for a gamma-correction**
 
-2.	Please press ***“Fit a model”*** button, the selected model is fitted to the data and the results will be displayed on the ***“measure”*** tab.
+2.	Please press ***"Fit a model"*** button, the selected model is fitted to the data and the results will be displayed on the ***"measure"*** tab.
 
 ![Mcalibrator2 measure tab after the gamma correction](doc/imgs/06_measure_tab_after_gamma_correction.png)  
 **Mcalibrator2: Gamma-correction results**
 
-3.	If the fitting results are fine, please press ***“Create Color Lookup Table”*** button.  
+3.	If the fitting results are fine, please press ***"Create Color Lookup Table"*** button.  
     CLUTs will be generated and saved to ***~/Mcalibrator2/data/(date etc)*** .
 4.	The details of the measurements and the model fits (input/output relationship before/after gamma-corrections, LUTs, residuals of the fits etc.) will be plotted on the external figure windows. If you are running Mcalibrator2 on Windows in which ***Microsoft(C) PowerPoint*** is installed, these plots are saved into a PowerPoint slide file and stored to ***~/Mcalibrator2/data/(date etc.)*** automatically.
 5.	You can repeat LUT-generation procedure by changing a fitting model until you can get the best results.
@@ -229,7 +229,7 @@ Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizi
 ![Mcalibrator2 model fit result](doc/imgs/08_model_fit_result.png)  
 **Mcalibrator2: Model fit result**
 
-6.	To check how properly the Gamma-correction is performed, please press the ***“Check the linearity”*** button. When the ***“easy check”*** toggle button is ON (default), the generated CLUTs will be simply displayed on LUT tab. If it is set to OFF, luminance values for 20 video inputs (equally sampled from 0.0 to 1.0) are re-measured, and the linearity between the input video values and the output luminance are evaluated. If the results are not good, please re-generate CLUTs by changing a fitting model.  
+6.	To check how properly the Gamma-correction is performed, please press the ***"Check the linearity"*** button. When the ***"easy check"*** toggle button is ON (default), the generated CLUTs will be simply displayed on LUT tab. If it is set to OFF, luminance values for 20 video inputs (equally sampled from 0.0 to 1.0) are re-measured, and the linearity between the input video values and the output luminance are evaluated. If the results are not good, please re-generate CLUTs by changing a fitting model.  
 
 ![Mcalibrator2 linearity test](doc/imgs/09_LUT_tab_linearity_test.png)  
 **Mcalibrator2: Linearity test (Easy-check mode)**
@@ -239,7 +239,7 @@ Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizi
 
 The whole procedures of gamma-correction and CLUT generations are completed. If you do not need to get optimal RBG video inputs to produce the specific chromaticities (CIE1931 xyY, not only Y (luminance)), the display characterization is done now.
 
-If you need to perform chromaticity calibration, please go to ***“Color Calculator”*** tab below. 
+If you need to perform chromaticity calibration, please go to ***"Color Calculator"*** tab below. 
 
 [return to menu](#Menu)
 
@@ -248,26 +248,26 @@ If you need to perform chromaticity calibration, please go to ***“Color Calcul
 ![Mcalibrator2 Color Calculator](doc/imgs/11_Color_Calculator_tab.png)  
 **Mcalibrator2: Color Calculator tab (for performing chromaticity calibration)**
 
-1.	First, to estimate chromaticity by a simple linear transformation, please load CIE1931 xyY values for each of the RGB phosphors at their maximum levels. To do this, please press the ***“Load/measure RGB”*** button. The phosphor values measured/stored in the previous session are extracted and displayed on the CIE1931 chromaticity diagram as 3 circles and a triangle. The range of chromaticity values you can present with the current display is a region enclosed by this triangle.
+1. First, to estimate chromaticity by a simple linear transformation, please load CIE1931 xyY values for each of the RGB phosphors at their maximum levels. To do this, please press the ***"Load/measure RGB"*** button. The phosphor values measured/stored in the previous session are extracted and displayed on the CIE1931 chromaticity diagram as 3 circles and a triangle. The range of chromaticity values you can present with the current display is a region enclosed by this triangle.
 
 ![Mcalibrator2 Color Calculator after loading phosphors](doc/imgs/12_Color_Calculator_tab_after_loading_phosphors.png)  
 **Mcalibrator2: Color Calculator tab after loading CIE1931 xy values of the RGB phosphors at their maximum level.**
 
-2.	Then, if you want to use the CLUTs generated in the previous step, please set the ***LUT*** radio-button to ON (default). If you want to use the raw RGB values without the reference CLUTs, please set the ***RGB*** radio-button to ON. If the RGB radio-button is ON, you can directly set RGB values on the ***"you want to measure"*** edit box. Please use this option when you want to simply measure RGB values of your stimuli.
-3.	Next, please input CIE1931 xyY values you want to use in your experiment on ***“x,y,Y”*** editing window just below the ***“you want (x1, y1, Y1; x2, y2, Y2; x3, y3,..)”*** message box. Please describe 3 (x, y, Y) values with a comma (,) as a delimiter. If you want to set multiple values, please use a semi-colon (;) to separate each of CIE 1931 xyY values. The format is thus as below.
-**x1,y1,Y1; x2,y2,Y2; x3,y3,Y3;…**
-4.	You can also load these CIE1931 xyY values from a text file. To do this, please press the ***“load”*** button. The CIE1931 xyY values in the text file should be described with commas and semi-colons as delimiters as below.  
+2. Then, if you want to use the CLUTs generated in the previous step, please set the ***LUT*** radio-button to ON (default). If you want to use the raw RGB values without the reference CLUTs, please set the ***RGB*** radio-button to ON. If the RGB radio-button is ON, you can directly set RGB values on the ***"you want to measure"*** edit box. Please use this option when you want to simply measure RGB values of your stimuli.
+3. Next, please input CIE1931 xyY values you want to use in your experiment on ***"x,y,Y"*** editing window just below the ***"you want (x1, y1, Y1; x2, y2, Y2; x3, y3,..)"*** message box. Please describe 3 (x, y, Y) values with a comma (,) as a delimiter. If you want to set multiple values, please use a semi-colon (;) to separate each of CIE 1931 xyY values. The format is thus as below.
+**x1,y1,Y1; x2,y2,Y2; x3,y3,Y3;...**
+4. You can also load these CIE1931 xyY values from a text file. To do this, please press the ***"load"*** button. The CIE1931 xyY values in the text file should be described with commas and semi-colons as delimiters as below.  
 ***x1, y1, Y1;***  
 ***x2, y2, Y2;***  
 ***x3, y3, Y3;***  
-***…***  
-5.	After setting xyY values you want, please press ***“convert xyY”*** button. If the LUT radio-button is ON, the xyY values are converted to **CLUT IDs**. If the RGB radio-button is ON, the raw RGB values required are calculated by a simple linear transformation. The estimated values  are presented on the ***“LUT (or RGB)”*** edit box on the right side.
-6.	To measure actual CIE1931 xyY values for these initial estimations, please press the ***“measure”*** button. The chromaticities for the estimated RGB values are successively measured. The results are presented on the ***“x,y,Y”*** and ***“LUT(or RGB)”*** edit boxes just below the ***“results (x1, y1, Y1; x2, y2, Y2; x3, y3,..)”*** message box. In addition, the CIE1931 xy values you want and the actual measures for the estimations are plotted on the ***“CIE1931 chromaticity diagram”*** window by a circle (what you want) and a cross (actual measurement). If these two values are close enough, the chromaticity calibration is done successfully.
+***...***  
+5. After setting xyY values you want, please press ***"convert xyY"*** button. If the LUT radio-button is ON, the xyY values are converted to **CLUT IDs**. If the RGB radio-button is ON, the raw RGB values required are calculated by a simple linear transformation. The estimated values  are presented on the ***"LUT (or RGB)"*** edit box on the right side.
+6. To measure actual CIE1931 xyY values for these initial estimations, please press the ***"measure"*** button. The chromaticities for the estimated RGB values are successively measured. The results are presented on the ***"x,y,Y"*** and ***"LUT(or RGB)"*** edit boxes just below the ***"results (x1, y1, Y1; x2, y2, Y2; x3, y3,..)"*** message box. In addition, the CIE1931 xy values you want and the actual measures for the estimations are plotted on the ***"CIE1931 chromaticity diagram"*** window by a circle (what you want) and a cross (actual measurement). If these two values are close enough, the chromaticity calibration is done successfully.
 
 ![Mcalibrator2 Color Calculator tab single estimation](doc/imgs/12_Color_Calculator_tab_single_estimation.png)  
 **Mcalibrator2: Color Calculator tab, single color estimation result**
 
-7.	If the estimations are not good, you need to adjut ***LUT IDs*** or ***RGB*** values by an automatic chromaticity estimation/correction method.
+7. If the estimations are not good, you need to adjut ***LUT IDs*** or ***RGB*** values by an automatic chromaticity estimation/correction method.
 - Mcalibrator2 currently has 7 automatic chromaticity estimation methods;
   1. ***recursive linear estimations based on a least-squares method with random local-value samplings***,  
   2. ***recursive linear estimations based on a least-squares method with grid local-value samplings***,
@@ -276,7 +276,7 @@ If you need to perform chromaticity calibration, please go to ***“Color Calcul
   5. ***a linear/nonlinear hybrid estimation --- recursive linear estimations + Nelder-Mead Simplex***,  
   6. ***a line search algorithm --- Brent-Powell with Coggins/Golden-section***,  
   7. ***a linear/nonlinear hybrid estimation --- recursive linear estimations + Brent-Powell with Coggins/Golden-section***.  
-  For more details of the estimation algorithms, please see comments on the source codes of Mcalibrator2 and see the paper on this software ([Ban and Yamamoto, 2013, Journal of Vision](http://www.journalofvision.org/content/13/6/20.long)). You can select one of these methods by using the dropdown-box next to the ***“measure”*** button. The estimation for one chromaticity will take 1-5 min. After finishing the estimations, the results are presented on the ***“x,y,Y”*** and ***“LUT(or RGB)”*** edit boxes just below the ***“results (x1, y1, Y1; x2, y2, Y2; x3, y3,..)”*** message. In addition, the CIE1931 xy values you want and the actual measured values for the estimations are plotted on the ***“CIE1931 chromaticity diagram”*** window by a circle (what you want) and a cross (actual measurement).
+  For more details of the estimation algorithms, please see comments on the source codes of Mcalibrator2 and see the paper on this software ([Ban and Yamamoto, 2013, Journal of Vision](http://www.journalofvision.org/content/13/6/20.long)). You can select one of these methods by using the dropdown-box next to the ***"measure"*** button. The estimation for one chromaticity will take 1-5 min. After finishing the estimations, the results are presented on the ***"x,y,Y"*** and ***"LUT(or RGB)"*** edit boxes just below the ***"results (x1, y1, Y1; x2, y2, Y2; x3, y3,..)"*** message. In addition, the CIE1931 xy values you want and the actual measured values for the estimations are plotted on the ***"CIE1931 chromaticity diagram"*** window by a circle (what you want) and a cross (actual measurement).
 
 ![Mcalibrator2 Color Calculator tab selection of estimation methods](doc/imgs/13_Color_Calculator_tab_selection_of_estimation_methods.png)  
 **Mcalibrator2: Color Calculator tab, the dropdown-list for selecting a chromaticity estimation method**
@@ -284,8 +284,8 @@ If you need to perform chromaticity calibration, please go to ***“Color Calcul
 ![Mcalibrator2 Color Calculator tab automatic color estimations](doc/imgs/14_Color_Calculator_tab_automatic_color_estimations.png)  
 **Mcalibrator2: Color Calculator tab, results of automatic chromaticity calibration (50 chromaticities)**
 
-8.	To view the detailed chromaticity estimation values, please press the ***“view”*** button. The estimation results, residuals etc. are displayed on the MATLAB console window.
-9.	To save the estimation results, please press the ***“save”*** button. The results are saved as a *.mat file to ***~/Mcalibrator2/data/(date etc.)*** like ***“estimate_files_001.txt”*** , ***“estimate_files_002.txt”*** ,… (file prefixex _001, _002,... are added automatically). Please be careful that ***no result will be saved automatically*** without pressing the ***“save”*** button.
+8. To view the detailed chromaticity estimation values, please press the ***"view"*** button. The estimation results, residuals etc. are displayed on the MATLAB console window.
+9. To save the estimation results, please press the ***"save"*** button. The results are saved as a *.mat file to ***~/Mcalibrator2/data/(date etc.)*** like ***"estimate_files_001.txt"*** , ***"estimate_files_002.txt"*** ,... (file prefixex _001, _002,... are added automatically). Please be careful that ***no result will be saved automatically*** without pressing the ***"save"*** button.
 10. If you can reproduce chromaticity values you want accurately enough, all the calibration procedures are completed. If the results are not good, please retry the estimations using different methods.
 
 [return to menu](#Menu)
@@ -301,7 +301,7 @@ If you need to perform chromaticity calibration, please go to ***“Color Calcul
 ![Mcalibrator2 color flickering test](doc/imgs/17_color_flickering_test.png)  
 **Mcalibrator2: color flickering test**
 
-On the ***“About”*** tab, the details of Mcalibrator2 software packages are displayed. If you press the ***“display test”*** button on this tab, you can perform several simple display tests.  
+On the ***"About"*** tab, the details of Mcalibrator2 software packages are displayed. If you press the ***"display test"*** button on this tab, you can perform several simple display tests.  
 Furthremore, by pressing the ***"parameters"*** button, you can change the detailed gamma-correction, LUT generation, and chromaticity estimation parameters as you like. ***However, changing those default values affect the performance and accuracies of the Mcalibrator2 functions. Please be careful.***
 
 [return to menu](#Menu)
@@ -316,8 +316,8 @@ Currently, we have already prepared subrountines for Mcalibrator2 to communicate
 - *some more but NOT fully tested.*
 
 You can also use your own colorimeter(s) with Mcalibrator2 if you write some simple codes in MATLAB. To do this, you need to  
-1．Register your own colorimeter(s) to an apparatus-list file, and  
-2．Create a class file which defines a MATLAB object for your own colorimeter to communicate with Mcalibrator2.
+1.Register your own colorimeter(s) to an apparatus-list file, and  
+2.Create a class file which defines a MATLAB object for your own colorimeter to communicate with Mcalibrator2.
 
 To register your colorimeter, please edit ***~/Mcalibrator2/subfunctions/colorimeter/colorimeter_list.m***
 By default, several photometers are already registered as below in this file.
@@ -336,20 +336,20 @@ colorimeters{9}={'International Light IL1700','il1700',0};
 colorimeters{10}={'Dummy Colorimeter (for Debug)','dummy_colorimeter',0};
 ```
 
-Therefore, please add your colorimeter(s) as ***colorimeters{11}*** , ***colorimeters{12}*** ,….or you can fully re-write this list.  
+Therefore, please add your colorimeter(s) as ***colorimeters{11}*** , ***colorimeters{12}*** ,...or you can fully re-write this list.  
 The first variable is ***a name of your colorimeter displayed on Mcalibrator2***, the second variable is ***a name of a function for your colorimeter to communicate with Mcalibrator2 (= a class file name to generate a MATLAB object)*** , and the third variable is ***a value (0/1) to specify the way of communication (0=serial connection, 1=USB connection)*** .
 
-Then, please generate a MATLAB class file (*.m) which describes the details of the way of communication. Specifically, please define a MATLAB object with a “classdef” keyword. ***The communication object should have 2 properties and 4 methods described below***.
+Then, please generate a MATLAB class file (*.m) which describes the details of the way of communication. Specifically, please define a MATLAB object with a "classdef" keyword. ***The communication object should have 2 properties and 4 methods described below***.
 
 ```
-・Property (Hidden)
+- Property (Hidden)
    portname,  
    rscom
 
-・Property (public)
+- Property (public)
    init_flg
 
-・Method
+- Method
    gen_port,  
    reset_port,  
    initialize,  
@@ -607,22 +607,22 @@ classdef brontesLL
   % [license details about Admesy SDK]
   % Admesy SDK license agreement
   % By installing the Admesy SDK, you agree to the following terms.
-  % 1)	The Admesy SDK can be used freely with Admesy instruments with no limitations regarding installation.
-  % 2)	Use of this library with other brands instruments is not permitted.
-  % 3)	This library is not licensed to third parties without the use of Admesy Instruments.
-  % 4)	Distribution of the files is only permitted with Admesy instruments or demo software.
+  % 1) The Admesy SDK can be used freely with Admesy instruments with no limitations regarding installation.
+  % 2) Use of this library with other brands instruments is not permitted.
+  % 3) This library is not licensed to third parties without the use of Admesy Instruments.
+  % 4) Distribution of the files is only permitted with Admesy instruments or demo software.
   % Distributions should always include this end-user license.
-  % 5)	Modifications/renaming of DLL’s are not permitted.
-  % 6)	Functions that are exported but undocumented, are not supported.
-  % 7)	This Admesy License agreement does not contain any 3th party licenses such as Labview,NI-Visa
+  % 5) Modifications/renaming of DLL's are not permitted.
+  % 6) Functions that are exported but undocumented, are not supported.
+  % 7) This Admesy License agreement does not contain any 3th party licenses such as Labview,NI-Visa
   %     or Microsoft Visual Studio. 3th party software may require a separate license agreement.
-  % 8)	Libusbtmc can be used in conjunction with libusb. This does not require a separate license.
-  % 9)	The library is not distributed with source code. It is not open source, but free to use.
-  % 10)	The Admesy colour SDK is developed for use on the Windows Operating system (XP32bit, Vista, Win7,
+  % 8) Libusbtmc can be used in conjunction with libusb. This does not require a separate license.
+  % 9) The library is not distributed with source code. It is not open source, but free to use.
+  % 10) The Admesy colour SDK is developed for use on the Windows Operating system (XP32bit, Vista, Win7,
   %     Win8) and with general hardware in mind. Admesy does not guarantee full functionality on all operating
   %     systems/hardware. Admesy Instruments can be operated on Linux and Mac OSX or other Operating systems,
   %     but that is not supported by this SDK.
-  % 11)	This SDK and its components are free to use under above terms and may not be sold to 3rd parties.
+  % 11) This SDK and its components are free to use under above terms and may not be sold to 3rd parties.
   %
   %
   % Created    : "2012-10-29 05:28:07 ban"
@@ -761,11 +761,11 @@ classdef brontesLL
 
         % [about output format of measured CIE1931 xyY]
         %
-        % :MEASure command return their result in ASCII formated floating point as shown below :
-        % (Y,x,y,clip,noise) ?ｨ %f,%f,%f,%d,%d\n;
+        % :MEASure command returns their result in ASCII formated floating point as shown below :
+        % (Y,x,y,clip,noise) %f,%f,%f,%d,%d\n;
         %
         % The integration time setting can be varied from 0.5ms to 5s.
-        % It is specified in μs. Results from the Brontes-LL colorimeter include a clip and noise
+        % It is specified in microsecond. Results from the Brontes-LL colorimeter include a clip and noise
         % indication which indicate whether the measured light is too bright (clip) or too low (noise).
         % When clipping is detected, the resulting colour will not be correct and a lower integration time
         % should be chosen. When noise is detected, a larger integration time should be chosen.
@@ -779,10 +779,10 @@ classdef brontesLL
         % The third input variable of usbtmc_read is Bytecount.
         % The number of bytes that needs to be read may exceed the actual data that is available.
         % However, assigning always a very large number is discouraged.
-        % For example when a “:meas:XYZ” command returns 36 bytes, you may ask for 64 bytes.
-        % When you use a “:sample:Y” function, you know exactly how many bytes should be returned.
+        % For example when a ":meas:XYZ" command returns 36 bytes, you may ask for 64 bytes.
+        % When you use a ":sample:Y" function, you know exactly how many bytes should be returned.
         % It is than best to input this exact number or just a little bit more.
-        % In case you read for example 65535 bytes for a “:meas:XYZ: command, the internal library
+        % In case you read for example 65535 bytes for a ":meas:XYZ: command, the internal library
         % allocates 65535 bytes where it only gets 36bytes back. This works, but is inefficient in
         % memory and execution time.
 
@@ -838,15 +838,15 @@ classdef brontesLL
 end % classdef brontesLL
 ```
 
-After completing these setups, please launch Mcalibrator2, check whether your own colorimeter is properly registered (if registered, your apparatus is listed in the dropdown-list on ***“config”*** tab), and check whether your colarimeter can communicate with Mcalibrator2.
+After completing these setups, please launch Mcalibrator2, check whether your own colorimeter is properly registered (if registered, your apparatus is listed in the dropdown-list on ***"config"*** tab), and check whether your colarimeter can communicate with Mcalibrator2.
 
 [return to menu](#Menu)
 
 # <a name = "CustomEstimation"> How to add your own chromaticity estimation methods to Mcalibrator2 </a>
 
 You can easily add your own chromaticity estimation procedure(s) to Mcalibrator2 as you like. To do this, please  
-１．Register your own estimation method(s) to a list of estimation-method file, and
-２. Create MATLAB function(s) which describe your own chromaticity estimation procedure(s).
+1. Register your own estimation method(s) to a list of estimation-method file, and
+2. Create MATLAB function(s) which describe your own chromaticity estimation procedure(s).
 
 To register your own chromaticity estimation method(s) to Mcalibrator2, please edit ***~/Mcalibrator2/subfunctions/colorcalculator/measurement_method_list.m***.  
 By default, eight chromaticity estimation methods are already registered in this file as below.
@@ -862,7 +862,7 @@ meas_methods{7}={'[auto] Brent-Powell with Coggins/Golden-section','calculator_a
 meas_methods{8}={'[auto] Linear/Brent-Powell hybrid','calculator_auto_estimation_powell_hybrid'};
 ```
 
-Please add your method(s) as ***meas_methods{9}*** , ***meas_methods{10}*** ,…, or you can fully rewrite the list. The first variable is ***a name of your estimation method displayed on Mcalibrator2***, the second variable is ***a name of the estimatin function***.  
+Please add your method(s) as ***meas_methods{9}*** , ***meas_methods{10}*** ,..., or you can fully rewrite the list. The first variable is ***a name of your estimation method displayed on Mcalibrator2***, the second variable is ***a name of the estimatin function***.  
 
 You have to separately create a MATLAB function, which defines the details of your own chromaticity estimation procedure, and have to save it with the same name with the second varialbe in the list. The function should be located in ***~/Mcalibrator2/subfunctions/colorcalculator/*** directory.  
 
@@ -880,17 +880,17 @@ handles    : A structure which includes handles to child objects
              of Mcalibrator2 and user-defined data
 ```
 
-In addition, please declare the global variables below in your function with a “global” keyword.
+In addition, please declare the global variables below in your function with a "global" keyword.
 
 ```Matlab
-global confiｇ;             % a structure which stores configuration of Mcalibrator2
+global config;             % a structure which stores configuration of Mcalibrator2
 global colorimeterhandler; % an object to handle a colorimeter
 global displayhandler;     % an object to present a chromaticity on display
 global phosphers;          % CIE1931 xyY values of RGB phosphors at their maximum levels
-global flares;              % Flares (zero-level luminance) of RGB phosphers
+global flares;             % Flares (zero-level luminance) of RGB phosphers
 ```
 
-By using the global variables above and the input variable, “handles”, you can manipulate Mcalibrator2 through your own chromaticity estimation function.  
+By using the global variables above and the input variable, "handles", you can manipulate Mcalibrator2 through your own chromaticity estimation function.  
 
 For examples, please see
 1. ***~/Mcalibrator2/subfunctions/colorcalculator/calculator_auto_estimation_linear.m***
