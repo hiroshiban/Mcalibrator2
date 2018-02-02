@@ -2,7 +2,7 @@
 # **README on Mcalibrator2**
 
 <div>Created    : "2013-05-13 12:30:52 ban"</div>
-<div>Last Update: "2018-02-02 12:52:07 ban"
+<div>Last Update: "2018-02-02 16:35:47 ban"
 
 **********
 # <a name = "Menu"> **Menu** </a>
@@ -130,7 +130,7 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
 
 [return to menu](#Menu)
 
-# <a name = "Instllation"> Installation </a>
+# <a name = "Installation"> Installation </a>
 
 1.	You need to install **MATLAB** ([***The Mathworks Inc.*** ](https://www.mathworks.com/)) to use Mcalibrator2.  
     You may additionally need to install **"Optimization"** and **"Statistics"** toolboxes to use all the functions of Mcalibrator2.
@@ -138,7 +138,7 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
     [**Mcalibrator2 GitHub repository**](https://github.com/hiroshiban/Mcalibrator2)  
     and add the *~/Mcalibrator2* directory to your MATLAB-path. If you use a MATLAB after 2011a, you do not need to add subdirectories.  
     Mcalibrator2 can handle all the subrouines internally.  
-    If you use MATLAB before 2011a, please set MATLAB-path to the Mcalibrator2 including all the subdirectories.
+    If you use MATLAB before 2011a, please add the Mcalibrator2 directory including all the subdirectories into your MATLAB-path.  
 
 3.  Please launch Mcalibrator2 from the MATLAB console,  
     
