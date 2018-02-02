@@ -109,7 +109,7 @@ Mcalibrator2 has provided some additional components to communicate with any pho
 The authors provide this software suite in the hope that it will benefit researchers performing calibration of their display devices efficiently and improve accuracies of stimulus displays regardless of the display types.
 
 ![Mcalibrator2 schematic illustrations of chromaticity estimation procedures](doc/imgs/00_Schematic_illustration_of_chromaticity_estimations.png)  
-**Schematic illustrations of the Gamma-correction and chromaticity estimation procedures implemented in Mcalibrator2.**
+**Schematic illustrations of the Gamma-correction and chromaticity estimation procedures implemented in Mcalibrator2.**  
 a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimation procedure. c) Custom Gamma-correction procedures. d) Custom chromaticity estimation procedures based on goal-seeking optimization algorithms  
 
 ***References***
