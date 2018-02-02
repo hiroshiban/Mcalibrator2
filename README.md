@@ -21,7 +21,7 @@
   - [About tab](#About)
   - [How to make Mcalibrator2 communicate with your own colorimeter(s) or photometer(s)](#CustomColorimeter)
   - [How to add your own chromaticity estimation methods to Mcalibrator2](#CustomEstimation)
-- [Automations and scripting of Mcalibrator2](#Scripting)
+  - [Automations and scripting of Mcalibrator2](#Scripting)
 - [Acknowledgments](#Acknowledgments)
 - [License](#License)
 - [Citations](#Citations)
@@ -108,6 +108,10 @@ Mcalibrator2 has provided some additional components to communicate with any pho
 
 The authors provide this software suite in the hope that it will benefit researchers performing calibration of their display devices efficiently and improve accuracies of stimulus displays regardless of the display types.
 
+![Mcalibrator2 schematic illustrations of chromaticity estimation procedures](doc/imgs/00_Schematic_illustration_of_chromaticity_estimations.png)  
+**Schematic illustrations of the Gamma-correction and chromaticity estimation procedures implemented in Mcalibrator2.**
+a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimation procedure. c) Custom Gamma-correction procedures. d) Custom chromaticity estimation procedures based on goal-seeking optimization algorithms  
+
 ***References***
 
 1.	Ban, H., Yamamoto, H., Ejima, Y. (2006). Mcalibrator: MATLAB integrated GUI software for display calibration ― a proposal of a new color calibration procedure applicable to a wide range of display devices and evaluation of its efficiency ―. The Japanese Journal of Psychonomic Science. 24(2). 149-161.
@@ -132,7 +136,7 @@ The authors provide this software suite in the hope that it will benefit researc
     You may additionally need to install **“Optimization"** and **"Statistics"** toolboxes to use all the functions of Mcalibrator2.
 2.	Please get the latest version of Mcalibrator2 from the link below,  
     [**Mcalibrator2 GitHub repository**](https://github.com/hiroshiban/Mcalibrator2)  
-    and add the *~/Mcalibrator2* directory to MATLAB-path. If you use MATLAB after 2011a, you do not need to add subdirectories.  
+    and add the *~/Mcalibrator2* directory to your MATLAB-path. If you use a MATLAB after 2011a, you do not need to add subdirectories.  
     Mcalibrator2 can handle all the subrouines internally.  
     If you use MATLAB before 2011a, please set MATLAB-path to the Mcalibrator2 including all the subdirectories.
 
@@ -333,7 +337,7 @@ colorimeters{10}={'Dummy Colorimeter (for Debug)','dummy_colorimeter',0};
 ```
 
 Therefore, please add your colorimeter(s) as ***colorimeters{11}*** , ***colorimeters{12}*** ,….or you can fully re-write this list.  
-The first variable is ***a name of your colorimeter displayed on Mcalibrator2***, the second variable is ***a name of a function for your colorimeter to communicate with Mcalibrator2 (= a class file name to generate MATLAB object)*** , and the third variable is ***a value (0/1) to specify the way of communication (0=serial connection, 1=USB connection)*** .
+The first variable is ***a name of your colorimeter displayed on Mcalibrator2***, the second variable is ***a name of a function for your colorimeter to communicate with Mcalibrator2 (= a class file name to generate a MATLAB object)*** , and the third variable is ***a value (0/1) to specify the way of communication (0=serial connection, 1=USB connection)*** .
 
 Then, please generate a MATLAB class file (*.m) which describes the details of the way of communication. Specifically, please define a MATLAB object with a “classdef” keyword. ***The communication object should have 2 properties and 4 methods described below***.
 
@@ -353,7 +357,7 @@ Then, please generate a MATLAB class file (*.m) which describes the details of t
 ```
 
 Furthermore, in creating your own class, you have to use exactly the same input/output variables etc with the other communication objects.  
-As examples, please see representative two objects below.  
+As examples, please see two sample MATLAB codes below. The sample, *"cs100a.m"*, is to create a communication object through a serial (RS232C) port. The sample, *"brontesLL.m"*, is to communicate via a USB port.  
 
 1. ***Sample 1: ~/Mcalibrator2/subfunctions/colorimeter/cs100a.m (a serial communication)***  
 
@@ -894,12 +898,12 @@ For examples, please see
 
 [return to menu](#Menu)
 
-# <a name = "Scripting"> **Automations and scripting of Mcalibrator2** </a>
+# <a name = "Scripting"> Automations and scripting of Mcalibrator2 </a>
 
-Almost all the display characterization procedures of Mcalibrator2 have been provided as individual MATLAB functions and they are found in ***~/Mcalibrator2/subfunctions directory***. Therefore, you can easily extract a part of the procedures implemented in Mcalibrator2
-and use it in your own characterization routines.
+Almost all the display characterization procedures of Mcalibrator2 have been provided as individual MATLAB functions and they are found in the ***~/Mcalibrator2/subfunctions*** directory. Therefore, you can easily extract a part of the procedures implemented in Mcalibrator2
+and use it in your own display characterization routines.
 
-Here, I will introduce some MATLAB code examples on how to acces and use the sub-routines of Mcalibrator2. Hope these samples can help your daily display characterization for your research projects.
+Here, I will introduce some MATLAB code examples on how to access and use the sub-routines of Mcalibrator2. Hope these samples can help your daily display characterizations.  
 
 1. ***Sample 1: run gamma-correction with CRS ColorCAL2***  
    (You can find the source in ***~/Mcalibrator2/scripting_samples/gamma_correction_ColorCAL.m***)
