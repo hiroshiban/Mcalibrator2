@@ -2,7 +2,7 @@
 # **README on Mcalibrator2**
 
 <div>Created    : "2013-05-13 12:30:52 ban"</div>
-<div>Last Update: "2018-02-02 16:35:47 ban"
+<div>Last Update: "2018-02-03 11:29:29 ban"
 
 **********
 # <a name = "Menu"> **Menu** </a>
@@ -99,7 +99,7 @@ Display characterization is an essential part of the experimental procedures in 
 
 CRT (Cathode Ray-Tube) displays are the most widely-used devices for current vision experiments, and the calibration procedures to characterize their luminance and chromaticities are well-established in the two-stage procedures: gamma-correction, followed by a linear color transformation (Berns et al., 1996; Brainard et al., 2002; Ban et al., 2006). The calibration results obtained through this standard two-step procedure has been tested (Brainard et al., 2002; Ban et al., 2006) and the quality of luminance and chromatic stimuli on CRT displays satisfy the researchers' criterion.  
 
-However, non-CRT devices such as a LCD (Liquid Crystal Display) and a DLP (Digital Light Processing) have come into the main stream recently and researchers are required to use non-CRT over CRT devices. There is no evidence that the standard display characterization method cannot be applied to these new types of devices since the current widely-used standard display calibration method is established based on the internal model of CRT devices.  
+However, non-CRT devices such as a LCD (Liquid Crystal Display) and a DLP (Digital Light Processing) have come into the main stream recently and researchers are required to use non-CRT over CRT devices. There is no evidence that the standard display characterization method can be applied to these new types of devices since the current widely-used standard display calibration method is established based on the internal model of CRT devices.  
 
 We have therefore developed a non-device-specific approach to display characterization. Specifically, our new methods use model-free gamma-correction procedure combined with a linear/non-linear (Nelder-Mead Simplex, Nelder & Mead, 1965; Dennis & Woods, 1987) hybrid or line search (Powell's method with Coggins constrain, Powell, 1964; Brent, 1973; Press et al., 2007; Farhi, 2011; Farhi et al, 2012) algorithm to get the optimal RGB video input values to produce the required luminance and chromaticities. The methods only assume 1) a monotonic increment of luminance against the increment of video input values, and 2) a piece wise linearity of the system in the initial estimation step. These new methods have a much broader range of applicability because they do not presume the internal model of the display device and can handle non-linearity of the device.  
 
@@ -1356,8 +1356,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 # <a name = "Citations"> **Citations of Mcalibrator2** </a>
 
-If you have spaces in "References" section of your research papers, please allow us to ask you to cite the article below.
-If you have no space, please cite somewhere someday next time...Thank you so much.
+If you have spaces in "References" section of your research papers, please allow us to ask you to cite the article(s) below.
+If you have no space, please cite it(them) somewhere someday next time...Thank you so much.
 
 1. ***Ban, H., & Yamamoto, H. (2013).***  
 **A non-device-specific approach to display characterization based on linear, nonlinear, and hybrid search algorithms.**  

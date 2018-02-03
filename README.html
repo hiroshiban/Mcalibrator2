@@ -52,7 +52,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 id="readme-on-mcalibrator2"><strong>README on Mcalibrator2</strong></h1>
 <div>Created    : "2013-05-13 12:30:52 ban"</div>
 <div>
-<p>Last Update: &quot;2018-02-02 12:52:07 ban&quot;</p>
+<p>Last Update: &quot;2018-02-03 11:29:29 ban&quot;</p>
 <hr />
 <h1 id="menu"><a name = "Menu"> <strong>Menu</strong> </a></h1>
 <ul>
@@ -125,7 +125,7 @@ To read the help documents, please open <strong>~/Mcalibrator2/doc/html/index.ht
 <h1 id="aims-and-purposes"><a name = "Purposes"> Aims and purposes </a></h1>
 <p>Display characterization is an essential part of the experimental procedures in vision science because almost all current experiments are conducted in computer-aided environments: visual stimuli are manipulated via a programming language and displayed on a computer display, and observer's responses are acquired by pressing keys connected to a computer. To ensure that visual stimuli - their luminance, color, timing, etc. are presented precisely in such computer-based experiments, researchers need to characterize display devices accurately in advance of actual experiments.</p>
 <p>CRT (Cathode Ray-Tube) displays are the most widely-used devices for current vision experiments, and the calibration procedures to characterize their luminance and chromaticities are well-established in the two-stage procedures: gamma-correction, followed by a linear color transformation (Berns et al., 1996; Brainard et al., 2002; Ban et al., 2006). The calibration results obtained through this standard two-step procedure has been tested (Brainard et al., 2002; Ban et al., 2006) and the quality of luminance and chromatic stimuli on CRT displays satisfy the researchers' criterion.</p>
-<p>However, non-CRT devices such as a LCD (Liquid Crystal Display) and a DLP (Digital Light Processing) have come into the main stream recently and researchers are required to use non-CRT over CRT devices. There is no evidence that the standard display characterization method cannot be applied to these new types of devices since the current widely-used standard display calibration method is established based on the internal model of CRT devices.</p>
+<p>However, non-CRT devices such as a LCD (Liquid Crystal Display) and a DLP (Digital Light Processing) have come into the main stream recently and researchers are required to use non-CRT over CRT devices. There is no evidence that the standard display characterization method can be applied to these new types of devices since the current widely-used standard display calibration method is established based on the internal model of CRT devices.</p>
 <p>We have therefore developed a non-device-specific approach to display characterization. Specifically, our new methods use model-free gamma-correction procedure combined with a linear/non-linear (Nelder-Mead Simplex, Nelder &amp; Mead, 1965; Dennis &amp; Woods, 1987) hybrid or line search (Powell's method with Coggins constrain, Powell, 1964; Brent, 1973; Press et al., 2007; Farhi, 2011; Farhi et al, 2012) algorithm to get the optimal RGB video input values to produce the required luminance and chromaticities. The methods only assume 1) a monotonic increment of luminance against the increment of video input values, and 2) a piece wise linearity of the system in the initial estimation step. These new methods have a much broader range of applicability because they do not presume the internal model of the display device and can handle non-linearity of the device.</p>
 <p>The whole procedures are integrated into a GUI-based display characterization software written in MATLAB (The Mathworks, Inc, USA) language and termed &quot;Mcalibrator2&quot; (Ban &amp; Yamamoto, 2013). The applicability and efficiency of our software to a wide range of display devices, including LCD and DLP type of devices, were confirmed by comparing the calibration accuracies of our procedures with that of the standard two-stage method. We found that all of these new approaches improved calibration accuracies for non-CRT devices compared with the standard display characterization procedure.<br />
 Mcalibrator2 has provided some additional components to communicate with any photometers that researchers are using in their daily measurements. The software has also provided simple frameworks to add alternative chromaticity optimization procedures researchers may want to use. Further, the software can automatically generate gamma-correction tables compatible with Psychtoolbox, one of the most widely used vision science tools (Brainard, 1997; Pelli, 1997). These functions will assist researchers in characterizing their display devices.</p>
@@ -150,7 +150,7 @@ Mcalibrator2 has provided some additional components to communicate with any pho
 <li>Press, W.H., Teukolsky, S.A., Vetterling, W.T., Flannery, B.P. (2007). Section 9.3. Van Wijngaarden Dekker Brent Method. Numerical Recipes: The Art of Scientific Computing (3rd ed.). New York: Cambridge University Press.</li>
 </ol>
 <p><a href="#Menu">return to menu</a></p>
-<h1 id="installation"><a name = "Instllation"> Installation </a></h1>
+<h1 id="installation"><a name = "Installation"> Installation </a></h1>
 <ol>
 <li>You need to install <strong>MATLAB</strong> (<a href="https://www.mathworks.com/"><strong><em>The Mathworks Inc.</em></strong></a>) to use Mcalibrator2.<br />
 You may additionally need to install <strong>&quot;Optimization&quot;</strong> and <strong>&quot;Statistics&quot;</strong> toolboxes to use all the functions of Mcalibrator2.</li>
@@ -158,7 +158,7 @@ You may additionally need to install <strong>&quot;Optimization&quot;</strong> a
 <a href="https://github.com/hiroshiban/Mcalibrator2"><strong>Mcalibrator2 GitHub repository</strong></a><br />
 and add the <em>~/Mcalibrator2</em> directory to your MATLAB-path. If you use a MATLAB after 2011a, you do not need to add subdirectories.<br />
 Mcalibrator2 can handle all the subrouines internally.<br />
-If you use MATLAB before 2011a, please set MATLAB-path to the Mcalibrator2 including all the subdirectories.</p></li>
+If you use MATLAB before 2011a, please add the Mcalibrator2 directory including all the subdirectories into your MATLAB-path.</p></li>
 <li><p>Please launch Mcalibrator2 from the MATLAB console,</p>
 <div class="sourceCode"><pre class="sourceCode matlab"><code class="sourceCode matlab">&gt;&gt; Mcalibrator2</code></pre></div>
 <p>Then, you will see the main window of Mcalibrator2 as below.</p></li>
@@ -1297,8 +1297,8 @@ All rights reserved.</p>
 <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 <p><a href="#Menu">return to menu</a></p>
 <h1 id="citations-of-mcalibrator2"><a name = "Citations"> <strong>Citations of Mcalibrator2</strong> </a></h1>
-<p>If you have spaces in &quot;References&quot; section of your research papers, please allow us to ask you to cite the article below.<br />
-If you have no space, please cite somewhere someday next time...Thank you so much.</p>
+<p>If you have spaces in &quot;References&quot; section of your research papers, please allow us to ask you to cite the article(s) below.<br />
+If you have no space, please cite it(them) somewhere someday next time...Thank you so much.</p>
 <ol>
 <li><p><strong><em>Ban, H., &amp; Yamamoto, H. (2013).</em></strong><br />
 <strong>A non-device-specific approach to display characterization based on linear, nonlinear, and hybrid search algorithms.</strong><br />

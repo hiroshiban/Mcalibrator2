@@ -26,11 +26,11 @@ function varargout = Mcalibrator2(varargin)
   %
   % Edit the above text to modify the response to help Mcalibrator2
   %
-  % Last Modified by GUIDE v2.5 12-Apr-2012 11:23:34
+  % Last Modified by GUIDE v2.5 03-Feb-2018 14:21:08
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2018-01-19 09:22:13 ban"
+  % Last Update: "2018-02-03 15:11:36 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -201,6 +201,34 @@ function gathermethod_popupmenu_CreateFcn(hObject, eventdata, handles)
     set(hObject,'BackgroundColor','white');
   end
 
+function save_dir_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
+
+
+function date_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
+
+
+function range_min_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
+
+
+function range_max_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
+
+
+function repetition_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
 
 % main procedures
 function manageConfigTab(handles,state)
@@ -1254,6 +1282,16 @@ function results_xyY_edit_CreateFcn(hObject, eventdata, handles)
   if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
   end
+
+function results_RGB_edit_Callback(hObject, eventdata, handles)
+function results_RGB_edit_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
+
+function color_figure_CreateFcn(hObject, eventdata, handles)
+
+  PlotCIE1931xy([],[],-1,0,1);
 
 
 % fucntions to handle GUI
