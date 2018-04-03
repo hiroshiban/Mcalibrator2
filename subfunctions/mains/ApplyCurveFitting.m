@@ -46,7 +46,7 @@ function fit=ApplyCurveFitting(lum,method,monotonic_flg,lowpass_flg,flare_correc
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2016-02-05 14:42:21 ban"
+% Last Update: "2018-04-03 12:51:18 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); fit=[]; return; end
@@ -252,20 +252,19 @@ if display_flg
     lumline(1)=plot(lum(1,:),raw_lum,'g-','LineWidth',1);
     lumline(2)=plot(lum(1,:),lum(2,:),'b-','LineWidth',2);
     lumline(3)=plot(lum(1,:),fit,'r-','LineWidth',2);
-    set(gca,'XLim',[0,1]);
-    set(gca,'YLim',[minlum-2,maxlum+2]);
-    xlabel('video input [0.0-1.0]');
-    ylabel('luminance');
     legend(lumline,{'measured','filtered','fitted'},'Location','SouthEast');
-    title(sprintf('curve fitting result, method: %s',method));
   else
     lumline(1)=plot(lum(1,:),lum(2,:),'b-','LineWidth',2);
     lumline(2)=plot(lum(1,:),fit,'r-','LineWidth',2);
-    set(gca,'XLim',[0,1]);
-    set(gca,'YLim',[minlum-2,maxlum+2]);
-    xlabel('video input [0.0-1.0]');
-    ylabel('luminance');
     legend(lumline,{'measured','fitted'},'Location','SouthEast');
+  end
+  set(gca,'XLim',[0,1]);
+  set(gca,'YLim',[minlum-2,maxlum+2]);
+  xlabel('video input [0.0-1.0]');
+  ylabel('luminance');
+  if strcmpi(method,'gog') % update the axis tile with the estimated Gamma value.
+    title(sprintf('curve fitting result, method: %s (Gamma: %.2f)',method,estimates));
+  else
     title(sprintf('curve fitting result, method: %s',method));
   end
 
@@ -317,7 +316,7 @@ try
   b = zeros(n-1,1);
   
   opts = optimset('lsqlin');
-  opts.LargeScale = 'off';
+  opts.LargeScale = 'on';
   opts.Display = 'none';
   opts.MaxIter=100;
   [output,dummy1,dummy2,exitflag] = lsqlin(C,D,A,b,[],[],[],[],[],opts);

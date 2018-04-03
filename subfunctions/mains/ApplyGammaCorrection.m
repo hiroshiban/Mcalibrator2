@@ -53,7 +53,7 @@ function [lut,lumfiltered,flare,fit]=ApplyGammaCorrection(lum,method,numluttbl,m
 %
 %
 % Created    : "2012-04-09 22:42:06 ban"
-% Last Update: "2014-04-23 16:01:05 ban"
+% Last Update: "2018-04-03 12:52:18 ban"
 
 % check input variables
 if nargin<1, help(mfilename()); lut=[]; return; end
@@ -395,20 +395,19 @@ if display_flg
     lumline(1)=plot(org_lum(1,:),raw_lum,'go','LineWidth',1);
     lumline(2)=plot(org_lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
     lumline(3)=plot(org_lum(1,:),fit+minlum,'r-','LineWidth',2);
-    set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]);
-    set(gca,'YLim',[minlum-2,maxlum+2]);
-    xlabel('video input [0.0-1.0]');
-    ylabel('luminance');
     legend(lumline,{'measured','filtered','fitted'},'Location','SouthEast');
-    title(sprintf('gamma correction result, method: %s',method));
   else
     lumline(1)=plot(org_lum(1,:),lum(2,:)+minlum,'bo','LineWidth',2);
     lumline(2)=plot(org_lum(1,:),fit+minlum,'r-','LineWidth',2);
-    set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]);
-    set(gca,'YLim',[minlum-2,maxlum+2]);
-    xlabel('video input [0.0-1.0]');
-    ylabel('luminance');
     legend(lumline,{'measured','fitted'},'Location','SouthEast');
+  end
+  xlabel('video input [0.0-1.0]');
+  ylabel('luminance');
+  set(gca,'XLim',[org_lum(1,1),org_lum(1,end)]);
+  set(gca,'YLim',[minlum-2,maxlum+2]);
+  if strcmpi(method,'gog') % update the axis tile with the estimated Gamma value.
+    title(sprintf('gamma correction result, method: %s (Gamma: %.2f)',method,estimates));
+  else
     title(sprintf('gamma correction result, method: %s',method));
   end
 
@@ -477,7 +476,7 @@ try
   b = zeros(n-1,1);
   
   opts = optimset('lsqlin');
-  opts.LargeScale = 'off';
+  opts.LargeScale = 'on';
   opts.Display = 'none';
   opts.MaxIter=100;
   [output,dummy1,dummy2,exitflag] = lsqlin(C,D,A,b,[],[],[],[],[],opts);

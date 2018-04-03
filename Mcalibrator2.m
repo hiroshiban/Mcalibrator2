@@ -26,11 +26,11 @@ function varargout = Mcalibrator2(varargin)
   %
   % Edit the above text to modify the response to help Mcalibrator2
   %
-  % Last Modified by GUIDE v2.5 03-Feb-2018 14:21:08
+  % Last Modified by GUIDE v2.5 03-Apr-2018 13:09:59
   %
   %
   % Created    : "2012-04-13 07:36:14 ban"
-  % Last Update: "2018-02-03 15:11:36 ban"
+  % Last Update: "2018-04-03 13:20:50 ban"
   % <a
   % href="mailto:ban.hiroshi+mcalibrator@gmail.com">email to Hiroshi Ban</a>
 
@@ -806,8 +806,16 @@ function measure_separate_pushbutton_Callback(hObject, eventdata, handles)
 
 % these are empty, just required to handle GUI
 function fitting_popupmenu_Callback(hObject, eventdata, handles)
-function easycheck_togglebutton_Callback(hObject, eventdata, handles)
+function fitting_popupmenu_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
 
+function easycheck_togglebutton_Callback(hObject, eventdata, handles)
+function easycheck_togglebutton_CreateFcn(hObject, eventdata, handles)
+  if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+  end
 
 % main procedures
 function fitmethod=getfitmethod(fitting_method)
@@ -1012,7 +1020,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
     end
     figall=figall.Children;
     for ff=1:1:size(figall,1)
-      if ~isempty(strfind(figall(ff).Name,'Mcalibrator2 Gamma Correction Result'))
+      if ~isempty(strmatch(figall(ff).Name,sprintf('Mcalibrator2 Gamma Correction Result: %s',fitmethod)))
         figure(figall(ff)); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
         figaxis=gcf;
       end
@@ -1028,6 +1036,7 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
       %saveas(gcf,tmpimgfile,'bmp');
       ppt=ppt.addImageSlide(color_str{ii},tmpimgfile);
       delete(tmpimgfile);
+      %close(figaxis);
     end
     if exist(fullfile(pwd,sprintf('gamma_corr_result_%s.png',fitmethod)),'file')
       delete(fullfile(pwd,sprintf('gamma_corr_result_%s.png',fitmethod)));
