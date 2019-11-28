@@ -1019,13 +1019,14 @@ function create_lut_pushbutton_Callback(hObject, eventdata, handles)
       figall=get(0); % old style to get the graphic root object;
     end
     figall=figall.Children;
-    for ff=1:1:size(figall,1)
-      if ~isempty(strmatch(figall(ff).Name,sprintf('Mcalibrator2 Gamma Correction Result: %s',fitmethod)))
-        figure(figall(ff)); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
-        figaxis=gcf;
-      end
-    end
-    set(figaxis,'Name',[get(figaxis,'Name'),sprintf(' %s',color_str{ii})]);
+    figaxis=gcf;
+    %for ff=1:1:size(figall,1)
+    %  if ~isempty(strmatch(figall(ff).Name,sprintf('Mcalibrator2 Gamma Correction Result: %s',fitmethod)))
+    %    figure(figall(ff)); % set the last gamma correction plot as the current figure. note: the Mcalibrator root figure is 0.
+    %    figaxis=gcf;
+    %  end
+    %end
+    %set(figaxis,'Name',[get(figaxis,'Name'),sprintf(' %s',color_str{ii})]);
     drawnow;
 
     % save images as a PPT slide

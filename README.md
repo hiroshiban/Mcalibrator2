@@ -2,7 +2,7 @@
 # **README on Mcalibrator2**
 
 <div>Created    : "2013-05-13 12:30:52 ban"</div>
-<div>Last Update: "2018-02-03 11:29:29 ban"
+<div>Last Update: "2019-11-28 15:24:32 ban"
 
 **********
 # <a name = "Menu"> **Menu** </a>
@@ -51,7 +51,7 @@ The details of the algorithms we developed are described below.
 Thank you for using our software.  
 We are happy if Mcalibrator2 can help your research projects.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "System"> **System requirements** </a>
 
@@ -64,7 +64,7 @@ We are happy if Mcalibrator2 can help your research projects.
   - note 1: Mcalibrator2 works even without optimization/statistics toolboxes, but to use full functionality of the software (e.g. automatic non-linear RGB video input estimations), these toolboxes are required.
   - note 2: Mcalibrator2 can not be launched properly on MATLAB R2007 or older since the GUI handling system that we are using to control Mcalibrator2 windows is quite different from the conventions of the older MATLABs.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Launch"> **How to launch Mcalibrator2** </a>
 
@@ -76,7 +76,7 @@ To launch Mcalibrator on MATLAB, please run
 
 Please note that when you use MATLAB version 2012 or later, a function to control GUI tabs, "tabselectionfcn", will be disabled due to incompatibility of the function with the recent MATLAB.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Help"> **How to generate/update html-based Mcalibrator2 help files** </a>
 
@@ -89,7 +89,7 @@ Please run
 Then, all the html-based help documents will be automatically generated in **~/Mcalibrator2/doc/html**.  
 To read the help documents, please open **~/Mcalibrator2/doc/html/index.html** on your browser.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Manual"> **Detailed manual of Mcalibrator2** </a>
 
@@ -128,7 +128,7 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
 12.	Powell, M. J. D. (1964). An efficient method for finding the minimum of a function of several variables without calculating derivatives. Computer Journal 7 (2): 155-162.
 13.	Press, W.H., Teukolsky, S.A., Vetterling, W.T., Flannery, B.P. (2007). Section 9.3. Van Wijngaarden–Dekker–Brent Method. Numerical Recipes: The Art of Scientific Computing (3rd ed.). New York: Cambridge University Press.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Installation"> Installation </a>
 
@@ -148,7 +148,7 @@ a) Standard Gamma-correction procedures. b) Standard linear chromaticity estimat
 
     Then, you will see the main window of Mcalibrator2 as below.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Configuration"> Mcalibrator2 configuration - setting measurement/calibration parameters </a>
 
@@ -169,7 +169,7 @@ The "config" tab above is for setting measurement/calibration parameters.
 
 Next, you can proceed to measure RGB phosphor luminance values. Please go to "measure" tab.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Measure"> Measure tab (you can measure CIE1931 xyY here) </a>
 
@@ -197,7 +197,7 @@ After completing the measurements, the relationship between video input and lumi
 The whole procedure on "measure" tab is completed now.  
 Next, Mcalibrator2 is going to generate Color Lookup Tables (CLUTs) by linearizing the input/output relationship. Please go to ***"LUT"*** tab.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "LUT"> LUT tab - Running Gamma-correction and generating Color-LookUp tables (CLUTs) </a>
 
@@ -241,7 +241,7 @@ The whole procedures of gamma-correction and CLUT generations are completed. If 
 
 If you need to perform chromaticity calibration, please go to ***"Color Calculator"*** tab below. 
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Chromaticity"> Chromaticity (CIE1931 xyY etc) estimation procedure </a>
 
@@ -288,7 +288,7 @@ If you need to perform chromaticity calibration, please go to ***"Color Calculat
 9. To save the estimation results, please press the ***"save"*** button. The results are saved as a *.mat file to ***~/Mcalibrator2/data/(date etc.)*** like ***"estimate_files_001.txt"*** , ***"estimate_files_002.txt"*** ,... (file prefixex _001, _002,... are added automatically). Please be careful that ***no result will be saved automatically*** without pressing the ***"save"*** button.
 10. If you can reproduce chromaticity values you want accurately enough, all the calibration procedures are completed. If the results are not good, please retry the estimations using different methods.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "About"> About tab </a>
 
@@ -304,7 +304,7 @@ If you need to perform chromaticity calibration, please go to ***"Color Calculat
 On the ***"About"*** tab, the details of Mcalibrator2 software packages are displayed. If you press the ***"display test"*** button on this tab, you can perform several simple display tests.  
 Furthremore, by pressing the ***"parameters"*** button, you can change the detailed gamma-correction, LUT generation, and chromaticity estimation parameters as you like. ***However, changing those default values affect the performance and accuracies of the Mcalibrator2 functions. Please be careful.***
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "CustomColorimeter"> How to make Mcalibrator2 communicate with your own colorimeter(s) </a>
 
@@ -840,7 +840,7 @@ end % classdef brontesLL
 
 After completing these setups, please launch Mcalibrator2, check whether your own colorimeter is properly registered (if registered, your apparatus is listed in the dropdown-list on ***"config"*** tab), and check whether your colarimeter can communicate with Mcalibrator2.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "CustomEstimation"> How to add your own chromaticity estimation methods to Mcalibrator2 </a>
 
@@ -896,7 +896,7 @@ For examples, please see
 1. ***~/Mcalibrator2/subfunctions/colorcalculator/calculator_auto_estimation_linear.m***
 2. ***~/Mcalibrator2/subfunctions/colorcalculator/calculator_auto_estimation_hybrid.m***
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Scripting"> Automations and scripting of Mcalibrator2 </a>
 
@@ -1280,7 +1280,7 @@ rmpath(genpath(fullfile(pwd,'..','subfunctions')));
 return
 ```
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Acknowledgments"> **Acknowledgments** </a>
 
@@ -1334,7 +1334,7 @@ We greatly appreciate for their contributions. We also clearly denote that our M
                (c) 2008-2011  Tobias Wolf  
                [ref] [http://psychtoolbox.org/HomePage](http://psychtoolbox.org/HomePage)
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "License"> **License** </a>
 
@@ -1352,7 +1352,7 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "Citations"> **Citations of Mcalibrator2** </a>
 
@@ -1369,7 +1369,7 @@ Journal of Vision, 13(6):20, 1-26, http://www.journalofvision.org/content/13/6/2
 applicable to a wide range of display devices and evaluation of its efficiency.**  
 Japanese Journal of Psychonomic Science, 24, 149-161.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
 
 # <a name = "TODO"> **TODO** </a>
 
@@ -1377,4 +1377,4 @@ Japanese Journal of Psychonomic Science, 24, 149-161.
 2. Updating Mcalibrator2 PDF manuals using the latest GUI window figures.
 3. Compiling *.m files using the MATLAB compiler so that we can provide a standalone verion of the Mcalibrator2 package.
 
-[return to menu](#Menu)
+[back to the menu](#Menu)
