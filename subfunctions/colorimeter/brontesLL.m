@@ -6,6 +6,7 @@ classdef brontesLL
   % brontesLL=brontesLL.initialize(integration_time) : initialize measurement parameters
   % brontesLL=brontesLL.reset_port()                 : reset USB port connection
   % [qq,Y,x,y,brontesLL]=brontesLL.measure(integration_time) : measure CIE1931 xyY
+  % [qq,luminance,dt,brontesLL]=brontesLL.measure_flicker(samples,delay,integration_time) : measure display flicker
   % command=brontesLL.write('command')               : send command to Brontes-LL through USB connection
   % results=brontesLL.read(number_of_bytes)          : read resutls etc from Brontes-LL through USB connection
   %
@@ -44,7 +45,7 @@ classdef brontesLL
   %
   %
   % Created    : "2012-10-29 05:28:07 ban"
-  % Last Update: "2017-06-30 10:17:52 ban"
+  % Last Update: "2021-08-04 16:58:17 ban"
 
   properties (Hidden) %(SetAccess = protected);
     % id of USB port to communicate with Brontes-LL. This is a dummy variable to match with the other function
@@ -234,6 +235,112 @@ classdef brontesLL
           end
           qq=1; Y=[]; x=[]; y=[];
         end
+      end
+    end
+
+    % measure luminance flicker of the target display
+    function [qq,luminance,dt,obj]=measure_flicker(obj,samples,delay,integtime)
+
+      if ~obj.init_flg, disp('initialization has not completed. open port and initialize the apparatus first.'); return; end
+      if nargin<2 || isempty(samples), samples=24000; end
+      if nargin<3 || isempty(delay), delay=0; end
+      if nargin<4 || isempty(integtime), integtime=20000*2; end
+      samples=min(samples,24000);
+      delay=min(delay,255);
+      integtime=min(integtime,500000);
+      integtime=max(50,integtime);
+
+      qq=1; counter=0;
+      while qq~=0 && counter<5
+        counter=counter+1;
+        if counter>2
+          if qq>0
+            integtime=min(ceil(integtime*0.8),50);
+          elseif qq<0
+            integtime=min(ceil(integtime*1.2),5000000);
+          end
+          [dummy,obj.devicehandle]=calllib('usbtmc','usbtmc_write',obj.devicehandle,sprintf(':SENSE:INT %d',integtime),obj.TIME_OUT);
+        end
+
+        % [about flicker measurement]
+        %
+        % <format>
+        %
+        % These functons only returns summary of the flicker.
+        % :MEASure:FLICker Samples 0-24000 Measure flicker level (%)
+        % :MEASure:FLICker:CONtrast Samples 0-24000 Measure flicker level (%)
+        %
+        %    The Brontes flicker measurement calculation is based on the ratio between the signal's AC and DC
+        %    component. This is the so called contrast method. The calculation is based on the raw signal, without any
+        %    low pass filtering. When signal filtering is needed, it is recommended to acquire the the raw data from the
+        %    Brontes and perform the calculation externally as for example in the Brontes main application.
+        %    The Brontes has two commands available for flicker measurement, each with different calculation method :
+        %
+        %    :MEASure:FLICker
+        %    This method is based on the RMS of the AC component.
+        %
+        %    :MEASure:FLICker:CONtrast
+        %    This method is based on the minimum and maximum value of the AC component.
+        %
+        % In contrast, for getting point-by-point data samples, we have to successively SAMPLE lminance values
+        % within a given period. To this end, we can use
+        % :SAMPle:Y
+
+        [dummy,obj.devicehandle]=calllib('usbtmc','usbtmc_write',obj.devicehandle,sprintf(':sample:y %d,%d',samples,delay),obj.TIME_OUT);
+        bytecount=samples*2+7; % 1 data = 8byte x 2. thus samples*2 is required
+        data_ptr=libpointer('uint8Ptr',zeros(1,bytecount));
+
+        % [Note from Admesy SDK manual about the use of Bytecount]
+        %
+        % The third input variable of usbtmc_read is Bytecount.
+        % The number of bytes that needs to be read may exceed the actual data that is available.
+        % However, assigning always a very large number is discouraged.
+        % For example when a g:meas:XYZh command returns 36 bytes, you may ask for 64 bytes.
+        % When you use a g:sample:Yh function, you know exactly how many bytes should be returned.
+        % It is than best to input this exact number or just a little bit more.
+        % In case you read for example 65535 bytes for a g:meas:XYZ: command, the internal library
+        % allocates 65535 bytes where it only gets 36bytes back. This works, but is inefficient in
+        % memory and execution time.
+
+        [dummy,obj.devicehandle,measured]=calllib('usbtmc','usbtmc_read',obj.devicehandle,data_ptr,uint8(bytecount)-1,obj.TIME_OUT);
+        clear data_ptr;
+
+        % encoding the byte array to the correct values because :SMAMPLE:Y: format is uint16 not uint8
+        % [NOTE]
+        % :SAMPle:Y returns it's data in unsigned integer format.
+        % dt     %u\n
+        % clip   %u\n
+        % noise  %u\n
+        % Value1 %u\n
+        % Value2 %u\n
+        % Value3 %u\n
+        % ...
+
+        % getting dt, clip, and noise. then storing the masured luminance values
+        %
+        % you can plot the result simply by
+        % >> plot([1:1:24000].*dt,luminance); xlabel('Time[s]'); ylabel('Luminance[counts]');
+        
+        measured=uint16(measured); % 16 bit conversion is required so as to be compatible with bitshift
+        dt=single( bitor(bitshift(measured(1),8),measured(2)) ) / 1e+7; % samples * dt = total_measured_period
+        clip=uint16( bitor(bitshift(measured(3),8),measured(4)) );
+        noise=uint16( bitor(bitshift(measured(5),8),measured(6)) );
+
+        vcounter=1;
+        luminance=uint16(zeros(1,numel(7:2:samples*2+6)));
+        for ii=7:2:samples*2+6 % 1 value = 16 byte
+          luminance(vcounter)=uint16( bitor(bitshift(measured(ii),8),measured(ii+1)) );
+          vcounter=vcounter+1;
+        end
+
+        %if clip==0 || noise==0
+        %  warning('the measured light is too bright or dark'); %#ok
+        %  qq=1;
+        %else
+        %  qq=0;
+        %end
+        qq=0;
+
       end
     end
 

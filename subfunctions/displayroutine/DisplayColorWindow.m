@@ -19,7 +19,7 @@ function [fig_id,success]=DisplayColorWindow(rgb,fullscr_flg,fig_id,scr_num)
 %
 %
 % Created    : "2012-04-06 07:25:53 ban"
-% Last Update: "2018-01-19 12:22:41 ban"
+% Last Update: "2020-02-27 16:38:44 ban"
 
 % persistent/global variable
 persistent hpush;
