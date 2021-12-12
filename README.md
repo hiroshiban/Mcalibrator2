@@ -3,7 +3,7 @@
 
 <div align="right">
 Created    : "2013-05-13 12:30:52 ban"<br>
-Last Update: "2021-12-13 06:33:26 ban"
+Last Update: "2021-12-13 07:28:02 ban"
 </div>
 
 <br>
@@ -11,7 +11,7 @@ Last Update: "2021-12-13 06:33:26 ban"
 <img src="https://img.shields.io/badge/LANGUAGE-MATLAB-brightgreen" />
 <img src="https://img.shields.io/badge/EDITED%20BY-EmEditor%20&%20VS%20Code-blue" />
 <img src="https://img.shields.io/badge/LICENSE-BSD-red" /><br>
-<img src="https://img.shields.io/badge/KEYWORDS-Vision%20Science,%20Display Characterization,%20Gamma Correction,%20Perception,%20fMRI,%20MEG,%20EEG,%20&%20Psychphysics-blue?style=social&logo=webauthn" /><br>
+<img src="https://img.shields.io/badge/KEYWORDS-Vision%20Science,%20Display Characterization,%20Gamma Correction,%20Perception,%20fMRI,%20MEG,%20EEG,%20&%20Psychophysics-blue?style=social&logo=webauthn" /><br>
 <img src="https://img.shields.io/badge/CONTACT-lightgrey" /> <img src="doc/images/ban_hiroshi_address.png" />
 </div>
 <br>
