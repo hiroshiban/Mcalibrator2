@@ -23,7 +23,7 @@ function [fig_id,success]=DisplayColorWindowPTB10Bit(rgb,fullscr_flg,fig_id,scr_
 %
 %
 % Created    : "2012-04-09 22:56:39 ban"
-% Last Update: "2014-03-26 15:10:50 ban"
+% Last Update: "2024-10-31 14:15:11 ban"
 
 warning off; %#ok
 
@@ -150,8 +150,8 @@ try
   HideCursor();
 
   % flip the screen
-  Screen('DrawingFinished',ptbwindow,0,1);
-  Screen('Flip', ptbwindow,[],0,[],1);
+  Screen('DrawingFinished',ptbwindow);
+  Screen('Flip', ptbwindow);
   success=1;
 
   % stay until the ENTER key is pressed
@@ -163,8 +163,8 @@ try
     % % clear the frames
     % frameid=Screen('OpenOffscreenWindow',ptbwindow,[255,255,255],ptbrect);
     % Screen('CopyWindow',frameid,ptbwindow,ptbrect,ptbrect);
-    % Screen('DrawingFinished',ptbwindow,0,1);
-    % Screen('Flip', ptbwindow,[],0,[],1);
+    % Screen('DrawingFinished',ptbwindow);
+    % Screen('Flip', ptbwindow);
   end
 
 catch ME
