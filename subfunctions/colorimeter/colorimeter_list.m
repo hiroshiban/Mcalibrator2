@@ -35,12 +35,12 @@ function colorimeters=colorimeter_list()
 %
 %
 % Created    : "2012-04-14 04:09:02 ban"
-% Last Update: "2023-12-12 18:06:31 ban"
+% Last Update: "2025-09-25 15:06:41 ban"
 
 colorimeters{1}={'Photo Research PR-650','pr650',0};
 colorimeters{2}={'Photo Research PR-655 (not tested, PTB3 is required)','pr655',0};
 colorimeters{3}={'KONICA-MINOLTA CS-100A','cs100a',0};
-colorimeters{4}={'KONICA-MINOLTA CS-150/160 (wrapper)','cs150_160',1};
+colorimeters{4}={'KONICA-MINOLTA CS-150 (C# server)','cs150',1};
 colorimeters{5}={'Admesy Brontes-LL (64bit)','brontesLL',1};
 colorimeters{6}={'Admesy Brontes-LL (32bit)','brontesLL32',1};
 colorimeters{7}={'Cambridge Research Systems ColorCAL2 Win-USB','colorcal',1};
